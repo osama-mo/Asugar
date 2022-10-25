@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600");
+@import url("~bootstrap/dist/css/bootstrap.css");
+
+:root
+{
+    --primary-color:#B73E3E;
+    --secondary-color:#162328;
+}
