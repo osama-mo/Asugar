@@ -1,5 +1,6 @@
 package com.agilesekeri.asugar_api.appuser;
 
+import com.agilesekeri.asugar_api.project.Project;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,9 @@ import java.util.Collections;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity
-public class AppUser implements UserDetails {
+public class AppUser
+        implements UserDetails
+{
 
     @Id
     @SequenceGenerator(
@@ -36,8 +39,11 @@ public class AppUser implements UserDetails {
     private String email;
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private AppUserRole appUserRole;
+//    @Enumerated(EnumType.STRING)
+//    private AppUserRole appUserRole;
+
+    @OneToMany
+    private Collection<Project> projectsJoined;
 
     private Boolean locked = false;
     private Boolean enabled = false;
@@ -45,21 +51,28 @@ public class AppUser implements UserDetails {
     public AppUser(String firstName,
                    String lastName,
                    String email,
-                   String password,
-                   AppUserRole appUserRole) {
+                   String password
+//            ,AppUserRole appUserRole
+    )
+    {
 
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.appUserRole = appUserRole;
+//        this.appUserRole = appUserRole;
     }
+
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        SimpleGrantedAuthority authority =
+//                new SimpleGrantedAuthority(appUserRole.name());
+//        return Collections.singletonList(authority);
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority =
-                new SimpleGrantedAuthority(appUserRole.name());
-        return Collections.singletonList(authority);
+        return null;
     }
 
     @Override
