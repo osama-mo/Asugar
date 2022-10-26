@@ -1,5 +1,6 @@
 package com.agilesekeri.asugar_api.appuser;
 
+import com.agilesekeri.asugar_api.project.ProjectService;
 import com.agilesekeri.asugar_api.registration.token.ConfirmationToken;
 import com.agilesekeri.asugar_api.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,8 @@ public class AppUserService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
+
+    private final ProjectService projectService;
 
     @Override
     public UserDetails loadUserByUsername(String email)

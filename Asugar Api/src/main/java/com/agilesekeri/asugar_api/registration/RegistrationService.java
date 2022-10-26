@@ -35,13 +35,13 @@ public class RegistrationService {
                         request.getFirstName(),
                         request.getLastName(),
                         request.getEmail(),
-                        request.getPassword(),
-                        AppUserRole.USER
+                        request.getPassword()
+//                        ,AppUserRole.USER
 
                 )
         );
 
-        String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
+        String link = "http://localhost:8080/registration/confirm?token=" + token;
 
         try {
             emailSender.send(
