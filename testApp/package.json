@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^14.2.0",
+    "@angular/animations": "^14.2.7",
     "@angular/common": "^14.2.0",
     "@angular/compiler": "^14.2.0",
     "@angular/core": "^14.2.0",
@@ -22,9 +22,14 @@
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@lottiefiles/lottie-player": "^1.6.0",
+    "angular-animations": "^0.11.0",
+    "angular-local-storage": "^0.7.1",
     "bootstrap": "^5.2.2",
     "lottie-web": "^5.9.6",
     "ngx-lottie": "^9.1.0",
+    "ngx-toastr": "^15.2.1",
+    "ngx-webstorage": "^10.0.1",
+    "ngx-webstorage-service": "^5.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
