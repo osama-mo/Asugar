@@ -2,14 +2,6 @@
     <div class="form">
       <form [formGroup]="signupForm" (ngsubmit)="signup()" class="signup-form" >
         <div class="form-group">
-        <lottie-player
-          src="https://assets4.lottiefiles.com/datafiles/XRVoUu3IX4sGWtiC3MPpFnJvZNq7lVWDCa8LSqgS/profile.json"
-          background="transparent"
-          speed="1"
-          style="justify-content: center"
-          loop
-          autoplay
-        ></lottie-player>
         <input type="text" [formControlName]="'username'" class="form-control" required autofocus placeholder="full name" />
         <input type="text" [formControlName]="'email'" class="form-control" required autofocus placeholder="email address" />
         <input type="password" [formControlName]="'password'" class="form-control" required autofocus  placeholder="set a password" />   
