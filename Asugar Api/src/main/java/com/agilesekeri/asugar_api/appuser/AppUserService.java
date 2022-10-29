@@ -1,6 +1,5 @@
 package com.agilesekeri.asugar_api.appuser;
 
-import com.agilesekeri.asugar_api.project.ProjectService;
 import com.agilesekeri.asugar_api.registration.token.ConfirmationToken;
 import com.agilesekeri.asugar_api.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
@@ -9,21 +8,24 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class AppUserService implements UserDetailsService {
 
     private final static String USER_NOT_FOUND_MSG =
             "User with the email %s was not found";
+
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
 
-    private final ProjectService projectService;
 
     @Override
     public UserDetails loadUserByUsername(String email)
@@ -65,5 +67,9 @@ public class AppUserService implements UserDetailsService {
 
     public int enableAppUser(String email) {
         return appUserRepository.enableAppUser(email);
+    }
+
+    public List<AppUser> getUsers() {
+        return appUserRepository.findAll();
     }
 }
