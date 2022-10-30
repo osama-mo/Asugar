@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   loginRequestPayload: LoginRequestPayload;
   registerSuccessMessage!: string;
   isError!: boolean;
+  signedin : boolean = false;
 
 
   options: AnimationOptions = {
@@ -42,10 +43,10 @@ export class LoginComponent implements OnInit {
   login() {
     this.loginRequestPayload.username = this.loginForm.get('username')!.value;
     this.loginRequestPayload.password = this.loginForm.get('password')!.value;
-
+    
     this.authService.login(this.loginRequestPayload).subscribe(data => {
+      this.signedin = true;
       this.isError = false;
-      this.router.navigateByUrl('');
       this.toastr.success('Login Successful');
     }, error => {
       this.isError = true;
