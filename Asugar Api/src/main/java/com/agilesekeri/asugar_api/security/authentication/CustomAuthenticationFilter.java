@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,10 +25,17 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    public final static byte[] accessSecret = new byte[128];
+    public final static byte[] refreshSecret = new byte[128];
+
     private final AuthenticationManager authenticationManager;
 
     public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
+
+        SecureRandom rand = new SecureRandom();
+        rand.nextBytes(accessSecret);
+        rand.nextBytes(refreshSecret);
     }
 
     @Override
@@ -50,18 +58,14 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                                             Authentication authentication)
             throws IOException, ServletException {
         UserDetails user = (UserDetails) authentication.getPrincipal();
-//        SecureRandom rand = new SecureRandom();
-//        byte bytes[] = new byte[128];
-//        rand.nextBytes(bytes);
-//        Algorithm algorithm = Algorithm.HMAC256(bytes);
-        Algorithm accessAlgorithm = Algorithm.HMAC256("access".getBytes());
+        Algorithm accessAlgorithm = Algorithm.HMAC256(accessSecret);
         String accessToken = JWT.create()
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(accessAlgorithm);
 
-        Algorithm refreshAlgorithm = Algorithm.HMAC256("refresh".getBytes());
+        Algorithm refreshAlgorithm = Algorithm.HMAC256(refreshSecret);
         String refreshToken = JWT.create()
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
