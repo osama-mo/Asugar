@@ -20,7 +20,6 @@ export class SignupComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router,
     private toastr: ToastrService) {
-
       this.signupRequestPayload = {
         username: '',
         email: '',
@@ -32,8 +31,7 @@ export class SignupComponent implements OnInit {
   
   }
   signup() {
-    
-    this.signupRequestPayload.email = this.signupForm.get('email')!.value  ;
+    this.signupRequestPayload.email = this.signupForm.get('email')!.value ;
     this.signupRequestPayload.username = this.signupForm.get('username')!.value;
     this.signupRequestPayload.password = this.signupForm.get('password')!.value;
 
