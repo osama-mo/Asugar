@@ -55,6 +55,9 @@ export class AuthService {
       }));
   }
 
+  testAuth(){
+    return this.httpClient.get<string>('http://localhost:8080/user/get');
+  }
   // logout() {
   //   this.httpClient.post('http://localhost:8080/api/auth/logout', this.refreshTokenPayload,
   //     { responseType: 'text' })

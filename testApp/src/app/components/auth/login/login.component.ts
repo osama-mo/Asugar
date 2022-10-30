@@ -24,8 +24,7 @@ export class LoginComponent implements OnInit {
   registerSuccessMessage!: string;
   isError!: boolean;
   signedin : boolean = false;
-
-
+  blablabla=this.authService.testAuth();
   options: AnimationOptions = {
     path: 'https://assets1.lottiefiles.com/packages/lf20_mybx9f51.json', 
   };
