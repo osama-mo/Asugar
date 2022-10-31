@@ -1,5 +1,5 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { SignupRequestPayload } from '../signup/signup-request.payload';
 import { Observable, throwError } from 'rxjs';
 import { LoginRequestPayload } from '../login/login-request.payload';
@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   constructor(private httpClient: HttpClient,
-    
+
     ) {
   }
 
@@ -29,8 +29,14 @@ export class AuthService {
   }
 
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean> {
+    let body = new URLSearchParams();
+    body.set('username', loginRequestPayload.username!);
+    body.set('password',loginRequestPayload.password!);
+    let options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    };
     return this.httpClient.post<LoginResponse>('http://localhost:8080/login',
-      loginRequestPayload).pipe(map(data => {
+      body.toString(),options).pipe(map(data => {
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('username', loginRequestPayload.username!);
         localStorage.setItem('refreshToken', data.refreshToken);
@@ -44,7 +50,7 @@ export class AuthService {
   getJwtToken() {
     return localStorage.getItem('accessToken');
   }
-  
+
   refreshToken() {
     return this.httpClient.post<LoginResponse>('http://localhost:8080/token/refresh',
       this.refreshTokenPayload)

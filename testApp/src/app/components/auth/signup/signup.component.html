@@ -1,17 +1,21 @@
 <div class="signup-page">
-    <div class="form">
-      <form [formGroup]="signupForm" (ngsubmit)="signup()" class="signup-form" >
-        <div class="form-group">
-        <input type="text" [formControlName]="'username'" class="form-control" required autofocus placeholder="full name" />
-        <input type="text" [formControlName]="'email'" class="form-control" required autofocus placeholder="email address" />
-        <input type="password" [formControlName]="'password'" class="form-control" required autofocus  placeholder="set a password" />   
+  <div class="form">
+    <form [formGroup]="signupForm" (ngsubmit)="signup()" class="signup-form">
+      <div class="form-group">
+        <input type="text" [formControlName]="'username'" class="form-control" required autofocus
+          placeholder="full name" />
+        <input type="text" [formControlName]="'email'" class="form-control" required autofocus
+          placeholder="email address" />
+        <input type="password" [formControlName]="'password'" class="form-control" required autofocus
+          placeholder="set a password" />
         <br>
         <br>
         <button type="button" (click)="signup()">
           SIGN UP
         </button>
-        <div>Already have an account? <a class="link-light" routerLink="" routerLinkActive="router-link-active">Sign in!</a></div>
+        <div>Already have an account? <a class="link-light" routerLink="" routerLinkActive="router-link-active">Sign
+            in!</a></div>
       </div>
-      </form>
-    </div>
+    </form>
   </div>
+</div>
