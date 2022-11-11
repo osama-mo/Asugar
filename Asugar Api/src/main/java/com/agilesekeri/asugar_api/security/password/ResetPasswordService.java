@@ -44,7 +44,7 @@ public class ResetPasswordService {
                 appUser.getFirstName()
         );
 
-        return token;
+        return "An email is sent";
     }
 
     @Transactional

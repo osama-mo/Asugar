@@ -58,7 +58,7 @@ public class RegistrationService {
             throw new IllegalStateException("email server not available");
         }
 
-        return token;
+        return "An email is sent";
     }
 
     public void sendVerificationEmail(String token, String email, String firstName)
