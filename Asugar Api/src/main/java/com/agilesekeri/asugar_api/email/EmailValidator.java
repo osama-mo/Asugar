@@ -1,4 +1,4 @@
-package com.agilesekeri.asugar_api.registration;
+package com.agilesekeri.asugar_api.email;
 
 import org.springframework.stereotype.Service;
 

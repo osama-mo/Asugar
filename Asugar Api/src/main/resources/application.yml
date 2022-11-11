@@ -6,7 +6,7 @@ server:
 spring:
   datasource:
     password: 1236760
-    url: jdbc:postgresql://localhost:5432/registration
+    url: jdbc:postgresql://localhost:5432/asugar_db
     username: postgres
   jpa:
     hibernate:

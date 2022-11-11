@@ -1,7 +1,6 @@
 package com.agilesekeri.asugar_api.appuser;
 
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,7 +23,7 @@ public class AppUserService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String email)
+    public AppUser loadUserByUsername(String email)
             throws UsernameNotFoundException {
         return appUserRepository.findByEmail(email)
                 .orElseThrow(() ->
@@ -46,6 +45,13 @@ public class AppUserService implements UserDetailsService {
 
     public int enableAppUser(String email) {
         return appUserRepository.enableAppUser(email);
+    }
+
+    public int changePassword(String email, String newPass) {
+        if (!userExists(email))
+            throw new IllegalStateException("This user does not exist.");
+
+        return appUserRepository.changePassword(email, newPass);
     }
 
     public boolean userExists(String email) {

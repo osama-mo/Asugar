@@ -1,13 +1,12 @@
-package com.agilesekeri.asugar_api.registration;
+package com.agilesekeri.asugar_api.security.password;
 
 import com.agilesekeri.asugar_api.appuser.AppUser;
-import com.agilesekeri.asugar_api.appuser.AppUserRole;
 import com.agilesekeri.asugar_api.appuser.AppUserService;
 import com.agilesekeri.asugar_api.email.EmailSender;
-import com.agilesekeri.asugar_api.email.EmailValidator;
-import com.agilesekeri.asugar_api.registration.token.RegistrationToken;
-import com.agilesekeri.asugar_api.registration.token.RegistrationTokenService;
+import com.agilesekeri.asugar_api.security.password.token.ResetPasswordToken;
+import com.agilesekeri.asugar_api.security.password.token.ResetPasswordTokenService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,100 +15,108 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class RegistrationService {
-
+@Transactional
+public class ResetPasswordService {
     private final AppUserService appUserService;
-    private final EmailValidator emailValidator;
-    private final RegistrationTokenService registrationTokenService;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private final ResetPasswordTokenService resetPasswordTokenService;
+
     private final EmailSender emailSender;
 
-
-    public String register(RegistrationRequest request) {
-        boolean isValidEmail = emailValidator.
-                test(request.getEmail());
-
-        if (!isValidEmail) {
-            throw new IllegalStateException("email not valid");
-        }
-
-        AppUser newUser = new AppUser(
-                request.getFirstName(),
-                request.getLastName(),
-                request.getEmail(),
-                request.getPassword(),
-                AppUserRole.USER
-        );
-
-        appUserService.signUpUser(newUser);
+    public String changePasswordRequest(String email) {
+        AppUser appUser = appUserService.loadUserByUsername(email);
 
         String token = UUID.randomUUID().toString();
-        RegistrationToken confirmationToken = new RegistrationToken(
+        ResetPasswordToken resetPasswordToken = new ResetPasswordToken(
                 token,
                 LocalDateTime.now(),
                 LocalDateTime.now().plusMinutes(15),
-                newUser
+                appUser
         );
 
-        registrationTokenService.saveConfirmationToken(confirmationToken);
+        resetPasswordTokenService.saveResetPasswordToken(resetPasswordToken);
 
-        try {
-            sendVerificationEmail(token, request.getEmail(), request.getFirstName());
-        } catch (Exception e) {
-            throw new IllegalStateException("email server not available");
-        }
+        sendVerificationEmail (
+                token,
+                email,
+                appUser.getFirstName()
+        );
 
         return token;
     }
 
+    @Transactional
+    public String confirmRequest(String token, String newPassword) {
+        ResetPasswordToken resetPasswordToken = resetPasswordTokenService
+                .getToken(token)
+                .orElseThrow(() ->
+                        new IllegalStateException("token not found"));
+
+        if (resetPasswordToken.getConfirmedAt() != null) {
+            throw new IllegalStateException("request already confirmed");
+        }
+
+        LocalDateTime expiredAt = resetPasswordToken.getExpiresAt();
+
+        if (expiredAt.isBefore(LocalDateTime.now())) {
+            String newToken = UUID.randomUUID().toString();
+            ResetPasswordToken newResetPasswordToken = new ResetPasswordToken(
+                    newToken,
+                    LocalDateTime.now(),
+                    LocalDateTime.now().plusMinutes(15),
+                    resetPasswordToken.getAppUser()
+            );
+
+            resetPasswordTokenService.saveResetPasswordToken(newResetPasswordToken);
+
+            sendVerificationEmail (
+                    newToken,
+                    resetPasswordToken.getAppUser().getEmail(),
+                    resetPasswordToken.getAppUser().getFirstName()
+            );
+
+            return "token expired, a new one is sent.";
+        }
+
+        boolean uppercase = false, lowercase = false, integer = false;
+
+        for (int i = 0; i < newPassword.length() && !(uppercase && lowercase && integer); ++i) {
+            char c = newPassword.charAt(i);
+            if (c >= 65 && c <= 90)
+                uppercase = true;
+
+            else if (c >= 97 && c <= 122)
+                lowercase = true;
+
+            else if (c >= 48 && c <= 57)
+                integer = true;
+        }
+
+        if(!(uppercase && lowercase && integer))
+            throw new IllegalArgumentException("Password is not valid.");
+
+        String encrypted = bCryptPasswordEncoder.encode(newPassword);
+        appUserService.changePassword(resetPasswordToken.getAppUser().getEmail(), encrypted);
+
+        resetPasswordTokenService.setConfirmedAt(token);
+        appUserService.enableAppUser(
+                resetPasswordToken.getAppUser().getEmail());
+
+        return "Password changed successfully";
+    }
+
     public void sendVerificationEmail(String token, String email, String firstName)
-        throws IllegalStateException{
+            throws IllegalStateException{
         try {
-            String link = "http://localhost:8080/registration/confirm?token=";
+            String link = "http://localhost:8080/password_reset?token=";
             emailSender.send(
                     email,
                     buildEmail(firstName, link + token));
         } catch (Exception e) {
             throw new IllegalStateException("email server not available");
         }
-    }
-
-    @Transactional
-    public String confirmToken(String token) {
-        RegistrationToken registrationToken = registrationTokenService
-                .getToken(token)
-                .orElseThrow(() ->
-                        new IllegalStateException("token not found"));
-
-        if (registrationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("email already confirmed");
-        }
-
-        LocalDateTime expiredAt = registrationToken.getExpiresAt();
-
-        if (expiredAt.isBefore(LocalDateTime.now())) {
-            String newToken = UUID.randomUUID().toString();
-            RegistrationToken newRegistrationToken = new RegistrationToken(
-                    newToken,
-                    LocalDateTime.now(),
-                    LocalDateTime.now().plusMinutes(15),
-                    registrationToken.getAppUser()
-            );
-
-            registrationTokenService.saveConfirmationToken(newRegistrationToken);
-
-            sendVerificationEmail (
-                    newToken,
-                    registrationToken.getAppUser().getEmail(),
-                    registrationToken.getAppUser().getFirstName()
-            );
-
-            return "token expired, a new one is sent.";
-        }
-
-        registrationTokenService.setConfirmedAt(token);
-        appUserService.enableAppUser(
-                registrationToken.getAppUser().getEmail());
-        return "confirmed";
     }
 
     private String buildEmail(String name, String link) {
@@ -130,7 +137,7 @@ public class RegistrationService {
                 "                  \n" +
                 "                    </td>\n" +
                 "                    <td style=\"font-size:28px;line-height:1.315789474;Margin-top:4px;padding-left:10px\">\n" +
-                "                      <span style=\"font-family:Helvetica,Arial,sans-serif;font-weight:700;color:#ffffff;text-decoration:none;vertical-align:top;display:inline-block\">Confirm your email</span>\n" +
+                "                      <span style=\"font-family:Helvetica,Arial,sans-serif;font-weight:700;color:#ffffff;text-decoration:none;vertical-align:top;display:inline-block\">Change Your Password</span>\n" +
                 "                    </td>\n" +
                 "                  </tr>\n" +
                 "                </tbody></table>\n" +
@@ -168,7 +175,7 @@ public class RegistrationService {
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
                 "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n" +
                 "        \n" +
-                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Thank you for registering. Please click on the below link to activate your account: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Activate Now</a> </p></blockquote>\n Link will expire in 15 minutes. <p>See you soon</p>" +
+                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Please click on the below link to change your password: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Change The Password</a> </p></blockquote>\n Link will expire in 15 minutes." +
                 "        \n" +
                 "      </td>\n" +
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +

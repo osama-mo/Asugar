@@ -1,6 +1,5 @@
-package com.agilesekeri.asugar_api.registration.token;
+package com.agilesekeri.asugar_api.actionToken;
 
-import com.agilesekeri.asugar_api.appuser.AppUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,11 +8,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Getter
 @Setter
 @NoArgsConstructor
-public class ConfirmationToken {
-
+public abstract class ActionToken {
     @Id
     @SequenceGenerator(
             name = "confirmation_token_sequence",
@@ -37,20 +36,11 @@ public class ConfirmationToken {
 
     private LocalDateTime confirmedAt;
 
-    @ManyToOne
-    @JoinColumn(
-            nullable = false,
-            name = "app_user_id"
-    )
-    private AppUser appUser;
-
-    public ConfirmationToken(String token,
+    public ActionToken(String token,
                              LocalDateTime createdAt,
-                             LocalDateTime expiresAt,
-                             AppUser appUser) {
+                             LocalDateTime expiresAt) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
-        this.appUser = appUser;
     }
 }

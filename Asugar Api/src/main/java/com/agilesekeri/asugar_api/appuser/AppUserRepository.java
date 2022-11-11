@@ -19,4 +19,10 @@ public interface AppUserRepository
     @Query("UPDATE AppUser a " +
             "SET a.enabled = TRUE WHERE a.email = ?1")
     int enableAppUser(String email);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE AppUser a " +
+            "SET a.password = ?2 WHERE a.email = ?1")
+    int changePassword(String email, String newPass);
 }
