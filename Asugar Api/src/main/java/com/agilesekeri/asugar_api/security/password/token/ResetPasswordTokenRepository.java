@@ -1,4 +1,4 @@
-package com.agilesekeri.asugar_api.registration.token;
+package com.agilesekeri.asugar_api.security.password.token;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,14 +11,14 @@ import java.util.Optional;
 
 @Repository
 @Transactional(readOnly = true)
-public interface ConfirmationTokenRepository
-        extends JpaRepository<ConfirmationToken, Long> {
+public interface ResetPasswordTokenRepository
+        extends JpaRepository<ResetPasswordToken, Long> {
 
-    Optional<ConfirmationToken> findByToken(String token);
+    Optional<ResetPasswordToken> findByToken(String token);
 
     @Transactional
     @Modifying
-    @Query("UPDATE ConfirmationToken c " +
+    @Query("UPDATE ResetPasswordToken c " +
             "SET c.confirmedAt = ?2 " +
             "WHERE c.token = ?1")
     int updateConfirmedAt(String token,
