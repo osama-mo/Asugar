@@ -16,6 +16,7 @@
   border-radius: 18px;
   border-width: 5px;
   border-color: #22597D;
+  border-style: solid;
   
 }
 
@@ -28,13 +29,14 @@
 }
 
 p{
+  margin-bottom: -20px;
   font-family: 'Share';
   font-size: 48;
   text-align: center;
   font-weight: bolder;
   text-shadow: black;
   -webkit-text-stroke-width: 2px;
-  padding-top: 0px;
+  padding-top: 20px;
 }
 
 h1{
@@ -42,7 +44,16 @@ h1{
   font-size: 28px;
   font-weight: bolder;
   text-shadow: black;
-  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-width: 1px;
+}
+
+h2{
+  font-family: 'Share';
+  font-size: 28px;
+  font-weight: bolder;
+  text-shadow: black;
+  text-align: right;
+  -webkit-text-stroke-width: 1px;
 }
 
 img { 
@@ -51,10 +62,11 @@ img {
   top: 50%;
   left: 50%;
 }
+
 form .txt_field{
   position: relative;
   border-bottom: 2px solid #8FCEE9;
-  margin: 30px 0;
+  margin: 10px 0;
 }
 
 .txt_field input{
@@ -65,7 +77,7 @@ form .txt_field{
   border: 1px solid;
   border-radius: 18px;
   border-color: #22597D;
-  border-width: 5px;
+  border-width: 4px;
   background: white;
   outline: none;
   
@@ -104,13 +116,15 @@ input[type="submit"]{
   border: 1px solid;
   background-color: #22597D;
   border-radius: 18px;
+  border-style: solid;
+  border-color: #000000;
+  border-width: 2px;
   font-size: 32px;
   font-family:'share';
   text-align: center;
   color: #e9f4fb;
   cursor: pointer;
   outline: none;
-  border: none;
   color: white;
   text-shadow: black;
   text-decoration: none;
@@ -121,6 +135,10 @@ input[type="submit"]:hover{
   border-color: #22597D;
   border-width: 5px;
   transition: .5s;
+  border-radius: 18px;
+  border-style: solid;
+  border-color: #000000;
+  border-width: 2px;
 }
 .signup_link{
   margin: 30px 0;
@@ -134,8 +152,7 @@ input[type="submit"]:hover{
 }
 
 span { 
-  margin-left: 32px; 
+  margin-top: 50px;
+  margin-left: 32px;
+  margin-right: -6px;
 }
-
-
-
