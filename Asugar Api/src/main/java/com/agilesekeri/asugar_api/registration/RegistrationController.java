@@ -10,7 +10,6 @@ public class RegistrationController {
 
     private final RegistrationService registrationService;
 
-    @CrossOrigin(origins="*", maxAge=3600)
     @PostMapping
     public String register(@RequestBody RegistrationRequest request) {
         return registrationService.register(request);
