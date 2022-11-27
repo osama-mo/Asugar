@@ -17,9 +17,15 @@
   border-width: 5px;
   border-color: #22597D;
   border-style: solid;
-  
 }
 
+body{
+  display:table-row-group;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url('background.png');
+}
 .center form{
   padding-left: 18px;
   padding-right: 18px;
