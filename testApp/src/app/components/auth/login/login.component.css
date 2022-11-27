@@ -12,15 +12,19 @@
   font-size: 18px;
   width: 440px;
   height: 415px;
-  background: #8FCEE9;
+  background-color: #8FCEE9;
   border-radius: 18px;
-  box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
+  border-width: 5px;
+  border-color: #22597D;
+  
 }
 
 .center form{
-  padding: 0px 18px;
+  padding-left: 18px;
+  padding-right: 18px;
   box-sizing: border-box;
-  border-color: black;
+  border-width: 5px;
+  border-color: #22597D;
 }
 
 p{
@@ -29,13 +33,16 @@ p{
   text-align: center;
   font-weight: bolder;
   text-shadow: black;
+  -webkit-text-stroke-width: 2px;
+  padding-top: 0px;
 }
 
 h1{
   font-family: 'Share';
-  font-size: 32;
+  font-size: 28px;
   font-weight: bolder;
   text-shadow: black;
+  -webkit-text-stroke-width: 2px;
 }
 
 img { 
@@ -51,12 +58,14 @@ form .txt_field{
 }
 
 .txt_field input{
-  width: 100%;
-  padding: 0 5px;
-  height: 40px;
+  width: 400px;
+  padding: 0px 0px;
+  height: 52px;
   font-size: 18px;
   border: 1px solid;
   border-radius: 18px;
+  border-color: #22597D;
+  border-width: 5px;
   background: white;
   outline: none;
   
@@ -105,11 +114,12 @@ input[type="submit"]{
   color: white;
   text-shadow: black;
   text-decoration: none;
+  -webkit-text-stroke-width: 1px;
   display: inline-block;
-
 }
 input[type="submit"]:hover{
-  border-color: #2691d9;
+  border-color: #22597D;
+  border-width: 5px;
   transition: .5s;
 }
 .signup_link{
