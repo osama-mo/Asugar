@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -31,28 +30,23 @@ public class RegistrationService {
             throw new IllegalStateException("email not valid");
         }
 
-        AppUser newUser = new AppUser(
-                request.getFirstName(),
-                request.getLastName(),
-                request.getEmail(),
-                request.getPassword(),
-                AppUserRole.USER
+        String token = appUserService.signUpUser(
+                new AppUser(
+                        request.getFirstName(),
+                        request.getLastName(),
+                        request.getEmail(),
+                        request.getPassword()
+//                        ,AppUserRole.USER
+
+                )
         );
 
-        appUserService.signUpUser(newUser);
-
-        String token = UUID.randomUUID().toString();
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(1),
-                newUser
-        );
-
-        confirmationTokenService.saveConfirmationToken(confirmationToken);
+        String link = "http://localhost:8080/registration/confirm?token=" + token;
 
         try {
-            sendVerificationEmail(token, request.getEmail(), request.getFirstName());
+            emailSender.send(
+                    request.getEmail(),
+                    buildEmail(request.getFirstName(), link));
         } catch (Exception e) {
             throw new IllegalStateException("email server not available");
         }
@@ -60,17 +54,6 @@ public class RegistrationService {
         return token;
     }
 
-    public void sendVerificationEmail(String token, String email, String firstName)
-        throws IllegalStateException{
-        try {
-            String link = "http://localhost:8080/registration/confirm?token=";
-            emailSender.send(
-                    email,
-                    buildEmail(firstName, link + token));
-        } catch (Exception e) {
-            throw new IllegalStateException("email server not available");
-        }
-    }
 
     @Transactional
     public String confirmToken(String token) {
@@ -86,23 +69,7 @@ public class RegistrationService {
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
-            String newToken = UUID.randomUUID().toString();
-            ConfirmationToken newConfirmationToken = new ConfirmationToken(
-                    newToken,
-                    LocalDateTime.now(),
-                    LocalDateTime.now().plusMinutes(1),
-                    confirmationToken.getAppUser()
-            );
-
-            confirmationTokenService.saveConfirmationToken(newConfirmationToken);
-
-            sendVerificationEmail (
-                    newToken,
-                    confirmationToken.getAppUser().getEmail(),
-                    confirmationToken.getAppUser().getFirstName()
-            );
-
-            return "token expired, a new one is sent.";
+            throw new IllegalStateException("token expired");
         }
 
         confirmationTokenService.setConfirmedAt(token);

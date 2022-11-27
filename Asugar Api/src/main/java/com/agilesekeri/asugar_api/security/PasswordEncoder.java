@@ -1,4 +1,4 @@
-package com.agilesekeri.asugar_api.security.password;
+package com.agilesekeri.asugar_api.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

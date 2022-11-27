@@ -9,6 +9,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { LottieModule } from 'ngx-lottie';
+import player from 'lottie-web';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToastrModule } from 'ngx-toastr';
 // import { TokenInterceptor } from './token-interceptor';
@@ -37,13 +38,11 @@ export function playerFactory(): any {
     })
   ],
   providers: [
- 
     // {
     // provide: HTTP_INTERCEPTORS,
     // useClass: TokenInterceptor,
     // multi: true
     // },
-    
   ],
   bootstrap: [AppComponent]
 })

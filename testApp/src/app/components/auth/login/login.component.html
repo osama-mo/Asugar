@@ -1,18 +1,18 @@
 <div class="login-page">
     <div class="form">
   
-      <form [formGroup]="loginForm" (ngsubmit)="login() " class="login-form">
+      <form>
         <ng-lottie height="auto" [options]="options" ></ng-lottie>
-        <input type="text" [formControlName]="'username'" class="form-control" placeholder="username"/>
-        <input type="password" [formControlName]="'password'" class="form-control"  id="password" placeholder="password"/>
+        <input type="text" placeholder="username"/>
+        <input type="password" id="password" placeholder="password"/>
         <i class="fas fa-eye" onclick="show()"></i> 
         <br>
         <br>
-        <button type="button" (click)="login()">LOGIN</button>
-        <div *ngIf="signedin == true"> signed in successfully</div>
-        <div id="blablabla"></div>
+        <button>LOGIN</button>
         <p class="message"></p>
         <a class="nav-link" routerLink= "signup" routerLinkActive="router-link-active"><button type="button"  >SIGN UP</button></a>
       </form>
+  
+    
     </div>
 </div>

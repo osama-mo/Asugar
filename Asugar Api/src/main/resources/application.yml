@@ -31,6 +31,10 @@ spring:
           auth: true
           starttls:
             enable: true
-          connection-timeout: 5000
+          connectiontimeout: 5000
           timeout: 3000
-          write timeout: 5000
+          writetimeout: 5000
+
+#security:
+#  ignored:
+#    - "*.bundle.*"
