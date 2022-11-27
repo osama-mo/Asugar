@@ -7,3 +7,8 @@
     color: var(--primary-color);
     text-decoration: underline;
 }
+
+img { 
+    width: 69px;
+    height: 69px;
+  }

@@ -1,121 +1,131 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+@import url(https://fonts.googleapis.com/css?family=Share);
 
-
-
-.login-page {
-    background-image: url("https://ordinaryfaith.net/wp-content/uploads/2016/03/Gray-plain-website-background.jpg");
-  width: 100%;
-  height: 100%;
-  background-size: auto;
-  padding: 5% 0% 5%;
-  margin: auto;
-
-}
-.form {
-  position: relative;
-  z-index: 1;
-  background: #DD5353;
-  max-width: 360px;
-  margin: 0 auto 100px;
-  padding: 45px;
-  text-align: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-  
-}
-.form input {
-  font-family: FontAwesome, "Roboto", sans-serif;
-  outline: 0;
-
-  width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 14px;
-border-radius:10px;
-  
-}
-.form button {
-  font-family: "Titillium Web", sans-serif;
-  font-size: 14px;
-  font-weight: bold;
-  letter-spacing: .1em;
-  outline: 0;
-  background: #df2614;
-  width: 100%;
-  border: 0;
-border-radius:30px;
-  margin: 0px 0px 8px;
-  padding: 15px;
-  color: #FFFFFF;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
-  transition: all 0.2s;
-
-
-}
-.form button:hover,.form button:focus {
-  background: #B73E3E;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  transform: translateY(-4px);
-}
-.form button:active {
-  transform: translateY(2px);
-  box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.2);
-}
-
-.form .message {
-  
-  margin: 6px 6px;
-  color: #808080;
-  font-size: 11px;
-  text-align: center;
-  font-weight: bold;
-  font-style: normal;
-
-  
-
-}
-.form .message a {
-  color: #FFFFFF;
-  text-decoration: none;
-  font-size: 13px;
-}
-.form .register-form {
-  display: none;
-}
 .container {
   position: relative;
-  z-index: 1;
-  max-width: 300px;
-  margin: 0 auto;
 }
-.container:before, .container:after {
-  content: "";
-  display: block;
-  clear: both;
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  width: 440px;
+  height: 415px;
+  background: #8FCEE9;
+  border-radius: 18px;
+  box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
 }
-.container .info {
-  margin: 50px auto;
+
+.center form{
+  padding: 0px 18px;
+  box-sizing: border-box;
+  border-color: black;
+}
+
+p{
+  font-family: 'Share';
+  font-size: 48;
   text-align: center;
+  font-weight: bolder;
+  text-shadow: black;
 }
-.container .info h1 {
-  margin: 0 0 15px;
-  padding: 0;
-  font-size: 36px;
-  font-weight: 300;
-  color: #1a1a1a;
+
+h1{
+  font-family: 'Share';
+  font-size: 32;
+  font-weight: bolder;
+  text-shadow: black;
 }
-.container .info span {
-  color: #4d4d4d;
-  font-size: 12px;
+
+img { 
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
 }
-.container .info span a {
-  color: #000000;
+form .txt_field{
+  position: relative;
+  border-bottom: 2px solid #8FCEE9;
+  margin: 30px 0;
+}
+
+.txt_field input{
+  width: 100%;
+  padding: 0 5px;
+  height: 40px;
+  font-size: 18px;
+  border: 1px solid;
+  border-radius: 18px;
+  background: white;
+  outline: none;
+  
+}
+
+.txt_field span::before{
+  content: '';
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #2691d9;
+  transition: .5s;
+}
+.txt_field input:focus ~ label,
+.txt_field input:valid ~ label{
+  top: -5px;
+  color: #2691d9;
+}
+.txt_field input:focus ~ span::before,
+.txt_field input:valid ~ span::before{
+  width: 100%;
+}
+.pass{
+  margin: -5px 0 20px 5px;
+  color: #a6a6a6;
+  cursor: pointer;
+}
+.pass:hover{
+  text-decoration: underline;
+}
+input[type="submit"]{
+  width: 184px;
+  height: 58px;
+  border: 1px solid;
+  background-color: #22597D;
+  border-radius: 18px;
+  font-size: 32px;
+  font-family:'share';
+  text-align: center;
+  color: #e9f4fb;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  color: white;
+  text-shadow: black;
+  text-decoration: none;
+  display: inline-block;
+
+}
+input[type="submit"]:hover{
+  border-color: #2691d9;
+  transition: .5s;
+}
+.signup_link{
+  margin: 30px 0;
+  text-align: center;
+  font-size: 16px;
+  color: #666666;
+}
+.signup_link a{
+  color: #2691d9;
   text-decoration: none;
 }
-.container .info span .fa {
-  color: #EF3B3A;
+
+span { 
+  margin-left: 50px; 
 }
+
+
 
