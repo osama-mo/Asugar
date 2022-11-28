@@ -1,32 +1,25 @@
-<!DOCTYPE html>
-<html lang = "en" dir = "ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>ASugar</title>
-    <link rel="stylesheet" href="login.component.css">
-  </head>
-  <body>
-    <img src="background.png" alt="Background" width="1000" height="300">
+<div class="login-page">
+
     <div class="center">
       <p style="font-size: 48px" >LOG IN</p>
-      <form method="post">
-        
+      <form [formGroup]="loginForm" (ngsubmit)="login() " class="login-form" >
+
         <div class="txt_field">
           <h1 style="font-size:32px" >Email</h1>
-          <input type="text" required>
+          <input type="text" [formControlName]="'username'" class="form-control" required>
         </div>
-        
+
         <div class = "txt_field">
           <h1 style = "font-size:32px" >Password</h1>
-          <input type="password" required>
-          </div>
-          <h2 style = "font-size:18px" >FORGOT MY PASSWORD</h2>
-        <input type="submit" value="SIGN UP">
-        
-          <span>
-            <input type="submit" value="CONTINUE">
-          </span>
+          <input type="password" [formControlName]="'password'" class="form-control"  id="password" required>
+        </div>
+
+           <h2 routerLink="forgot-my-password" style = "font-size:18px">FORGOT MY PASSWORD</h2>
+
+           <input routerLink="signup" type="submit" value="SIGN UP">
+           <span></span>
+           <input (click)="login()" type="submit" value="CONTINUE"> 
       </form>
     </div>
-  </body>
-</html>
+</div>
+
