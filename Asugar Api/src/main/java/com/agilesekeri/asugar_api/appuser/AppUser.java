@@ -37,6 +37,8 @@ public class AppUser implements UserDetails {
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
 
+//    private Collection<Long> projects;
+
     private Boolean locked = false;
     private Boolean enabled = false;
 
