@@ -1,10 +1,7 @@
 package com.agilesekeri.asugar_api.appuser;
 
-import com.agilesekeri.asugar_api.project.Project;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,25 +9,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 
 @Getter
 @Setter
-@EqualsAndHashCode
 @NoArgsConstructor
 @Entity
-public class AppUser
-        implements UserDetails
-{
+public class AppUser implements UserDetails {
 
     @Id
     @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
+            name = "user_sequence",
+            sequenceName = "user_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
+            generator = "user_sequence"
     )
     private Long id;
 
@@ -39,11 +34,8 @@ public class AppUser
     private String email;
     private String password;
 
-//    @Enumerated(EnumType.STRING)
-//    private AppUserRole appUserRole;
-
-    @OneToMany
-    private Collection<Project> projectsJoined;
+    @Enumerated(EnumType.STRING)
+    private AppUserRole appUserRole;
 
     private Boolean locked = false;
     private Boolean enabled = false;
@@ -51,28 +43,21 @@ public class AppUser
     public AppUser(String firstName,
                    String lastName,
                    String email,
-                   String password
-//            ,AppUserRole appUserRole
-    )
-    {
+                   String password,
+                   AppUserRole appUserRole) {
 
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-//        this.appUserRole = appUserRole;
+        this.appUserRole = appUserRole;
     }
-
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        SimpleGrantedAuthority authority =
-//                new SimpleGrantedAuthority(appUserRole.name());
-//        return Collections.singletonList(authority);
-//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        SimpleGrantedAuthority authority =
+                new SimpleGrantedAuthority(appUserRole.name());
+        return Collections.singletonList(authority);
     }
 
     @Override
@@ -111,5 +96,18 @@ public class AppUser
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        AppUser appUser = (AppUser) o;
+        return id != null && Objects.equals(id, appUser.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

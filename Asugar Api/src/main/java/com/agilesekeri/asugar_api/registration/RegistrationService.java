@@ -4,13 +4,15 @@ import com.agilesekeri.asugar_api.appuser.AppUser;
 import com.agilesekeri.asugar_api.appuser.AppUserRole;
 import com.agilesekeri.asugar_api.appuser.AppUserService;
 import com.agilesekeri.asugar_api.email.EmailSender;
-import com.agilesekeri.asugar_api.registration.token.ConfirmationToken;
-import com.agilesekeri.asugar_api.registration.token.ConfirmationTokenService;
+import com.agilesekeri.asugar_api.email.EmailValidator;
+import com.agilesekeri.asugar_api.registration.token.RegistrationToken;
+import com.agilesekeri.asugar_api.registration.token.RegistrationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -18,7 +20,7 @@ public class RegistrationService {
 
     private final AppUserService appUserService;
     private final EmailValidator emailValidator;
-    private final ConfirmationTokenService confirmationTokenService;
+    private final RegistrationTokenService registrationTokenService;
     private final EmailSender emailSender;
 
 
@@ -30,51 +32,83 @@ public class RegistrationService {
             throw new IllegalStateException("email not valid");
         }
 
-        String token = appUserService.signUpUser(
-                new AppUser(
-                        request.getFirstName(),
-                        request.getLastName(),
-                        request.getEmail(),
-                        request.getPassword()
-//                        ,AppUserRole.USER
-
-                )
+        AppUser newUser = new AppUser(
+                request.getFirstName(),
+                request.getLastName(),
+                request.getEmail(),
+                request.getPassword(),
+                AppUserRole.USER
         );
 
-        String link = "http://localhost:8080/registration/confirm?token=" + token;
+        appUserService.signUpUser(newUser);
+
+        String token = UUID.randomUUID().toString();
+        RegistrationToken confirmationToken = new RegistrationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                newUser
+        );
+
+        registrationTokenService.saveConfirmationToken(confirmationToken);
 
         try {
-            emailSender.send(
-                    request.getEmail(),
-                    buildEmail(request.getFirstName(), link));
+            sendVerificationEmail(token, request.getEmail(), request.getFirstName());
         } catch (Exception e) {
             throw new IllegalStateException("email server not available");
         }
 
-        return token;
+        return "An email is sent";
     }
 
+    public void sendVerificationEmail(String token, String email, String firstName)
+        throws IllegalStateException{
+        try {
+            String link = "http://localhost:8080/registration/confirm?token=";
+            emailSender.send(
+                    email,
+                    buildEmail(firstName, link + token));
+        } catch (Exception e) {
+            throw new IllegalStateException("email server not available");
+        }
+    }
 
     @Transactional
     public String confirmToken(String token) {
-        ConfirmationToken confirmationToken = confirmationTokenService
+        RegistrationToken registrationToken = registrationTokenService
                 .getToken(token)
                 .orElseThrow(() ->
                         new IllegalStateException("token not found"));
 
-        if (confirmationToken.getConfirmedAt() != null) {
+        if (registrationToken.getConfirmedAt() != null) {
             throw new IllegalStateException("email already confirmed");
         }
 
-        LocalDateTime expiredAt = confirmationToken.getExpiresAt();
+        LocalDateTime expiredAt = registrationToken.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("token expired");
+            String newToken = UUID.randomUUID().toString();
+            RegistrationToken newRegistrationToken = new RegistrationToken(
+                    newToken,
+                    LocalDateTime.now(),
+                    LocalDateTime.now().plusMinutes(15),
+                    registrationToken.getAppUser()
+            );
+
+            registrationTokenService.saveConfirmationToken(newRegistrationToken);
+
+            sendVerificationEmail (
+                    newToken,
+                    registrationToken.getAppUser().getEmail(),
+                    registrationToken.getAppUser().getFirstName()
+            );
+
+            return "token expired, a new one is sent.";
         }
 
-        confirmationTokenService.setConfirmedAt(token);
+        registrationTokenService.setConfirmedAt(token);
         appUserService.enableAppUser(
-                confirmationToken.getAppUser().getEmail());
+                registrationToken.getAppUser().getEmail());
         return "confirmed";
     }
 
