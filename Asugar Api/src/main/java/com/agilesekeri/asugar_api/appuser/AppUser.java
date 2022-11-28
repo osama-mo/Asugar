@@ -37,9 +37,6 @@ public class AppUser implements UserDetails {
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
 
-//    @OneToMany
-//    private Collection<Project> projectsJoined;
-
     private Boolean locked = false;
     private Boolean enabled = false;
 
