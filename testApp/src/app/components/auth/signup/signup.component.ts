@@ -1,4 +1,4 @@
-import { Component,  OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -20,26 +20,24 @@ export class SignupComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router,
     private toastr: ToastrService) {
-
-      this.signupRequestPayload = {
-        username: '',
-        email: '',
-        password: ''
-      };
-     }
+    this.signupRequestPayload = {
+      username: '',
+      email: '',
+      password: ''
+    };
+  }
 
   ngOnInit(): void {
-  
+
   }
   signup() {
-    
-    this.signupRequestPayload.email = this.signupForm.get('email')!.value  ;
+    this.signupRequestPayload.email = this.signupForm.get('email')!.value;
     this.signupRequestPayload.username = this.signupForm.get('username')!.value;
     this.signupRequestPayload.password = this.signupForm.get('password')!.value;
 
     this.authService.signup(this.signupRequestPayload)
       .subscribe(data => {
-        this.router.navigate(['/login'],
+        this.router.navigate([''],
           { queryParams: { registered: 'true' } });
       }, error => {
         console.log(error);

@@ -4,7 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d04cb654-b2c8-4b58-84fb-6e6deef351a7" name="Changes" comment="Some extra changes" />
+    <list default="true" id="d04cb654-b2c8-4b58-84fb-6e6deef351a7" name="Changes" comment="Some extra changes">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/authentication/CustomAuthenticationFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/authentication/CustomAuthorizationFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/config/CustomDsl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Asugar.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Asugar.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/AsugarApiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/AsugarApiApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/registration/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/registration/RegistrationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/PasswordEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/password/PasswordEncoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/config/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testApp/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login-request.payload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login-request.payload.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login-response.payload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login-response.payload.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testApp/src/app/components/auth/shared/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/components/auth/shared/auth.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testApp/src/app/components/auth/signup/signup.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/components/auth/signup/signup.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testApp/src/app/components/auth/signup/signup.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/components/auth/signup/signup.component.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,27 +90,55 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/anasa/Documents/GitHub/angular8-springboot-basic-auth-login-logout&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;9c4b890df3b20b89e4b1f53b3c6e4078&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/anasa/Documents/GitHub/angular8-springboot-basic-auth-login-logout",
+    "nodejs_package_manager_path": "npm",
+    "spring.configuration.checksum": "9c4b890df3b20b89e4b1f53b3c6e4078"
   }
-}</component>
-  <component name="RunManager">
+}]]></component>
+  <component name="RunManager" selected="Spring Boot.AsugarApiApplication">
+    <configuration name="Angular Application (testApp)" type="JavascriptDebugType" uri="http://localhost:4200">
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="asugar_api" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="asugar_api" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="AsugarApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="asugar_api" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.agilesekeri.asugar_api.AsugarApiApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="Angular CLI Server (testApp)" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/testApp/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
     </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
