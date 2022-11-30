@@ -11,7 +11,7 @@
   transform: translate(-50%, -50%);
   font-size: 18px;
   width: 440px;
-  height: 415px;
+  height: 615px;
   background-color: #8FCEE9;
   border-radius: 18px;
   border-width: 5px;
@@ -33,7 +33,7 @@ body{
 }
 
 p{
-  margin-bottom: -20px;
+  margin-bottom: -10px;
   font-family: 'Share';
   font-size: 48;
   text-align: center;
@@ -135,6 +135,7 @@ input[type="submit"]{
   -webkit-text-stroke-width: 1px;
   display: inline-block;
 }
+
 input[type="submit"]:hover{
   border-color: #22597D;
   border-width: 5px;
