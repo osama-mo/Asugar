@@ -11,7 +11,7 @@
   transform: translate(-50%, -50%);
   font-size: 18px;
   width: 440px;
-  height: 615px;
+  height: 635px;
   background-color: #8FCEE9;
   border-radius: 18px;
   border-width: 5px;
@@ -33,7 +33,7 @@ body{
 }
 
 p{
-  margin-bottom: -10px;
+  margin-bottom: 10px;
   font-family: 'Share';
   font-size: 48;
   text-align: center;
@@ -115,6 +115,7 @@ form .txt_field{
   text-decoration: underline;
 }
 input[type="submit"]{
+  margin-top: 15px;
   width: 184px;
   height: 58px;
   border: 1px solid;

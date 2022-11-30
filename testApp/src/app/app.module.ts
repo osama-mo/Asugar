@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { LottieModule } from 'ngx-lottie';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToastrModule } from 'ngx-toastr';
+import { PwResComponent } from './components/auth/pw-res/pw-res.component';
 // import { TokenInterceptor } from './token-interceptor';
 
 export function playerFactory(): any {  
@@ -23,6 +24,7 @@ export function playerFactory(): any {
     LoginComponent,
     SignupComponent,
     HeaderComponent,
+    PwResComponent,
   ],
   imports: [
     HttpClientModule,
