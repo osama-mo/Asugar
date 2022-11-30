@@ -1,21 +1,32 @@
-<div class="signup-page">
-  <div class="form">
-    <form [formGroup]="signupForm" (ngsubmit)="signup()" class="signup-form">
-      <div class="form-group">
-        <input type="text" [formControlName]="'username'" class="form-control" required autofocus
-          placeholder="full name" />
-        <input type="text" [formControlName]="'email'" class="form-control" required autofocus
-          placeholder="email address" />
-        <input type="password" [formControlName]="'password'" class="form-control" required autofocus
-          placeholder="set a password" />
-        <br>
-        <br>
-        <button type="button" (click)="signup()">
-          SIGN UP
-        </button>
-        <div>Already have an account? <a class="link-light" routerLink="" routerLinkActive="router-link-active">Sign
-            in!</a></div>
-      </div>
-    </form>
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang = "en" dir = "ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>ASugar</title>
+    <link rel="stylesheet" href="login.component.css">
+  </head>
+  <body>
+    <img src="background.png" alt="Background" width="1000" height="300">
+    <div class="center">
+      <p style="font-size: 48px" >LOG IN</p>
+      <form method="post">
+        
+        <div class="txt_field">
+          <h1 style="font-size:32px" >Email</h1>
+          <input type="text" required>
+        </div>
+        
+        <div class = "txt_field">
+          <h1 style = "font-size:32px" >Password</h1>
+          <input type="password" required>
+          </div>
+          <h2 style = "font-size:18px" >FORGOT MY PASSWORD</h2>
+        <input type="submit" value="SIGN UP">
+        
+          <span>
+            <input type="submit" value="CONTINUE">
+          </span>
+      </form>
+    </div>
+  </body>
+</html>
