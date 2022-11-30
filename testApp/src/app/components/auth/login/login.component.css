@@ -20,8 +20,6 @@
 }
 
 body{
-  display:table-row-group;
-  position: absolute;
   top: 0;
   left: 0;
   background-image: url('background.png');

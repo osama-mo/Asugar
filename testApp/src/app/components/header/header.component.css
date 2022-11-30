@@ -7,8 +7,7 @@ ul{
   }
 
   body{
-    order: 0;
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
   }
