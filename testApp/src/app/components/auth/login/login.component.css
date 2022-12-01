@@ -11,7 +11,7 @@
   transform: translate(-50%, -50%);
   font-size: 18px;
   width: 440px;
-  height: 415px;
+  height: 310px;
   background-color: #8FCEE9;
   border-radius: 18px;
   border-width: 5px;
@@ -33,7 +33,7 @@ body{
 }
 
 p{
-  margin-bottom: -20px;
+  margin-bottom: 10px;
   font-family: 'Share';
   font-size: 48;
   text-align: center;
@@ -115,6 +115,7 @@ form .txt_field{
   text-decoration: underline;
 }
 input[type="submit"]{
+  margin-top: 15px;
   width: 184px;
   height: 58px;
   border: 1px solid;
@@ -135,6 +136,7 @@ input[type="submit"]{
   -webkit-text-stroke-width: 1px;
   display: inline-block;
 }
+
 input[type="submit"]:hover{
   border-color: #22597D;
   border-width: 5px;
@@ -153,7 +155,10 @@ input[type="submit"]:hover{
 .signup_link a{
   color: #2691d9;
   text-decoration: none;
+  -webkit-text-stroke-width: 1px;
+  display: inline-block;
 }
+
 
 span { 
   margin-top: 50px;
