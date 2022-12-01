@@ -26,10 +26,7 @@ export class LoginComponent implements OnInit {
   signedin: boolean = false;
   blablabla = this.authService.testAuth();
 
-
-  options: AnimationOptions = {
-    path: 'https://assets1.lottiefiles.com/packages/lf20_mybx9f51.json',
-  };
+  
   constructor(private authService: AuthService, private activatedRoute: ActivatedRoute,
     private router: Router, private toastr: ToastrService) {
     this.loginRequestPayload = {

@@ -155,7 +155,10 @@ input[type="submit"]:hover{
 .signup_link a{
   color: #2691d9;
   text-decoration: none;
+  -webkit-text-stroke-width: 1px;
+  display: inline-block;
 }
+
 
 span { 
   margin-top: 50px;
