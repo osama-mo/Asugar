@@ -1,40 +1,63 @@
-<!DOCTYPE html>
-<html lang = "en" dir = "ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>ASugar</title>
-    <link rel="stylesheet" href="signup.component.css">
-  </head>
+
   <body>
     <img src="background.png" alt="Background" width="1000" height="300">
     <div class="center">
       <p style="font-size: 48px" >SIGN UP</p>
-      <form method="post">
+
+
+      <form [formGroup]="signupForm" (ngsubmit)="signup() " class="login-form" >
+
+        <!--    Name and surname   -->
         <div class="txt_field">
           <h1 style="font-size:32px" >Name and Surname</h1>
-          <input type="text" required>
+          <input type="text" [formControlName]="'username'" class="form-control" required >
         </div>
+
+        <!--    Email   -->
         <div class="txt_field">
           <h1 style="font-size:32px" >Email</h1>
-          <input type="text" required>
+          <input  type="text" [formControlName]="'email'" class="form-control" required>
         </div>
         
+
+        <!--    password   -->
         <div class = "txt_field">
           <h1 style = "font-size:32px" >Password</h1>
-          <input type="password" required>
+          <input type="password"  [formControlName]="'password'" required>
         </div>
 
+        <!--    password Confirm   -->
         <div class = "txt_field">
           <h1 style = "font-size:32px" >Confirm Password</h1>
-          <input type="password" required>
+          <input type="password"  [formControlName]="'passwordConfirm'"   required>
         </div>
 
-        <input type="submit" value="LOG IN">
-        
+        <!--     Signin btn     -->
+        <input routerLink="" type="submit" value="LOG IN">
           <span>
-            <input type="submit" value="SIGN UP">
+        <!--     Signup btn     -->
+        <input (click)="signup()" type="submit" value="SIGN UP">
           </span>
+
+
+        <!-- Password not equal Erorr message -->
+        <div class="Erorr" [style.visibility]="pnqvisibility" >
+          Passwords are not equal!
+        </div>
+
+        <!-- empty field Error message -->
+        <div class="Erorr" [style.visibility]="efvisibility" >
+          There is at least one Empty field in the form!
+        </div>
+
+        <!-- general Error message -->
+        <div class="Erorr" [style.visibility]="gvisibility" >
+          Registration Failed! Please try again
+        </div>
+
+
       </form>
+
+
     </div>
   </body>
-</html>

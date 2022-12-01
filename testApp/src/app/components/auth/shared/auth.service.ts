@@ -6,6 +6,7 @@ import { LoginRequestPayload } from '../login/login-request.payload';
 import { LoginResponse } from '../login/login-response.payload';
 import { map, tap } from 'rxjs/operators';
 import { ForgotMyPasswordRequestPayload } from '../forgot-my-password/forgot-my-password-request-payload';
+import { ForgotMyPasswordConfirmationRequestPayload } from '../forgot-my-password-confirmation/forgot-my-password-confirmation-request.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +48,11 @@ export class AuthService {
         return true;
       }));
   }
-  forgetMyPassword(fgmRequestPayload: ForgotMyPasswordRequestPayload) {
+  forgetMyPassword(fgmRequestPayload: ForgotMyPasswordRequestPayload) : Observable<any> {
+    return this.httpClient.get(`localhost:8080/password_reset?email=ّ{${fgmRequestPayload.email}}` )
+  }
+  forgetMyPasswordConfirmation(fgmcRequestPayload: ForgotMyPasswordConfirmationRequestPayload) : Observable<any> {
+    return this.httpClient.post(`localhost:8080/password_reset`, fgmcRequestPayload, { responseType: 'text' })
   }
   getJwtToken() {
     return localStorage.getItem('accessToken');

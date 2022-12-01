@@ -4,14 +4,15 @@ import { CommonModule } from '@angular/common';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { ForgotMyPasswordComponent } from './components/auth/forgot-my-password/forgot-my-password.component';
+import { ForgotMyPasswordConfirmationComponent } from './components/auth/forgot-my-password-confirmation/forgot-my-password-confirmation.component';
 
 
 
 const routes: Routes = [
   {path:'',component:LoginComponent},
   {path:'signup',component:SignupComponent},
-  {path:'login',component:LoginComponent},
-  {path:'forgot-my-password',component:ForgotMyPasswordComponent}
+  {path:'forgot-my-password',component:ForgotMyPasswordComponent},
+  {path:'forgot-my-password-confirmation',component:ForgotMyPasswordConfirmationComponent}
   
 ];
 

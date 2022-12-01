@@ -1,27 +1,28 @@
+<div class="login-page">
+  <img src="background.png" alt="Background" width="1000" height="300">
+  <div class="center">
+    <p style="font-size: 48px">LOG IN</p>
+    <form [formGroup]="loginForm" (ngsubmit)="login() " class="login-form">
 
-<!DOCTYPE html>
-<html lang = "en" dir = "ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>ASugar</title>
-    <link rel="stylesheet" href="login.component.css">
-  </head>
-  <body>
-    <img src="background.png" alt="Background" width="1000" height="300">
-    <div class="center">
-      <p style="font-size: 48px" >RESET PASSWORD</p>
-      <form method="post">
-        <div class="txt_field">
-          <h1 style="font-size:32px" >Email</h1>
-          <input type="text" required>
-        </div>
-        
-        <input type="submit" value="BACK">
-        
-          <span>
-            <input type="submit" value="RESET">
-          </span>
-      </form>
-    </div>
-  </body>
-</html>
+      <!--  Email field  -->
+      <div class="txt_field">
+        <h1 style="font-size:32px">Email</h1>
+        <input type="text" [formControlName]="'username'" class="form-control" required>
+      </div>
+      <!--  Password field  -->
+      <div class="txt_field">
+        <h1 style="font-size:32px">Password</h1>
+        <input type="password" [formControlName]="'password'" class="form-control" id="password" required>
+      </div>
+
+      <!--  forgot my Password btn  -->
+      <h2 routerLink="forgot-my-password" style="font-size:18px; cursor: pointer">FORGOT MY PASSWORD</h2>
+
+      <!--  signup btn  -->
+      <input routerLink="signup" type="submit" value="SIGN UP">
+      <span></span>
+
+      <!-- login btn -->
+      <input (click)="login()" type="submit" value="CONTINUE">
+    </form>
+  </div>
