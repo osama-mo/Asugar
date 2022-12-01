@@ -17,7 +17,7 @@ public class RegistrationToken extends ActionToken {
     @ManyToOne
     @JoinColumn(
             nullable = false,
-            name = "app_user_id"
+            name = "registration_token_id"
     )
     private AppUser appUser;
 
