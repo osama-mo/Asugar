@@ -1,18 +1,25 @@
 <div class="login-page">
-    <div class="form">
-  
-      <form [formGroup]="loginForm" (ngsubmit)="login() " class="login-form">
-        <ng-lottie height="auto" [options]="options" ></ng-lottie>
-        <input type="text" [formControlName]="'username'" class="form-control" placeholder="username"/>
-        <input type="password" [formControlName]="'password'" class="form-control"  id="password" placeholder="password"/>
-        <i class="fas fa-eye" onclick="show()"></i> 
-        <br>
-        <br>
-        <button type="button" (click)="login()">LOGIN</button>
-        <div *ngIf="signedin == true"> signed in successfully</div>
-        <div id="blablabla"></div>
-        <p class="message"></p>
-        <a class="nav-link" routerLink= "signup" routerLinkActive="router-link-active"><button type="button"  >SIGN UP</button></a>
+
+    <div class="center">
+      <p style="font-size: 48px" >LOG IN</p>
+      <form [formGroup]="loginForm" (ngsubmit)="login() " class="login-form" >
+
+        <div class="txt_field">
+          <h1 style="font-size:32px" >Email</h1>
+          <input type="text" [formControlName]="'username'" class="form-control" required>
+        </div>
+
+        <div class = "txt_field">
+          <h1 style = "font-size:32px" >Password</h1>
+          <input type="password" [formControlName]="'password'" class="form-control"  id="password" required>
+        </div>
+
+           <h2 routerLink="forgot-my-password" style = "font-size:18px">FORGOT MY PASSWORD</h2>
+
+           <input routerLink="signup" type="submit" value="SIGN UP">
+           <span></span>
+           <input (click)="login()" type="submit" value="CONTINUE"> 
       </form>
     </div>
 </div>
+

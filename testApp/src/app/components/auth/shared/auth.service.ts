@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { LoginRequestPayload } from '../login/login-request.payload';
 import { LoginResponse } from '../login/login-response.payload';
 import { map, tap } from 'rxjs/operators';
+import { ForgotMyPasswordRequestPayload } from '../forgot-my-password/forgot-my-password-request-payload';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +47,8 @@ export class AuthService {
         return true;
       }));
   }
-
+  forgetMyPassword(fgmRequestPayload: ForgotMyPasswordRequestPayload) {
+  }
   getJwtToken() {
     return localStorage.getItem('accessToken');
   }
