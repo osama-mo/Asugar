@@ -44,6 +44,8 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  
   signup() {
 
     this.pnqvisibility = 'hidden'
@@ -68,7 +70,8 @@ export class SignupComponent implements OnInit {
       this.signupRequestPayload.password = this.signupForm.get('password')!.value;
 
       this.authService.signup(this.signupRequestPayload)
-        .subscribe(data => {
+        .subscribe(
+          data => {
           this.router.navigate([''],
             { queryParams: { registered: 'true' } });
         }, error => {
