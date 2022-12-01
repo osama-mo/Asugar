@@ -17,5 +17,5 @@ public interface ProjectRepository
 
     Optional<List<Project>> findByMembers_Id(Long member);
 
-    Optional<Project> findByAdmin_IdAndName(Long adminId, String name);
+//    Optional<Project> findByAdminId(Long adminId, String name);
 }

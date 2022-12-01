@@ -8,14 +8,14 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-@Embeddable
+//@Embeddable
 @Setter
 @Getter
 @EqualsAndHashCode
 public class ProjectMemberKey implements Serializable {
-    @Column(name = "project_id")
-    private Long projectId;
-
-    @Column(name = "user_id")
-    private Long userId;
+//    @Column(name = "project_id")
+//    private Long projectId;
+//
+//    @Column(name = "user_id")
+//    private Long userId;
 }

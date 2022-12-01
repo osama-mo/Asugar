@@ -1,16 +1,25 @@
 package com.agilesekeri.asugar_api.project.task;
 
-import java.time.LocalDateTime;
-import java.util.Collection;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
 public class Task {
+    @Id
+    @SequenceGenerator(
+            name = "task_sequence",
+            sequenceName = "task_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "task_sequence"
+    )
     private Long id;
-    private String title;
-    private String description;
-    private LocalDateTime createdAt;
-    private LocalDateTime closedAt;
-    private Long assignee;
-    private Long assignedTo;
-    private Collection<String> comments;
-    private Task dependentOn;
 }

@@ -1,16 +1,25 @@
 package com.agilesekeri.asugar_api.project.sprint;
 
-import com.agilesekeri.asugar_api.project.task.Task;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.util.Collection;
+import javax.persistence.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
 public class Sprint {
+    @Id
+    @SequenceGenerator(
+            name = "sprint_sequence",
+            sequenceName = "sprint_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "sprint_sequence"
+    )
     private Long id;
-    private String title;
-    private String description;
-    private LocalDateTime createdAt;
-    private LocalDateTime closedAt;
-    private LocalDateTime plannedTo;
-    private Collection<Task> tasks;
 }

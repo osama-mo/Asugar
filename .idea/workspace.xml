@@ -4,14 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d04cb654-b2c8-4b58-84fb-6e6deef351a7" name="Changes" comment="Some extra changes">
-      <change afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/task/Task.java" afterDir="false" />
+    <list default="true" id="d04cb654-b2c8-4b58-84fb-6e6deef351a7" name="Changes" comment="Database implementation of project table and connecting it with the users table with some security optimizations">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/asugar_db.iJ-dug/schema/information_schema.FNRwLQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/asugar_db.iJ-dug/schema/information_schema.FNRwLQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/asugar_db.iJ-dug/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/asugar_db.iJ-dug/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/asugar_db.iJ-dug/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/asugar_db.iJ-dug/schema/public.abK9xQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/postgres.edMnLQ/schema/information_schema.FNRwLQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/postgres.edMnLQ/schema/information_schema.FNRwLQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/postgres.edMnLQ/schema/information_schema.FNRwLQ.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/postgres.edMnLQ/schema/information_schema.FNRwLQ.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/postgres.edMnLQ/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/postgres.edMnLQ/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/postgres.edMnLQ/schema/pg_catalog.0S1ZNQ.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/postgres.edMnLQ/schema/pg_catalog.0S1ZNQ.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/Project.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectMember.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectMemberKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectMemberKey.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectMemberRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectMemberRole.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/epic/Epic.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/epic/Epic.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/sprint/Sprint.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/sprint/Sprint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/substory/Substory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/task/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/task/Task.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +35,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -68,44 +83,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/anasa/Documents/GitHub/Asugar",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
-    "spring.configuration.checksum": "9c4b890df3b20b89e4b1f53b3c6e4078"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/anasa/Documents/GitHub/angular8-springboot-basic-auth-login-logout&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;9c4b890df3b20b89e4b1f53b3c6e4078&quot;
   }
-}]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\anasa\Documents\GitHub\Asugar" />
-    </key>
-  </component>
+}</component>
   <component name="RunManager" selected="Spring Boot.AsugarApiApplication">
     <configuration name="Angular Application (testApp)" type="JavascriptDebugType" uri="http://localhost:4200">
       <method v="2" />
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="asugar_api" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="asugar_api" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
     </configuration>
     <configuration name="AsugarApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="asugar_api" />
@@ -144,7 +140,9 @@
       <workItem from="1666775737849" duration="5964000" />
       <workItem from="1666787203280" duration="444000" />
       <workItem from="1666791746527" duration="1558000" />
-      <workItem from="1669648348215" duration="3714000" />
+      <workItem from="1669833156969" duration="7213000" />
+      <workItem from="1669897542897" duration="21073000" />
+      <workItem from="1669923903615" duration="7284000" />
     </task>
     <task id="LOCAL-00001" summary="adding the project classes">
       <created>1666570227932</created>
@@ -167,7 +165,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666787529000</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Database implementation of project table and connecting it with the users table with some security optimizations">
+      <created>1669924367165</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1669924367166</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,6 +194,72 @@
     <MESSAGE value="adding the project classes" />
     <MESSAGE value="Replacing the deprecated security configurer" />
     <MESSAGE value="Adding some new functionality for the security system" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding some new functionality for the security system" />
+    <MESSAGE value="Database implementation of project table and connecting it with the users table with some security optimizations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Database implementation of project table and connecting it with the users table with some security optimizations" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java</url>
+          <line>75</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java</url>
+          <line>76</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectService.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectService.java</url>
+          <line>17</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserService.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserService.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserService.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserService.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserService.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java</url>
+          <line>77</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectService.java</url>
+          <line>18</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.springframework.data.mapping.PropertyReferenceException" package="org.springframework.data.mapping" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

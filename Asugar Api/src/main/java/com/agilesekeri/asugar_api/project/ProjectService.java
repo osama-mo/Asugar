@@ -13,12 +13,10 @@ import java.util.List;
 public class ProjectService {
     private ProjectRepository projectRepository;
 
-    public void createProject(String projectName, AppUser admin) {
-//        if (projectExists(projectName, admin))
-//            throw new IllegalArgumentException("Project with the same name already exists.");
-
-        Project project = new Project(projectName, admin.getId());
+    public Project createProject(String projectName, AppUser admin) {
+        Project project = new Project(projectName, admin);
         projectRepository.save(project);
+        return project;
     }
 
     public boolean projectExists(String name, AppUser admin) {

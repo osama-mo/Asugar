@@ -1,5 +1,6 @@
 package com.agilesekeri.asugar_api.appuser;
 
+import com.agilesekeri.asugar_api.project.Project;
 import com.agilesekeri.asugar_api.project.ProjectService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -10,10 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.MimeTypeUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +31,11 @@ public class AppUserController {
     private final AppUserService appUserService;
 
     private final ProjectService projectService;
+
+    @GetMapping("/user/test")
+    public String getusename() {
+        return "it's me";
+    }
 
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -69,8 +72,9 @@ public class AppUserController {
     }
 
     @PostMapping("/project/create")
-    public void createProject(@RequestBody String name, String userName) {
-        AppUser admin = appUserService.loadUserByUsername(userName);
-        projectService.createProject(name, admin);
+    public void createProject(@RequestParam String name, @RequestParam String username) {
+        AppUser admin = appUserService.loadUserByUsername(username);
+        Project newProject = projectService.createProject(name, admin);
+        admin.getProjects().add(newProject);
     }
 }

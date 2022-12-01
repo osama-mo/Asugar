@@ -1,16 +1,18 @@
 package com.agilesekeri.asugar_api.project.epic;
 
-import com.agilesekeri.asugar_api.project.task.Task;
+import javax.persistence.*;
 
-import java.time.LocalDateTime;
-import java.util.Collection;
-
+@Entity
 public class Epic {
+    @Id
+    @SequenceGenerator(
+            name = "epic_sequence",
+            sequenceName = "epic_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "epic_sequence"
+    )
     private Long id;
-    private String title;
-    private String description;
-    private LocalDateTime createdAt;
-    private LocalDateTime closedAt;
-    private LocalDateTime plannedTo;
-    private Collection<Task> tasks;
 }
