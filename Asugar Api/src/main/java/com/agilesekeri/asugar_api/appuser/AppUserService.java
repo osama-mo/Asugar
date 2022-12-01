@@ -1,7 +1,5 @@
 package com.agilesekeri.asugar_api.appuser;
 
-import com.agilesekeri.asugar_api.project.Project;
-import com.agilesekeri.asugar_api.project.ProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,8 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @Transactional
 public class AppUserService implements UserDetailsService {
-
-    private final ProjectService projectService;
 
     private final static String USER_NOT_FOUND_MSG =
             "User with the email %s was not found";
@@ -65,16 +61,5 @@ public class AppUserService implements UserDetailsService {
 
     public List<AppUser> getUsers() {
         return appUserRepository.findAll();
-    }
-
-    public List<Project> getProjectList(Long userId) {
-        return projectService.getUserProjects(
-                appUserRepository.findById(userId)
-                        .orElseThrow(() ->
-                                new IllegalArgumentException("There are no projects were found for the user")));
-    }
-
-    public boolean createProject(Project newProject) {
-        return false;
     }
 }
