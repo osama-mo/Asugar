@@ -13,6 +13,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToastrModule } from 'ngx-toastr';
 import { ForgotMyPasswordComponent } from './components/auth/forgot-my-password/forgot-my-password.component';
 import { ForgotMyPasswordConfirmationComponent } from './components/auth/forgot-my-password-confirmation/forgot-my-password-confirmation.component';
+import { ListProjectComponent } from './components/project/list-project/list-project.component';
+import { CreateProjectComponent } from './components/project/create-project/create-project.component';
 
 
 
@@ -30,6 +32,8 @@ export function playerFactory(): any {
     HeaderComponent,
     ForgotMyPasswordComponent,
     ForgotMyPasswordConfirmationComponent,
+    ListProjectComponent,
+    CreateProjectComponent,
   ],
   imports: [
     HttpClientModule,
