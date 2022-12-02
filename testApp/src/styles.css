@@ -4,6 +4,8 @@
 
 :root
 {
+    background:url(./assets/imgs/background.png);
+    background-position: 50%;
     --primary-color:#B73E3E;
     --secondary-color:#162328;
 }

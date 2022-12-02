@@ -51,9 +51,11 @@ export class AuthService {
   forgetMyPassword(fgmRequestPayload: ForgotMyPasswordRequestPayload) : Observable<any> {
     return this.httpClient.get(`localhost:8080/password_reset?email=ّ{${fgmRequestPayload.email}}` )
   }
+
   forgetMyPasswordConfirmation(fgmcRequestPayload: ForgotMyPasswordConfirmationRequestPayload) : Observable<any> {
     return this.httpClient.post(`localhost:8080/password_reset`, fgmcRequestPayload, { responseType: 'text' })
   }
+  
   getJwtToken() {
     return localStorage.getItem('accessToken');
   }
@@ -71,19 +73,19 @@ export class AuthService {
   testAuth(){
     return this.httpClient.get<string>('http://localhost:8080/user/get');
   }
-  // logout() {
-  //   this.httpClient.post('http://localhost:8080/api/auth/logout', this.refreshTokenPayload,
-  //     { responseType: 'text' })
-  //     .subscribe(data => {
-  //       console.log(data);
-  //     }, error => {
-  //       throwError(error);
-  //     })
-  //   this.localStorage.clear('authenticationToken');
-  //   this.localStorage.clear('username');
-  //   this.localStorage.clear('refreshToken');
-  //   this.localStorage.clear('expiresAt');
-  // }
+
+
+
+  logout() {
+    this.httpClient.post('http://localhost:8080/api/auth/logout', this.refreshTokenPayload,
+      { responseType: 'text' })
+      .subscribe(data => {
+        console.log(data);
+      }, error => {
+        throwError(error);
+      })
+    localStorage.clear();
+  }
 
   getUserName() {
     return localStorage.getItem('username');
