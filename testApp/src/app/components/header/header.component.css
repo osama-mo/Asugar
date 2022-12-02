@@ -1,4 +1,35 @@
-.header{
-  height: 85px;
+.header {
+  padding: 0px;
+  font-weight: 600;
+  color: white;
+  text-align: left;
   background-color: #22597D;
+  height: 60px;
+}
+
+.logoimg {
+  height: 100%;
+  float: left;
+  margin-left: 15px;
+}
+
+.title {
+  display: inline-block;
+  font-size: 40px;
+  font-weight: 600;
+  padding: 0px;
+  margin: 0px;
+}
+
+.logout {
+  float: right;
+  text-decoration: none;
+  color:white;
+  margin: 5px 20px;
+  font-size: 30px;
+}
+.logout:hover{
+  color:lightblue;
+  cursor: pointer;
+ 
 }
