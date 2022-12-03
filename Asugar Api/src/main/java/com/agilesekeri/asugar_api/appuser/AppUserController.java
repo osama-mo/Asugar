@@ -32,11 +32,6 @@ public class AppUserController {
 
     private final ProjectService projectService;
 
-    @GetMapping("/user/test")
-    public String getusename() {
-        return "it's me";
-    }
-
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
@@ -74,7 +69,6 @@ public class AppUserController {
     @PostMapping("/project/create")
     public void createProject(@RequestParam String name, @RequestParam String username) {
         AppUser admin = appUserService.loadUserByUsername(username);
-        Project newProject = projectService.createProject(name, admin);
-        admin.getProjects().add(newProject);
+        projectService.createProject(name, admin);
     }
 }

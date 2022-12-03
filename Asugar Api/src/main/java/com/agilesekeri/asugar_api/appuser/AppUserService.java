@@ -63,18 +63,10 @@ public class AppUserService implements UserDetailsService {
                 .findByEmail(email).isPresent();
     }
 
-    public List<AppUser> getUsers() {
-        return appUserRepository.findAll();
-    }
-
     public List<Project> getProjectList(Long userId) {
-        return projectService.getUserProjects(
-                appUserRepository.findById(userId)
-                        .orElseThrow(() ->
-                                new IllegalArgumentException("There are no projects were found for the user")));
-    }
-
-    public boolean createProject(Project newProject) {
-        return false;
+        AppUser user = appUserRepository.findById(userId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("There are no projects were found for the user"));
+        return projectService.getUserProjects(user);
     }
 }

@@ -19,19 +19,15 @@ public class ProjectService {
         return project;
     }
 
-    public boolean projectExists(String name, AppUser admin) {
-        List<Project> list = getUserProjects(admin);
-
-        for(Project project : list)
-            if(project.getName() == name)
-                return true;
-
-        return false;
+    public Project getProject(Long projectId) {
+        return projectRepository.findById(projectId)
+                .orElseThrow( () ->
+                        new IllegalArgumentException("No project with this ID was found"));
     }
 
     public List<Project> getUserProjects(AppUser user) {
         return projectRepository.findByMembers_Id(user.getId())
                 .orElseThrow(() ->
-                        new IllegalArgumentException("There are no projects were found for the user"));
+                        new IllegalArgumentException("There are no projects found for the user"));
     }
 }
