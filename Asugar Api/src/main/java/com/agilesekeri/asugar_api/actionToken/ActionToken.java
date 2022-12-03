@@ -15,13 +15,13 @@ import java.time.LocalDateTime;
 public abstract class ActionToken {
     @Id
     @SequenceGenerator(
-            name = "confirmation_token_sequence",
-            sequenceName = "confirmation_token_sequence",
+            name = "action_token_sequence",
+            sequenceName = "action_token_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "confirmation_token_sequence"
+            generator = "action_token_sequence"
     )
     private Long id;
 
@@ -37,8 +37,8 @@ public abstract class ActionToken {
     private LocalDateTime confirmedAt;
 
     public ActionToken(String token,
-                             LocalDateTime createdAt,
-                             LocalDateTime expiresAt) {
+                       LocalDateTime createdAt,
+                       LocalDateTime expiresAt) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;

@@ -19,7 +19,7 @@ public class ResetPasswordToken extends ActionToken {
     @ManyToOne
     @JoinColumn(
             nullable = false,
-            name = "app_user_id"
+            name = "reset_pass_token_id"
     )
     private AppUser appUser;
 

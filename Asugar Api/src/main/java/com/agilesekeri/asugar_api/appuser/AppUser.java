@@ -1,14 +1,13 @@
 package com.agilesekeri.asugar_api.appuser;
 
+import com.agilesekeri.asugar_api.project.Project;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Objects;
 
 @Getter
@@ -34,30 +33,24 @@ public class AppUser implements UserDetails {
     private String email;
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private AppUserRole appUserRole;
+    @ManyToMany(mappedBy = "members")
+    private Collection<Project> projects;
 
-    private Boolean locked = false;
     private Boolean enabled = false;
 
     public AppUser(String firstName,
                    String lastName,
                    String email,
-                   String password,
-                   AppUserRole appUserRole) {
-
+                   String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.appUserRole = appUserRole;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority =
-                new SimpleGrantedAuthority(appUserRole.name());
-        return Collections.singletonList(authority);
+        return null;
     }
 
     @Override
@@ -70,14 +63,6 @@ public class AppUser implements UserDetails {
         return email;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -85,12 +70,20 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !locked;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
     }
 
     @Override
