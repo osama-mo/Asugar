@@ -5,17 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d04cb654-b2c8-4b58-84fb-6e6deef351a7" name="Changes" comment="First working commit with project addition working">
-      <change afterPath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/email/EmailValidatorTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/registration/token/RegistrationTokenServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/security/password/ResetPasswordServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/security/password/token/ResetPasswordTokenServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_5_8_2.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/email/EmailValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/email/EmailValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/AsugarApiApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/AsugarApiApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +85,7 @@
     "spring.configuration.checksum": "9c4b890df3b20b89e4b1f53b3c6e4078"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.All in asugar_api">
+  <component name="RunManager" selected="Spring Boot.AsugarApiApplication">
     <configuration name="All in asugar_api" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="asugar_api" />
       <option name="PACKAGE_NAME" value="" />
@@ -215,7 +205,7 @@
       <workItem from="1669993683933" duration="4213000" />
       <workItem from="1670003939253" duration="1118000" />
       <workItem from="1670018469356" duration="1921000" />
-      <workItem from="1670065492057" duration="19418000" />
+      <workItem from="1670065492057" duration="19984000" />
     </task>
     <task id="LOCAL-00001" summary="adding the project classes">
       <created>1666570227932</created>
