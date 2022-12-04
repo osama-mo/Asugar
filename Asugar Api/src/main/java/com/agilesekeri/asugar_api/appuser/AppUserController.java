@@ -7,6 +7,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.util.Pair;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static com.agilesekeri.asugar_api.security.authentication.CustomAuthenticationFilter.refreshSecret;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -26,6 +25,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @RestController
 @AllArgsConstructor
+//@RequestMapping(path = "user")
 public class AppUserController {
 
     private final AppUserService appUserService;
@@ -66,9 +66,21 @@ public class AppUserController {
         }
     }
 
-    @PostMapping("/project/create")
+    @PostMapping("/user/project/create")
     public void createProject(@RequestParam String name, @RequestParam String username) {
         AppUser admin = appUserService.loadUserByUsername(username);
         projectService.createProject(name, admin);
+    }
+
+    @GetMapping("/project/list")
+    public List<Pair<String, Long>> getProjectList(@RequestParam String username) {
+        AppUser user = appUserService.loadUserByUsername(username);
+        List<Project> list = projectService.getUserProjects(user);
+        List<Pair<String, Long>> response = new ArrayList<>();
+
+        for(Project project : list)
+            response.add(new Pair<>(project.getName(), project.getId()));
+
+        return response;
     }
 }
