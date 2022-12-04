@@ -33,8 +33,7 @@ export class ForgotMyPasswordComponent implements OnInit {
     
     this.fgmRequestPayload.email = this.fgmForm.get('email')!.value;
     this.authService.forgetMyPassword(this.fgmRequestPayload).subscribe(data => {    
-      this.router.navigate(['forgot-my-password-confirmation'],
-      { queryParams: { registered: 'true' } })
+      this.router.navigate(['forgot-my-password-confirmation'])
     }, error => {
       
       this.isError = true;

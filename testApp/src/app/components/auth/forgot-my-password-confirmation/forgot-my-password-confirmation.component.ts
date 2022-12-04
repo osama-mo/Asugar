@@ -33,9 +33,9 @@ export class ForgotMyPasswordConfirmationComponent implements OnInit {
 
   forgotMyPasswordConfirmation(){
     this.fgmcRequestPayload.token = this.fgmcForm.get('confirmationCode')!.value;
+    this.fgmcRequestPayload.password = this.fgmcForm.get('password')!.value;
     this.authService.forgetMyPasswordConfirmation(this.fgmcRequestPayload).subscribe(data => {    
       this.router.navigate(['']);
-      
     }, error => {
       
       this.isError = true;

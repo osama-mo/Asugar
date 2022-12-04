@@ -51,8 +51,8 @@ export class LoginComponent implements OnInit {
     this.gvisibility = 'hidden'
 
 
-    if (this.loginForm.get('email')!.value?.length == 0 
-    || this.loginForm.get('username')!.value?.length ==  0) {
+    if (this.loginForm.get('username')!.value?.length == 0 
+    || this.loginForm.get('password')!.value?.length ==  0) {
       this.efvisibility = 'visible'
     }
     else {
