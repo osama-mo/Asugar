@@ -66,7 +66,13 @@ export class AuthService {
   }
 
   createProject(projectName: String | null) {
-    return this.httpClient.post(`http://localhost:8080/user/project/create?name=${projectName}&username=${localStorage.getItem('username')}`, null)
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Authorization':  localStorage.getItem('accessToken')!
+      
+      })
+    }
+    return this.httpClient.post(`http://localhost:8080/user/project/create?name=${projectName}&username=${localStorage.getItem('username')}`, null, httpOptions)
   }
 
   getJwtToken() {
