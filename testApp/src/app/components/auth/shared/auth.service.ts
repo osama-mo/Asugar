@@ -64,7 +64,7 @@ export class AuthService {
   }
 
   createProject(projectName: String | null) {
-    return this.httpClient.post(`localhost:8080/project/create?name=ّ{${projectName}}&username={${localStorage.getItem('email')}}`, null)
+    return this.httpClient.post(`http://localhost:8080/user/project/create?name=ّ{${projectName}}&username={${localStorage.getItem('email')}}`, null)
   }
 
   getJwtToken() {
