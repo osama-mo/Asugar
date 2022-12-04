@@ -31,15 +31,19 @@ export class CreateProjectComponent implements OnInit {
     if(this.createProjectForm.get('projectName')?.value?.length == 0){
       this.efvisibility = 'visible'
     }
-    this.projectName =this.createProjectForm.get('projectName')!.value ;
-    this.authService.createProject(this.projectName).subscribe(
-    error => {
-    console.log(error);
-    this.isError = true;
-    this.gvisibility = 'visible'
-  });
-  if(this.isError !=true){
-    this.router.navigate(['backlog']);
-  }
+    else{
+      this.projectName =this.createProjectForm.get('projectName')!.value ;
+      this.authService.createProject(this.projectName).subscribe(
+      error => {
+      console.log(error);
+      this.isError = true;
+      this.gvisibility = 'visible'
+      
+    });
+    if(this.isError !=true){
+      this.router.navigate(['backlog']);
+    }
+    }
+  
 }
 }

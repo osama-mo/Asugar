@@ -162,3 +162,10 @@ span {
   margin-left: 32px;
   margin-right: -6px;
 }
+
+.Erorr{
+  background-color: white;
+  background-size: cover;
+  color: red;
+  visibility: hidden;
+}
