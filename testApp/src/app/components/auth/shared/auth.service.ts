@@ -45,7 +45,6 @@ export class AuthService {
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('username', loginRequestPayload.username!);
         localStorage.setItem('refreshToken', data.refreshToken);
-        this.usernameo =loginRequestPayload.username!;
         this.loggedIn.emit(true);
         this.username.emit(loginRequestPayload.username!);
         return true;
@@ -67,7 +66,7 @@ export class AuthService {
   }
 
   createProject(projectName: String | null) {
-    return this.httpClient.post(`http://localhost:8080/user/project/create?name=${projectName}&username=${this.usernameo}`, null)
+    return this.httpClient.post(`http://localhost:8080/user/project/create?name=${projectName}&username=${localStorage.getItem('username')}`, null)
   }
 
   getJwtToken() {
