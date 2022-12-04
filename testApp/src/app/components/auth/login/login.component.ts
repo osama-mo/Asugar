@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.loginRequestPayload).subscribe(data => {
         this.signedin = true;
         this.isError = false;
-        this.toastr.success('Login Successful');
+        this.router.navigate(['list-project'])
       }, error => {
         this.gvisibility = 'visible'
         this.isError = true;

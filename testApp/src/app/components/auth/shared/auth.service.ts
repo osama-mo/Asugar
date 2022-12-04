@@ -63,7 +63,7 @@ export class AuthService {
     return this.httpClient.post(`http://localhost:8080/password_reset`, null,httpOptions)
   }
 
-  createProject(projectName: String) {
+  createProject(projectName: String | null) {
     return this.httpClient.post(`localhost:8080/project/create?name=ّ{${projectName}}&username={${localStorage.getItem('email')}}`, null)
   }
 
@@ -101,4 +101,6 @@ export class AuthService {
   isLoggedIn(): boolean {
     return this.getJwtToken() != null;
   }
+
+  
 }
