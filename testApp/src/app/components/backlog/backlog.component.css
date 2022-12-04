@@ -11,29 +11,108 @@
   transform: translate(-50%, -50%);
   font-size: 18px;
   width: 440px;
-  height: 270px;
+  height: 415px;
   background-color: #8FCEE9;
   border-radius: 18px;
   border-width: 5px;
   border-color: #22597D;
   border-style: solid;
+
 }
 
-body{
-  top: 0;
-  left: 0;
-  background-image: url('../../../../assets/imgs/background.png');
+.sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #8FCEE9;
+    overflow-x: hidden;
+    padding-top: 20px;
+    opacity: 0.4;
+    border-style: solid;
+    border-width: 4px;
+    border-color: #22597D;
+    margin-top: 55px;
+  }
+  
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    
+    opacity: 0.4;
+  }
+  
+  .sidenav a:hover {
+    color: #22597D;
+  }
+  
+  .main {
+    margin-left: 160px; /* Same as the width of the sidenav */
+    font-size: 28px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+  }
+  
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+
+  .button{
+    width: 200px;
+    height: 52px;
+    border-color: #22597D;
+    border-radius: 36px;
+    border-width: 5px;
+    background-color: #8FCEE9;
+    text-decoration: bold;
+    text-align: center;
+    font-family: 'Share';
+    cursor:pointer;
+    display: inline-block;
+    font-size: 18px;
+    opacity: 100;
+    margin-bottom: 20px;
+    font-weight: bolder;
+    text-shadow: black;
+    -webkit-text-stroke-width: 2px;
+  }
+
+.button button1{
+    top:0;
+    margin-left: 350px;
+    background-color: #269531;
+
+
 }
+.rectangle1{
+    top:0;
+    margin-left: 250px;
+    margin-top: -20px;
+    width: 679px;
+    height: 301px;
+    background-color: #8FCEE9;
+    opacity: 0.7;
+    border: solid;
+    border-color: #22597D;
+    border-width: 4px;
+}
+
 .center form{
   padding-left: 18px;
   padding-right: 18px;
   box-sizing: border-box;
   border-width: 5px;
   border-color: #22597D;
+  opacity: 0.7;
 }
 
 p{
-  margin-bottom: 10px;
+  margin-bottom: -20px;
   font-family: 'Share';
   font-size: 48;
   text-align: center;
@@ -49,6 +128,9 @@ h1{
   font-weight: bolder;
   text-shadow: black;
   -webkit-text-stroke-width: 1px;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 30px;
 }
 
 h2{
@@ -63,8 +145,9 @@ h2{
 img { 
   width: 100%;
   height: 100%;
-  top: 50%;
-  left: 50%;
+  top: 50;
+  left: 0;
+  position: fixed;
 }
 
 form .txt_field{
@@ -84,7 +167,8 @@ form .txt_field{
   border-width: 4px;
   background: white;
   outline: none;
-  
+  margin-left: 18px;
+  margin-bottom: 50px;
 }
 
 .txt_field span::before{
@@ -115,7 +199,6 @@ form .txt_field{
   text-decoration: underline;
 }
 input[type="submit"]{
-  margin-top: 15px;
   width: 184px;
   height: 58px;
   border: 1px solid;
@@ -135,8 +218,8 @@ input[type="submit"]{
   text-decoration: none;
   -webkit-text-stroke-width: 1px;
   display: inline-block;
+  margin-left: 120px;
 }
-
 input[type="submit"]:hover{
   border-color: #22597D;
   border-width: 5px;
@@ -155,10 +238,7 @@ input[type="submit"]:hover{
 .signup_link a{
   color: #2691d9;
   text-decoration: none;
-  -webkit-text-stroke-width: 1px;
-  display: inline-block;
 }
-
 
 span { 
   margin-top: 50px;
