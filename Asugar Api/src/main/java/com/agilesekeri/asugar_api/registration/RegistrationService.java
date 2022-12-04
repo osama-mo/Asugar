@@ -1,7 +1,6 @@
 package com.agilesekeri.asugar_api.registration;
 
 import com.agilesekeri.asugar_api.appuser.AppUser;
-import com.agilesekeri.asugar_api.appuser.AppUserRole;
 import com.agilesekeri.asugar_api.appuser.AppUserService;
 import com.agilesekeri.asugar_api.email.EmailSender;
 import com.agilesekeri.asugar_api.email.EmailValidator;
@@ -28,6 +27,8 @@ public class RegistrationService {
         boolean isValidEmail = emailValidator.
                 test(request.getEmail());
 
+        String message;
+
         if (!isValidEmail) {
             throw new IllegalStateException("email not valid");
         }
@@ -36,11 +37,19 @@ public class RegistrationService {
                 request.getFirstName(),
                 request.getLastName(),
                 request.getEmail(),
-                request.getPassword(),
-                AppUserRole.USER
+                request.getPassword()
         );
 
-        appUserService.signUpUser(newUser);
+        try {
+            appUserService.signUpUser(newUser);
+            message = "A confirmation email is sent";
+        } catch (IllegalStateException c) {
+            newUser = appUserService.loadUserByUsername(newUser.getEmail());
+            if(!newUser.getEnabled())
+                message = "The given email is already registered but not confirmed, a new confirmation email is sent.";
+            else
+                throw new IllegalStateException("The given email is already registered.");
+        }
 
         String token = UUID.randomUUID().toString();
         RegistrationToken confirmationToken = new RegistrationToken(
@@ -58,7 +67,7 @@ public class RegistrationService {
             throw new IllegalStateException("email server not available");
         }
 
-        return "An email is sent";
+        return message;
     }
 
     public void sendVerificationEmail(String token, String email, String firstName)

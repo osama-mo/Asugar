@@ -4,36 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d04cb654-b2c8-4b58-84fb-6e6deef351a7" name="Changes" comment="Some extra changes">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/authentication/CustomAuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/authentication/CustomAuthorizationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/config/CustomDsl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Asugar.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Asugar.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="d04cb654-b2c8-4b58-84fb-6e6deef351a7" name="Changes" comment="First working commit with project addition working">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/AsugarApiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/AsugarApiApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/registration/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/registration/RegistrationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/PasswordEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/password/PasswordEncoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/config/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testApp/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login-request.payload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login-request.payload.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login-response.payload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login-response.payload.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/components/auth/login/login.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testApp/src/app/components/auth/shared/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/components/auth/shared/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testApp/src/app/components/auth/signup/signup.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/components/auth/signup/signup.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testApp/src/app/components/auth/signup/signup.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/testApp/src/app/components/auth/signup/signup.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,8 +15,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -101,27 +74,45 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_directory_selection": "C:/Users/anasa/Documents/GitHub/Asugar/Asugar Api/src/test/java/com/agilesekeri/asugar_api/registration",
     "last_opened_file_path": "C:/Users/anasa/Documents/GitHub/angular8-springboot-basic-auth-login-logout",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "spring.configuration.checksum": "9c4b890df3b20b89e4b1f53b3c6e4078"
   }
 }]]></component>
   <component name="RunManager" selected="Spring Boot.AsugarApiApplication">
+    <configuration name="All in asugar_api" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="asugar_api" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AsugarApiApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="asugar_api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.agilesekeri.asugar_api.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.agilesekeri.asugar_api" />
+      <option name="MAIN_CLASS_NAME" value="com.agilesekeri.asugar_api.AsugarApiApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Angular Application (testApp)" type="JavascriptDebugType" uri="http://localhost:4200">
       <method v="2" />
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="asugar_api" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="asugar_api" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
     </configuration>
     <configuration name="AsugarApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="asugar_api" />
@@ -129,6 +120,33 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="Write tests for class EmailValidator" type="com.diffblue.cover.write-tests-run-configuration" factoryName="com.diffblue.cover.write-tests-run-configuration" activateToolWindowBeforeRun="false" temporary="true">
+      <module name="asugar_api" />
+      <settings run-config-name="Write tests for class EmailValidator" include-system-env-vars="true">
+        <jvm-args />
+        <selection-scope>class</selection-scope>
+        <selected-element key="com.agilesekeri.asugar_api.email.EmailValidator" />
+      </settings>
+      <method v="2" />
+    </configuration>
+    <configuration name="Write tests for class ResetPasswordTokenService" type="com.diffblue.cover.write-tests-run-configuration" factoryName="com.diffblue.cover.write-tests-run-configuration" activateToolWindowBeforeRun="false" temporary="true">
+      <module name="asugar_api" />
+      <settings run-config-name="Write tests for class ResetPasswordTokenService" include-system-env-vars="true">
+        <jvm-args />
+        <selection-scope>class</selection-scope>
+        <selected-element key="com.agilesekeri.asugar_api.security.password.token.ResetPasswordTokenService" />
+      </settings>
+      <method v="2" />
+    </configuration>
+    <configuration name="Write tests for method ResetPasswordService.confirmRequest" type="com.diffblue.cover.write-tests-run-configuration" factoryName="com.diffblue.cover.write-tests-run-configuration" activateToolWindowBeforeRun="false" temporary="true">
+      <module name="asugar_api" />
+      <settings run-config-name="Write tests for method ResetPasswordService.confirmRequest" include-system-env-vars="true">
+        <jvm-args />
+        <selection-scope>method</selection-scope>
+        <selected-element key="com.agilesekeri.asugar_api.security.password.ResetPasswordService.confirmRequest:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" />
+      </settings>
+      <method v="2" />
     </configuration>
     <configuration name="Angular CLI Server (testApp)" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/testApp/package.json" />
@@ -140,6 +158,25 @@
       <envs />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Diffblue Cover.Write tests for class ResetPasswordTokenService" />
+      <item itemvalue="Diffblue Cover.Write tests for method ResetPasswordService.confirmRequest" />
+      <item itemvalue="Diffblue Cover.Write tests for class EmailValidator" />
+      <item itemvalue="JavaScript Debug.Angular Application (testApp)" />
+      <item itemvalue="JUnit.AsugarApiApplicationTests" />
+      <item itemvalue="JUnit.All in asugar_api" />
+      <item itemvalue="npm.Angular CLI Server (testApp)" />
+      <item itemvalue="Spring Boot.AsugarApiApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.All in asugar_api" />
+        <item itemvalue="Diffblue Cover.Write tests for method ResetPasswordService.confirmRequest" />
+        <item itemvalue="Diffblue Cover.Write tests for class ResetPasswordTokenService" />
+        <item itemvalue="Diffblue Cover.Write tests for class EmailValidator" />
+        <item itemvalue="JUnit.AsugarApiApplicationTests" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -160,6 +197,15 @@
       <workItem from="1666775737849" duration="5964000" />
       <workItem from="1666787203280" duration="444000" />
       <workItem from="1666791746527" duration="1558000" />
+      <workItem from="1669833156969" duration="7213000" />
+      <workItem from="1669897542897" duration="21073000" />
+      <workItem from="1669923903615" duration="9972000" />
+      <workItem from="1669979896737" duration="1403000" />
+      <workItem from="1669992516848" duration="1148000" />
+      <workItem from="1669993683933" duration="4213000" />
+      <workItem from="1670003939253" duration="1118000" />
+      <workItem from="1670018469356" duration="1921000" />
+      <workItem from="1670065492057" duration="19984000" />
     </task>
     <task id="LOCAL-00001" summary="adding the project classes">
       <created>1666570227932</created>
@@ -182,7 +228,21 @@
       <option name="project" value="LOCAL" />
       <updated>1666787529000</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Database implementation of project table and connecting it with the users table with some security optimizations">
+      <created>1669924367165</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1669924367166</updated>
+    </task>
+    <task id="LOCAL-00005" summary="First working commit with project addition working">
+      <created>1669935655034</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1669935655034</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -204,6 +264,27 @@
     <MESSAGE value="adding the project classes" />
     <MESSAGE value="Replacing the deprecated security configurer" />
     <MESSAGE value="Adding some new functionality for the security system" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding some new functionality for the security system" />
+    <MESSAGE value="Database implementation of project table and connecting it with the users table with some security optimizations" />
+    <MESSAGE value="First working commit with project addition working" />
+    <option name="LAST_COMMIT_MESSAGE" value="First working commit with project addition working" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.springframework.data.mapping.PropertyReferenceException" package="org.springframework.data.mapping" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/AsugarApiApplicationTests.java</url>
+          <line>129</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
