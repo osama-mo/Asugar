@@ -30,15 +30,14 @@ export class ForgotMyPasswordComponent implements OnInit {
   ngOnInit(): void {
   }
   forgotpassword() {
-    this.router.navigate(['forgot-my-password-confirmation'])
-    // this.fgmRequestPayload.email = this.fgmForm.get('email')!.value;
-
-    // this.authService.forgetMyPassword(this.fgmRequestPayload).subscribe(data => {    
+    
+    this.fgmRequestPayload.email = this.fgmForm.get('email')!.value;
+    this.authService.forgetMyPassword(this.fgmRequestPayload).subscribe(data => {    
+      this.router.navigate(['forgot-my-password-confirmation'])
+    }, error => {
       
-    // }, error => {
-      
-    //   this.isError = true;
-    //   throwError(error);
-    // });
+      this.isError = true;
+      throwError(error);
+    });
   }
 }
