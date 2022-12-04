@@ -84,7 +84,7 @@ export class AuthService {
       }, error => {
         throwError(error);
       })
-    localStorage.clear();
+    localStorage.clear()
   }
 
   getUserName() {
