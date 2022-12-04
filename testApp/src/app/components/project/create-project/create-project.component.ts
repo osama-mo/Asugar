@@ -28,7 +28,7 @@ export class CreateProjectComponent implements OnInit {
 
   createProject(){
     this.efvisibility = 'hidden'
-    if(this.createProjectForm.get('projectName')?.value?.length == 0){
+    if(this.createProjectForm.get('projectName')!.value?.length == 0){
       this.efvisibility = 'visible'
     }
     else{
