@@ -15,7 +15,7 @@ import { BacklogComponent } from './components/backlog/backlog.component';
 
 
 const routes: Routes = [
-  {path:'',component:ListProjectComponent},
+  {path:'',component:LoginComponent},
   {path:'signup',component:SignupComponent},
   {path:'forgot-my-password',component:ForgotMyPasswordComponent},
   {path:'forgot-my-password-confirmation',component:ForgotMyPasswordConfirmationComponent},
