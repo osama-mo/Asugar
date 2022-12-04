@@ -1,5 +1,5 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SignupRequestPayload } from '../signup/signup-request.payload';
 import { Observable, throwError } from 'rxjs';
 import { LoginRequestPayload } from '../login/login-request.payload';
@@ -23,7 +23,7 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient,
 
-    ) {
+  ) {
   }
 
   signup(signupRequestPayload: SignupRequestPayload): Observable<any> {
@@ -31,31 +31,30 @@ export class AuthService {
   }
 
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean> {
-    let body = new URLSearchParams();
-    body.set('username', loginRequestPayload.username!);
-    body.set('password',loginRequestPayload.password!);
-    let options = {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-    };
+   
     return this.httpClient.post<LoginResponse>('http://localhost:8080/login',
-      body.toString(),options).pipe(map(data => {
+    loginRequestPayload ).pipe(map (data => {
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('username', loginRequestPayload.username!);
         localStorage.setItem('refreshToken', data.refreshToken);
-
         this.loggedIn.emit(true);
         this.username.emit(loginRequestPayload.username!);
         return true;
       }));
   }
-  forgetMyPassword(fgmRequestPayload: ForgotMyPasswordRequestPayload) : Observable<any> {
-    return this.httpClient.get(`localhost:8080/password_reset?email=ّ{${fgmRequestPayload.email}}` )
+
+  forgetMyPassword(fgmRequestPayload: ForgotMyPasswordRequestPayload): Observable<any> {
+    return this.httpClient.get(`localhost:8080/password_reset?email=ّ{${fgmRequestPayload.email}}`)
   }
 
-  forgetMyPasswordConfirmation(fgmcRequestPayload: ForgotMyPasswordConfirmationRequestPayload) : Observable<any> {
+  forgetMyPasswordConfirmation(fgmcRequestPayload: ForgotMyPasswordConfirmationRequestPayload): Observable<any> {
     return this.httpClient.post(`localhost:8080/password_reset`, fgmcRequestPayload, { responseType: 'text' })
   }
-  
+
+  createProject(projectName: String) {
+    return this.httpClient.post(`localhost:8080/project/create?name=ّ{${projectName}}&username={${localStorage.getItem('email')}}`, null)
+  }
+
   getJwtToken() {
     return localStorage.getItem('accessToken');
   }
@@ -70,7 +69,7 @@ export class AuthService {
       }));
   }
 
-  testAuth(){
+  testAuth() {
     return this.httpClient.get<string>('http://localhost:8080/user/get');
   }
 
