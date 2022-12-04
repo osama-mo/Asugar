@@ -41,7 +41,7 @@ export class ForgotMyPasswordConfirmationComponent implements OnInit {
       throwError(error);
     });
     if(this.isError != true){
-      this.router.navigate(['forgot-my-password-confirmation']);
+      this.router.navigate(['']);
     }
   }
 
