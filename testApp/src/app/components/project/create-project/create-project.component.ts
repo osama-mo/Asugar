@@ -33,16 +33,15 @@ export class CreateProjectComponent implements OnInit {
     }
     else{
       this.projectName =this.createProjectForm.get('projectName')!.value ;
-      this.authService.createProject(this.projectName).subscribe(
+      this.authService.createProject(this.projectName).subscribe(data => {
+        this.router.navigate(['backlog']);
+      },
       error => {
       console.log(error);
       this.isError = true;
       this.gvisibility = 'visible'
       
     });
-    if(this.isError !=true){
-      this.router.navigate(['backlog']);
-    }
     }
   
 }
