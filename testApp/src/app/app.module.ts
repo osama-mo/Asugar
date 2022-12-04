@@ -15,6 +15,7 @@ import { ForgotMyPasswordComponent } from './components/auth/forgot-my-password/
 import { ForgotMyPasswordConfirmationComponent } from './components/auth/forgot-my-password-confirmation/forgot-my-password-confirmation.component';
 import { ListProjectComponent } from './components/project/list-project/list-project.component';
 import { CreateProjectComponent } from './components/project/create-project/create-project.component';
+import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 
 
 
@@ -34,6 +35,7 @@ export function playerFactory(): any {
     ForgotMyPasswordConfirmationComponent,
     ListProjectComponent,
     CreateProjectComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     HttpClientModule,
