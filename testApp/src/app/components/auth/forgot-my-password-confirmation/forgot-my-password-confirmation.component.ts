@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
+import { AuthService } from '../shared/auth.service';
+import { ForgotMyPasswordConfirmationRequestPayload } from './forgot-my-password-confirmation-request.payload';
 
 @Component({
   selector: 'app-forgot-my-password-confirmation',
@@ -6,10 +11,36 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./forgot-my-password-confirmation.component.css']
 })
 export class ForgotMyPasswordConfirmationComponent implements OnInit {
+  isError!: boolean;
 
-  constructor() { }
+  fgmcForm = new FormGroup({
+    
+    confirmationCode: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]), 
+    
+  })
+
+  constructor(private authService: AuthService, private router: Router) {
+    this.fgmcRequestPayload = {
+      token: '',
+      password: ''
+    };
+   }
+   fgmcRequestPayload: ForgotMyPasswordConfirmationRequestPayload;
 
   ngOnInit(): void {
+  }
+
+  forgotMyPasswordConfirmation(){
+    this.fgmcRequestPayload.token = this.fgmcForm.get('confirmationCode')!.value;
+    this.authService.forgetMyPasswordConfirmation(this.fgmcRequestPayload).subscribe(data => {    
+      this.router.navigate(['']);
+      
+    }, error => {
+      
+      this.isError = true;
+      throwError(error);
+    });
   }
 
 }

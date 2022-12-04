@@ -50,13 +50,14 @@ export class AuthService {
   }
 
   forgetMyPassword(fgmRequestPayload: ForgotMyPasswordRequestPayload): Observable<any> {
-    return this.httpClient.get(`localhost:8080/password_reset?email=ّ{${fgmRequestPayload.email}}`)
+    return this.httpClient.get(`http://localhost:8080/password_reset?email=${fgmRequestPayload.email}`)
   }
 
   forgetMyPasswordConfirmation(fgmcRequestPayload: ForgotMyPasswordConfirmationRequestPayload): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
       'Token':  fgmcRequestPayload.token!,
+      // 'password': fgmcRequestPayload.password!
       })
   };
     return this.httpClient.post(`localhost:8080/password_reset`, fgmcRequestPayload, { responseType: 'text' })

@@ -23,5 +23,17 @@
 
       <!-- login btn -->
       <input (click)="login()" type="submit" value="CONTINUE">
+
+
+       <!-- empty field Error message -->
+       <div class="Erorr" [style.visibility]="efvisibility" >
+        There is at least one Empty field in the form!
+      </div>
+
+
+      <!-- general Error message -->
+      <div class="Erorr" [style.visibility]="gvisibility" >
+        Something went wrong!, make sure that you are registered in the platform
+      </div>
     </form>
   </div>
