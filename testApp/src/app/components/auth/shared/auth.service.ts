@@ -57,7 +57,7 @@ export class AuthService {
     const httpOptions = {
       headers: new HttpHeaders({
       'Token':  fgmcRequestPayload.token!,
-      'password': fgmcRequestPayload.password!
+      'Password': fgmcRequestPayload.password!
       })
   };
     return this.httpClient.post(`http://localhost:8080/password_reset`, null,httpOptions)
