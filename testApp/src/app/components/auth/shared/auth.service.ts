@@ -60,7 +60,7 @@ export class AuthService {
       // 'password': fgmcRequestPayload.password!
       })
   };
-    return this.httpClient.post(`localhost:8080/password_reset`, fgmcRequestPayload, { responseType: 'text' })
+    return this.httpClient.post(`http://localhost:8080/password_reset`, fgmcRequestPayload, { responseType: 'text' })
   }
 
   createProject(projectName: String) {

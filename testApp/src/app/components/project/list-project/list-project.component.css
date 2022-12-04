@@ -30,6 +30,7 @@
 }
 
 .rectangle {
+  float: left;
     height: 300px;
     width: 250px;
     background-color: #8FCEE9;
