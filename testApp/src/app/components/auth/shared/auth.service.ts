@@ -31,9 +31,15 @@ export class AuthService {
   }
 
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'username':  loginRequestPayload.username!,
+      'password': loginRequestPayload.password!
+      })
+  };
    
     return this.httpClient.post<LoginResponse>('http://localhost:8080/login',
-    loginRequestPayload ).pipe(map (data => {
+    null,httpOptions ).pipe(map (data => {
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('username', loginRequestPayload.username!);
         localStorage.setItem('refreshToken', data.refreshToken);
