@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d04cb654-b2c8-4b58-84fb-6e6deef351a7" name="Changes" comment="First working commit with project addition working">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectService.java" afterDir="false" />
-    </list>
+    <list default="true" id="d04cb654-b2c8-4b58-84fb-6e6deef351a7" name="Changes" comment="DELETE for projects" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -222,7 +218,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669935655034</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="DELETE for projects">
+      <created>1670269523900</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1670269523900</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -246,7 +249,8 @@
     <MESSAGE value="Adding some new functionality for the security system" />
     <MESSAGE value="Database implementation of project table and connecting it with the users table with some security optimizations" />
     <MESSAGE value="First working commit with project addition working" />
-    <option name="LAST_COMMIT_MESSAGE" value="First working commit with project addition working" />
+    <MESSAGE value="DELETE for projects" />
+    <option name="LAST_COMMIT_MESSAGE" value="DELETE for projects" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
