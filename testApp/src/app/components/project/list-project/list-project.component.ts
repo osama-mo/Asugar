@@ -8,9 +8,14 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class ListProjectComponent implements OnInit {
 
-  constructor(router:Router) { }
+  constructor( private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  navigateToCreateProject() {
+    this.router.navigate(['create-project'])
+  }
 }
+
+

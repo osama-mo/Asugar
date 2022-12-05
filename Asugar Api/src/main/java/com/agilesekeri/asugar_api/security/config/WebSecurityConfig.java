@@ -17,7 +17,13 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
-        http.authorizeRequests().antMatchers("/registration", "/registration/**", "/login/**", "/token/refresh/**", "/password_reset").permitAll();
+        http.authorizeRequests().antMatchers(
+                "/registration",
+                "/registration/**",
+                "/login/**",
+                "/token/refresh",
+//                "/token/refresh/**",
+                "/password_reset").permitAll();
 //        http.authorizeRequests().antMatchers(GET, "/user/**").hasAnyAuthority("ROLE_USER");
         http.authorizeRequests().anyRequest().authenticated();
         http.apply(CustomDsl.customDsl());

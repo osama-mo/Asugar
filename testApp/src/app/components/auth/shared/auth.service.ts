@@ -12,7 +12,7 @@ import { ForgotMyPasswordConfirmationRequestPayload } from '../forgot-my-passwor
   providedIn: 'root'
 })
 export class AuthService {
-  
+
   usernameo: string = "";
 
   @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
@@ -39,7 +39,7 @@ export class AuthService {
       'password': loginRequestPayload.password!
       })
   };
-   
+
     return this.httpClient.post<LoginResponse>('http://localhost:8080/login',
     null,httpOptions ).pipe(map (data => {
         localStorage.setItem('accessToken', data.accessToken);
@@ -68,8 +68,8 @@ export class AuthService {
   createProject(projectName: String | null) {
     const httpOptions = {
       headers: new HttpHeaders({
-      'Authorization':  localStorage.getItem('accessToken')!
-      
+      'Authorization':  'Bearer ' + localStorage.getItem('accessToken')!
+
       })
     }
     return this.httpClient.post(`http://localhost:8080/user/project/create?name=${projectName}&username=${localStorage.getItem('username')}`, null, httpOptions)
@@ -96,7 +96,8 @@ export class AuthService {
 
 
   logout() {
-    localStorage.clear()
+    this.loggedIn.emit(false);
+    localStorage.clear();
   }
 
   getUserName() {
@@ -110,5 +111,5 @@ export class AuthService {
     return this.getJwtToken() != null;
   }
 
-  
+
 }
