@@ -85,4 +85,12 @@ public class AppUserController {
 
         return response;
     }
+
+    @DeleteMapping("/project/{projectId}"/*path = "{projectId})"*/)
+    public void deleteProject(@PathVariable("projectId") Long projectId, @RequestParam String username){
+        AppUser admin = appUserService.loadUserByUsername(username);
+        projectService.deleteProject(projectId);
+    }
+
+
 }

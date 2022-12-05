@@ -30,4 +30,11 @@ public class ProjectService {
                 .orElseThrow(() ->
                         new IllegalArgumentException("There are no projects found for the user"));
     }
+
+    public void deleteProject(Long projectId){
+        if(!projectRepository.existsById(projectId)){
+            throw new IllegalStateException("No project with id " + projectId + " was found to delete");
+        }
+        projectRepository.deleteById(projectId);
+    }
 }
