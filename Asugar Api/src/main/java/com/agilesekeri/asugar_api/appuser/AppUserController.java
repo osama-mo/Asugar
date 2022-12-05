@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
+import static com.agilesekeri.asugar_api.security.authentication.CustomAuthenticationFilter.accessSecret;
 import static com.agilesekeri.asugar_api.security.authentication.CustomAuthenticationFilter.refreshSecret;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
@@ -42,12 +43,13 @@ public class AppUserController {
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
                 String username = decodedJWT.getSubject();
+                Algorithm algorithmAccess = Algorithm.HMAC256(accessSecret);
                 UserDetails userDetails = appUserService.loadUserByUsername(username);
                 String access_token = JWT.create()
                         .withSubject(userDetails.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
-                        .sign(algorithm);
+                        .sign(algorithmAccess);
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("accessToken", access_token);
                 tokens.put("refreshToken", refresh_token);

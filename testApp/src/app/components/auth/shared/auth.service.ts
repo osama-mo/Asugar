@@ -96,7 +96,8 @@ export class AuthService {
 
 
   logout() {
-    localStorage.clear()
+    this.loggedIn.emit(false);
+    localStorage.clear();
   }
 
   getUserName() {
