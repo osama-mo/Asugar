@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d04cb654-b2c8-4b58-84fb-6e6deef351a7" name="Changes" comment="DELETE for projects" />
+    <list default="true" id="d04cb654-b2c8-4b58-84fb-6e6deef351a7" name="Changes" comment="First working commit with project addition working">
+      <change afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/asugar_db.iJ-dug/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/11d7d409-5294-46d8-94cb-1c75dcf2caac/storage_v2/_src_/database/asugar_db.iJ-dug/schema/public.abK9xQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/Project.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/password/token/ResetPasswordToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/password/token/ResetPasswordToken.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/resources/application.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,20 +40,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="JpbToolWindowState">
-    <option name="myId2FirstActivated">
-      <map>
-        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
-        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
-        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
-      </map>
-    </option>
-    <option name="myId2Visible">
-      <map>
-        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
-        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
-        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
-      </map>
-    </option>
+    <option name="isToolWindowVisible" value="false" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -61,7 +60,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="RunManager" selected="Application.AsugarApiApplication">
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm",
+    "spring.configuration.checksum": "9c4b890df3b20b89e4b1f53b3c6e4078",
+    "ts.external.directory.path": "C:\\Users\\anasa\\Documents\\GitHub\\Asugar\\testApp\\node_modules\\typescript\\lib"
+  }
+}]]></component>
+  <component name="RunManager" selected="Spring Boot.AsugarApiApplication">
     <configuration name="AsugarApiApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.agilesekeri.asugar_api.AsugarApiApplication" />
       <module name="asugar_api" />
@@ -85,49 +96,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AppUserControllerTest.testRefreshToken" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="asugar_api" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.agilesekeri.asugar_api.appuser.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.agilesekeri.asugar_api.appuser" />
-      <option name="MAIN_CLASS_NAME" value="com.agilesekeri.asugar_api.appuser.AppUserControllerTest" />
-      <option name="METHOD_NAME" value="testRefreshToken" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Angular Application (testApp)" type="JavascriptDebugType" uri="http://localhost:4200">
       <method v="2" />
     </configuration>
     <configuration name="AsugarApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ACTIVE_PROFILES" />
       <module name="asugar_api" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.agilesekeri.asugar_api.AsugarApiApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
-    </configuration>
-    <configuration name="Write tests for method AppUserController.refreshToken" type="com.diffblue.cover.write-tests-run-configuration" factoryName="com.diffblue.cover.write-tests-run-configuration" activateToolWindowBeforeRun="false" temporary="true">
-      <module name="asugar_api" />
-      <settings run-config-name="Write tests for method AppUserController.refreshToken" include-system-env-vars="true">
-        <jvm-args />
-        <selection-scope>method</selection-scope>
-        <selected-element key="com.agilesekeri.asugar_api.appuser.AppUserController.refreshToken:(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V" />
-      </settings>
-      <method v="2" />
-    </configuration>
-    <configuration name="Write tests for method ResetPasswordService.confirmRequest" type="com.diffblue.cover.write-tests-run-configuration" factoryName="com.diffblue.cover.write-tests-run-configuration" activateToolWindowBeforeRun="false" temporary="true">
-      <module name="asugar_api" />
-      <settings run-config-name="Write tests for method ResetPasswordService.confirmRequest" include-system-env-vars="true">
-        <jvm-args />
-        <selection-scope>method</selection-scope>
-        <selected-element key="com.agilesekeri.asugar_api.security.password.ResetPasswordService.confirmRequest:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" />
-      </settings>
-      <method v="2" />
     </configuration>
     <configuration name="Angular CLI Server (testApp)" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/testApp/package.json" />
@@ -140,14 +118,15 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="JUnit.AppUserControllerTest.testRefreshToken" />
-      <item itemvalue="JUnit.All in asugar_api" />
       <item itemvalue="Application.AsugarApiApplication" />
+      <item itemvalue="JavaScript Debug.Angular Application (testApp)" />
+      <item itemvalue="JUnit.All in asugar_api" />
+      <item itemvalue="npm.Angular CLI Server (testApp)" />
+      <item itemvalue="Spring Boot.AsugarApiApplication" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.AsugarApiApplication" />
-        <item itemvalue="JUnit.AppUserControllerTest.testRefreshToken" />
         <item itemvalue="JUnit.All in asugar_api" />
       </list>
     </recent_temporary>
@@ -182,6 +161,8 @@
       <workItem from="1670065492057" duration="19984000" />
       <workItem from="1670091456528" duration="5399000" />
       <workItem from="1670162157758" duration="16720000" />
+      <workItem from="1670415758849" duration="382000" />
+      <workItem from="1670532345481" duration="7123000" />
     </task>
     <task id="LOCAL-00001" summary="adding the project classes">
       <created>1666570227932</created>
@@ -263,61 +244,6 @@
           <url>file://$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/AsugarApiApplicationTests.java</url>
           <line>129</line>
           <option name="timeStamp" value="60" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="61" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="62" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="63" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java</url>
-          <line>41</line>
-          <option name="timeStamp" value="64" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="65" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java</url>
-          <line>39</line>
-          <option name="timeStamp" value="66" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java</url>
-          <line>45</line>
-          <option name="timeStamp" value="67" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java</url>
-          <line>46</line>
-          <option name="timeStamp" value="68" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java</url>
-          <line>47</line>
-          <option name="timeStamp" value="69" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="70" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java</url>
-          <line>49</line>
-          <option name="timeStamp" value="71" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

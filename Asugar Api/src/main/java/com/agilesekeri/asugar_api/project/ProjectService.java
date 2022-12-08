@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -36,5 +38,13 @@ public class ProjectService {
             throw new IllegalStateException("No project with id " + projectId + " was found to delete");
         }
         projectRepository.deleteById(projectId);
+    }
+
+    public Set<AppUser> getMemberSet(Long id) {
+        Project project = projectRepository
+                .findById(id).orElseThrow(() ->
+                        new IllegalArgumentException("Project does not exist"));
+
+        return project.getMembers();
     }
 }
