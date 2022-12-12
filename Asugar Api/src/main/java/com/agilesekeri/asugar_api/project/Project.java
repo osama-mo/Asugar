@@ -4,6 +4,7 @@ import com.agilesekeri.asugar_api.appuser.AppUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Session;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -59,9 +60,7 @@ public class Project {
     }
 
     public boolean addMember(AppUser user) {
-        boolean result = members.add(user);
-        user.getProjects().add(this);
-        return result;
+        return members.add(user);
     }
 
     public boolean removeMember(AppUser user) {

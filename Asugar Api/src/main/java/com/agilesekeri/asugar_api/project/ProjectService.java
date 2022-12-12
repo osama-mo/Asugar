@@ -4,6 +4,8 @@ import com.agilesekeri.asugar_api.appuser.AppUser;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collection;
 import java.util.List;
@@ -46,5 +48,19 @@ public class ProjectService {
                         new IllegalArgumentException("Project does not exist"));
 
         return project.getMembers();
+    }
+
+    public boolean addMember(Long projectId, AppUser user) {
+        Project project = getProject(projectId);
+        boolean result = project.addMember(user);
+        projectRepository.save(project);
+        return result;
+    }
+
+    public boolean removeMember(Long projectId, AppUser user) {
+        Project project = getProject(projectId);
+        boolean result = project.removeMember(user);
+        projectRepository.save(project);
+        return result;
     }
 }

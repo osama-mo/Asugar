@@ -10,6 +10,7 @@ import com.agilesekeri.asugar_api.appuser.AppUser;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +40,7 @@ class RegistrationTokenServiceTest {
         appUser.setId(123L);
         appUser.setLastName("Doe");
         appUser.setPassword("iloveyou");
-        appUser.setProjects(new ArrayList<>());
+        appUser.setProjects(new HashSet<>());
 
         RegistrationToken registrationToken = new RegistrationToken();
         registrationToken.setAppUser(appUser);
@@ -57,7 +58,7 @@ class RegistrationTokenServiceTest {
         appUser1.setId(123L);
         appUser1.setLastName("Doe");
         appUser1.setPassword("iloveyou");
-        appUser1.setProjects(new ArrayList<>());
+        appUser1.setProjects(new HashSet<>());
 
         RegistrationToken registrationToken1 = new RegistrationToken();
         registrationToken1.setAppUser(appUser1);

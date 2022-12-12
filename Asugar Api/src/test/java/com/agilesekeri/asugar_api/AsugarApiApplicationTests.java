@@ -6,6 +6,7 @@ import com.agilesekeri.asugar_api.appuser.AppUserRepository;
 import com.agilesekeri.asugar_api.appuser.AppUserService;
 import com.agilesekeri.asugar_api.email.EmailValidator;
 import com.agilesekeri.asugar_api.project.Project;
+import com.agilesekeri.asugar_api.project.ProjectController;
 import com.agilesekeri.asugar_api.project.ProjectRepository;
 import com.agilesekeri.asugar_api.project.ProjectService;
 import com.agilesekeri.asugar_api.registration.RegistrationController;
@@ -42,9 +43,13 @@ class AsugarApiApplicationTests {
     @Autowired
     private ProjectService projectService;
 
+    @Autowired
+    private ProjectController projectController;
+
     @Test
     @Order(1)
     void contextLoads() {
+
     }
 
     @Test
@@ -61,7 +66,7 @@ class AsugarApiApplicationTests {
 
         RegistrationRequest request4 = new RegistrationRequest("Can", "tarık", "email2@test.com", "pass");
         registrationController.register(request4);
-        appUserService.enableAppUser("email2@test.com");
+        assertEquals(1, appUserService.enableAppUser("email2@test.com"));
         assertThrows(IllegalStateException.class , () -> registrationController.register(request4));
     }
 
@@ -92,6 +97,21 @@ class AsugarApiApplicationTests {
         assertTrue(appUserService.userExists("email@test.com"));
         assertFalse(appUserService.userExists("bugalum@buya.bu"));
     }
+    @Test
+    @Order(7)
+    void testCreateProject() {
+        AppUser appUser = appUserService.loadUserByUsername("email@test.com");
+        assertTrue(appUserService.getProjectList(appUser.getId()).isEmpty());
+
+        Project project = projectService.createProject("project test 1", appUser);
+        assertNotNull(project.getCreatedAt());
+        assertNull(project.getPlannedTo());
+        assertNull(project.getEndedAt());
+        assertEquals(appUser, project.getAdmin());
+        assertFalse(project.getMembers().isEmpty());
+        assertEquals("project test 1", project.getName());
+        assertNotNull(project.getId());
+    }
 
     @Test
     @Order(8)
@@ -106,28 +126,10 @@ class AsugarApiApplicationTests {
     }
 
     @Test
-    @Order(7)
-    void testCreateProject() {
-        AppUser appUser = appUserService.loadUserByUsername("email@test.com");
-        assertTrue(appUserService.getProjectList(appUser.getId()).isEmpty());
-
-        Project project = projectService.createProject("project name", appUser);
-        assertNotNull(project.getCreatedAt());
-        assertNull(project.getPlannedTo());
-        assertNull(project.getEndedAt());
-        assertEquals(appUser, project.getAdmin());
-        assertFalse(project.getMembers().isEmpty());
-        assertEquals("project name", project.getName());
-        assertNotNull(project.getId());
-    }
-
-    @Test
-    @Order(9)
-    void testProjectExists() {
-        AppUser appUser = appUserService.loadUserByUsername("email@test.com");
-        Project project = projectService.createProject("project name2", appUser);
-        List<Project> list = appUserService.getProjectList(appUser.getId());
-        assertEquals(list.get(1).getId(), project.getId());
+    @Order(10)
+    void testAddMember() {
+        AppUser appUser = appUserService.loadUserByUsername("email2@test.com");
+        assertTrue(projectService.addMember(1L, appUser));
     }
 
     /**

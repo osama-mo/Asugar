@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -35,19 +34,15 @@ public class ProjectController {
 
     @PutMapping(path = "/members")
     public boolean addMember(@PathVariable Long projectId, @RequestParam String username) {
-        Project project = projectService.getProject(projectId);
         AppUser user = appUserService.loadUserByUsername(username);
-        project.addMember(user);
-        projectRepository.save(project);
+        projectService.addMember(projectId, user);
         return true;
     }
 
     @DeleteMapping(path = "/members")
     public boolean removeMember(@PathVariable Long projectId, @RequestParam String username) {
-        Project project = projectService.getProject(projectId);
         AppUser user = appUserService.loadUserByUsername(username);
-        project.removeMember(user);
-        projectRepository.save(project);
+        projectService.removeMember(projectId, user);
         return true;
     }
 
