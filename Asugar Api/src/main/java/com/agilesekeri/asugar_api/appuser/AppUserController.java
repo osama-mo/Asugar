@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @RestController
 @AllArgsConstructor
-//@RequestMapping(path = "user")
+@RequestMapping(path = "user")
 public class AppUserController {
 
     private final AppUserService appUserService;
@@ -68,7 +68,7 @@ public class AppUserController {
         }
     }
 
-    @PostMapping("/user/project/create")
+    @PostMapping("/project/create")
     public void createProject(@RequestParam String name, @RequestParam String username) {
         AppUser admin = appUserService.loadUserByUsername(username);
         projectService.createProject(name, admin);
@@ -87,9 +87,7 @@ public class AppUserController {
     }
 
     @DeleteMapping("/project/{projectId}")
-    public void deleteProject(@PathVariable("projectId") Long projectId, @RequestParam String username){
-        AppUser admin = appUserService.loadUserByUsername(username);
+    public void deleteProject(@PathVariable("projectId") Long projectId){
         projectService.deleteProject(projectId);
     }
-
 }

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -33,8 +34,9 @@ public class AppUser implements UserDetails {
     private String email;
     private String password;
 
+
     @ManyToMany(mappedBy = "members")
-    private Collection<Project> projects;
+    private Set<Project> projects;
 
     private Boolean enabled = false;
 

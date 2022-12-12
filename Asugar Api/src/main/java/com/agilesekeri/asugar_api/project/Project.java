@@ -4,12 +4,11 @@ import com.agilesekeri.asugar_api.appuser.AppUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Session;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.*;
 
 @Getter
 @Setter
@@ -38,7 +37,7 @@ public class Project {
             name = "app_user_project",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Collection<AppUser> members;
+    private Set<AppUser> members;
 
 //    @ManyToMany
 //    private Collection<Sprint> sprints;
@@ -56,7 +55,30 @@ public class Project {
         this.plannedTo = null;
         this.createdAt = LocalDateTime.now();
         this.endedAt = null;
-        this.members = new ArrayList<>();
+        this.members = new HashSet<>();
         this.members.add(admin);
+    }
+
+    public boolean addMember(AppUser user) {
+        return members.add(user);
+    }
+
+    public boolean removeMember(AppUser user) {
+        boolean result = members.remove(user);
+        user.getProjects().remove(this);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return id.equals(project.id) && name.equals(project.name) && admin.equals(project.admin) && createdAt.equals(project.createdAt) && Objects.equals(plannedTo, project.plannedTo) && Objects.equals(endedAt, project.endedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, admin, createdAt, plannedTo, endedAt);
     }
 }

@@ -33,6 +33,33 @@ class AppUserControllerTest {
     private ProjectRepository projectRepository;
 
     /**
+     * Method under test: {@link AppUserController#createProject(String, String)}
+     */
+    @Test
+    void testCreateProject() throws Exception {
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/project/create")
+                .param("name", "foo")
+                .param("username", "foo");
+        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(appUserController)
+                .build()
+                .perform(requestBuilder);
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    /**
+     * Method under test: {@link AppUserController#getProjectList(String)}
+     */
+    @Test
+    void testGetProjectList() throws Exception {
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/project/list")
+                .param("username", "foo");
+        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(appUserController)
+                .build()
+                .perform(requestBuilder);
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    /**
      * Method under test: {@link AppUserController#refreshToken(HttpServletRequest, HttpServletResponse)}
      */
     @Test

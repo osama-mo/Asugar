@@ -18,6 +18,7 @@ import com.agilesekeri.asugar_api.security.password.token.ResetPasswordTokenServ
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Disabled;
@@ -59,7 +60,7 @@ class ResetPasswordServiceTest {
         appUser.setId(123L);
         appUser.setLastName("Doe");
         appUser.setPassword("iloveyou");
-        appUser.setProjects(new ArrayList<>());
+        appUser.setProjects(new HashSet<>());
 
         ResetPasswordToken resetPasswordToken = new ResetPasswordToken();
         resetPasswordToken.setAppUser(appUser);
@@ -86,7 +87,7 @@ class ResetPasswordServiceTest {
         appUser.setId(123L);
         appUser.setLastName("Doe");
         appUser.setPassword("iloveyou");
-        appUser.setProjects(new ArrayList<>());
+        appUser.setProjects(new HashSet<>());
 
         AppUser appUser1 = new AppUser();
         appUser1.setEmail("jane.doe@example.org");
@@ -95,7 +96,7 @@ class ResetPasswordServiceTest {
         appUser1.setId(123L);
         appUser1.setLastName("Doe");
         appUser1.setPassword("iloveyou");
-        appUser1.setProjects(new ArrayList<>());
+        appUser1.setProjects(new HashSet<>());
         ResetPasswordToken resetPasswordToken = mock(ResetPasswordToken.class);
         when(resetPasswordToken.getAppUser()).thenReturn(appUser1);
         when(resetPasswordToken.getConfirmedAt()).thenReturn(null);
@@ -143,7 +144,7 @@ class ResetPasswordServiceTest {
         appUser.setId(123L);
         appUser.setLastName("Doe");
         appUser.setPassword("iloveyou");
-        appUser.setProjects(new ArrayList<>());
+        appUser.setProjects(new HashSet<>());
 
         AppUser appUser1 = new AppUser();
         appUser1.setEmail("jane.doe@example.org");
@@ -152,7 +153,7 @@ class ResetPasswordServiceTest {
         appUser1.setId(123L);
         appUser1.setLastName("Doe");
         appUser1.setPassword("iloveyou");
-        appUser1.setProjects(new ArrayList<>());
+        appUser1.setProjects(new HashSet<>());
         ResetPasswordToken resetPasswordToken = mock(ResetPasswordToken.class);
         when(resetPasswordToken.getAppUser()).thenReturn(appUser1);
         when(resetPasswordToken.getConfirmedAt()).thenReturn(null);
