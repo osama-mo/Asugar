@@ -35,11 +35,15 @@ public class ProjectService {
                         new IllegalArgumentException("There are no projects found for the user"));
     }
 
-    public void deleteProject(Long projectId){
-        if(!projectRepository.existsById(projectId)){
-            throw new IllegalStateException("No project with id " + projectId + " was found to delete");
-        }
-        projectRepository.deleteById(projectId);
+    public void deleteProject(Long projectId, Long userId){
+        Project target = projectRepository.findById(projectId)
+                .orElseThrow( () ->
+                        new IllegalStateException("No project with id " + projectId + " was found to delete"));
+
+        if(target.getAdmin().getId() == userId)
+            projectRepository.deleteById(projectId);
+        else
+            throw new IllegalStateException("Not qualified to delete the project with the id " + projectId);
     }
 
     public Set<AppUser> getMemberSet(Long id) {

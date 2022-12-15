@@ -5,18 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d04cb654-b2c8-4b58-84fb-6e6deef351a7" name="Changes" comment="First working commit with project addition working">
-      <change afterPath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/project/ProjectServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/registration/RegistrationControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/authentication/CustomAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/authentication/CustomAuthenticationFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/AsugarApiApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/AsugarApiApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/appuser/AppUserControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/appuser/AppUserControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/registration/token/RegistrationTokenServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/registration/token/RegistrationTokenServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/security/password/ResetPasswordServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/security/password/ResetPasswordServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/security/password/token/ResetPasswordTokenServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/test/java/com/agilesekeri/asugar_api/security/password/token/ResetPasswordTokenServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +66,7 @@
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\anasa\\Documents\\GitHub\\Asugar\\testApp\\node_modules\\typescript\\lib&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.ProjectServiceTest">
+  <component name="RunManager" selected="Spring Boot.AsugarApiApplication">
     <configuration name="All in asugar_api" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="asugar_api" />
       <option name="PACKAGE_NAME" value="" />
