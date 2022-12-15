@@ -87,7 +87,27 @@ public class AppUserController {
     }
 
     @DeleteMapping("/project/{projectId}")
-    public void deleteProject(@PathVariable("projectId") Long projectId){
-        projectService.deleteProject(projectId);
+    public void deleteProject(@PathVariable("projectId") Long projectId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            try {
+                String refresh_token = authorizationHeader.substring("Bearer ".length());
+                Algorithm algorithm = Algorithm.HMAC256(accessSecret);
+                JWTVerifier verifier = JWT.require(algorithm).build();
+                DecodedJWT decodedJWT = verifier.verify(refresh_token);
+                String username = decodedJWT.getSubject();
+                AppUser user = appUserService.loadUserByUsername(username);
+                projectService.deleteProject(projectId, user.getId());
+            }catch (Exception exception) {
+                response.setHeader("error", exception.getMessage());
+                response.setStatus(FORBIDDEN.value());
+                Map<String, String> error = new HashMap<>();
+                error.put("error_message", exception.getMessage());
+                response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
+                new ObjectMapper().writeValue(response.getOutputStream(), error);
+            }
+        } else {
+            throw new RuntimeException("Refresh token is missing");
+        }
     }
 }
