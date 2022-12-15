@@ -39,17 +39,19 @@ public class AppUserController {
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
                 String refresh_token = authorizationHeader.substring("Bearer ".length());
-                Algorithm algorithm = Algorithm.HMAC256(refreshSecret);
-                JWTVerifier verifier = JWT.require(algorithm).build();
+
+                Algorithm refreshAlgorithm = Algorithm.HMAC256(refreshSecret);
+                Algorithm accessAlgorithm = Algorithm.HMAC256(accessSecret);
+                JWTVerifier verifier = JWT.require(refreshAlgorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
+
                 String username = decodedJWT.getSubject();
-                Algorithm algorithmAccess = Algorithm.HMAC256(accessSecret);
                 UserDetails userDetails = appUserService.loadUserByUsername(username);
                 String access_token = JWT.create()
                         .withSubject(userDetails.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
-                        .sign(algorithmAccess);
+                        .sign(accessAlgorithm);
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("accessToken", access_token);
                 tokens.put("refreshToken", refresh_token);
@@ -64,41 +66,54 @@ public class AppUserController {
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
             }
         } else {
-            throw new RuntimeException("Refresh token is missing");
+            throw new RuntimeException("Token is missing");
         }
     }
 
     @PostMapping("/project/create")
-    public void createProject(@RequestParam String name, @RequestParam String username) {
-        AppUser admin = appUserService.loadUserByUsername(username);
-        projectService.createProject(name, admin);
+    public void createProject(@RequestParam String name, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String username = getJWTUsername(request, response);
+        if(username != null) {
+            AppUser admin = appUserService.loadUserByUsername(username);
+            projectService.createProject(name, admin);
+        }
     }
 
     @GetMapping("/project/list")
-    public List<Pair<String, Long>> getProjectList(@RequestParam String username) {
-        AppUser user = appUserService.loadUserByUsername(username);
-        List<Project> list = projectService.getUserProjects(user);
-        List<Pair<String, Long>> response = new ArrayList<>();
+    public List<Pair<String, Long>> getProjectList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        List<Pair<String, Long>> result = new ArrayList<>();
+        String username = getJWTUsername(request, response);
 
-        for(Project project : list)
-            response.add(new Pair<>(project.getName(), project.getId()));
+        if(username != null) {
+            AppUser user = appUserService.loadUserByUsername(username);
+            List<Project> list = projectService.getUserProjects(user);
+            for(Project project : list)
+                result.add(new Pair<>(project.getName(), project.getId()));
+        }
 
-        return response;
+        return result;
     }
 
     @DeleteMapping("/project/{projectId}")
     public void deleteProject(@PathVariable("projectId") Long projectId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String username = getJWTUsername(request, response);
+        if(username != null) {
+            AppUser user = appUserService.loadUserByUsername(username);
+            projectService.deleteProject(projectId, user.getId());
+        }
+    }
+
+    String getJWTUsername(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String username = null;
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
-                String refresh_token = authorizationHeader.substring("Bearer ".length());
+                String token = authorizationHeader.substring("Bearer ".length());
                 Algorithm algorithm = Algorithm.HMAC256(accessSecret);
                 JWTVerifier verifier = JWT.require(algorithm).build();
-                DecodedJWT decodedJWT = verifier.verify(refresh_token);
-                String username = decodedJWT.getSubject();
-                AppUser user = appUserService.loadUserByUsername(username);
-                projectService.deleteProject(projectId, user.getId());
-            }catch (Exception exception) {
+                DecodedJWT decodedJWT = verifier.verify(token);
+                username = decodedJWT.getSubject();
+            } catch (Exception exception) {
                 response.setHeader("error", exception.getMessage());
                 response.setStatus(FORBIDDEN.value());
                 Map<String, String> error = new HashMap<>();
@@ -107,7 +122,9 @@ public class AppUserController {
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
             }
         } else {
-            throw new RuntimeException("Refresh token is missing");
+            throw new RuntimeException("Token is missing");
         }
+
+        return username;
     }
 }

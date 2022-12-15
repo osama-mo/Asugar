@@ -16,8 +16,6 @@ import java.util.Set;
 public class ProjectController {
     private final ProjectService projectService;
 
-    private final ProjectRepository projectRepository;
-
     private final AppUserService appUserService;
 
 

@@ -7,9 +7,7 @@
     <list default="true" id="d04cb654-b2c8-4b58-84fb-6e6deef351a7" name="Changes" comment="First working commit with project addition working">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/appuser/AppUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/authentication/CustomAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/security/authentication/CustomAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Asugar Api/src/main/java/com/agilesekeri/asugar_api/project/ProjectController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
