@@ -1,6 +1,8 @@
 package com.agilesekeri.asugar_api.project;
 
 import com.agilesekeri.asugar_api.appuser.AppUser;
+import com.agilesekeri.asugar_api.project.epic.Epic;
+import com.agilesekeri.asugar_api.project.sprint.Sprint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,11 +41,11 @@ public class Project {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<AppUser> members;
 
-//    @ManyToMany
-//    private Collection<Sprint> sprints;
-//
-//    @ManyToMany
-//    private Collection<Long> Epics;
+    @OneToMany
+    private Set<Sprint> sprints;
+
+    @OneToMany
+    private Set<Epic> Epics;
 
     private LocalDateTime createdAt;
     private LocalDateTime plannedTo;

@@ -2,14 +2,29 @@ package com.agilesekeri.asugar_api.appuser;
 
 import com.agilesekeri.asugar_api.project.Project;
 import com.agilesekeri.asugar_api.project.ProjectService;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MimeTypeUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.agilesekeri.asugar_api.security.authentication.CustomAuthenticationFilter.accessSecret;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 
 @Service
@@ -68,5 +83,14 @@ public class AppUserService implements UserDetailsService {
                 .orElseThrow(() ->
                         new IllegalArgumentException("There are no projects were found for the user"));
         return projectService.getUserProjects(user);
+    }
+
+    public String getJWTUsername(HttpServletRequest request) throws IOException {
+
+        String token = request.getHeader(AUTHORIZATION).substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256(accessSecret);
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = verifier.verify(token);
+        return decodedJWT.getSubject();
     }
 }

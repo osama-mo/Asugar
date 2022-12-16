@@ -1,6 +1,8 @@
 package com.agilesekeri.asugar_api.project;
 
 import com.agilesekeri.asugar_api.appuser.AppUser;
+import com.agilesekeri.asugar_api.project.epic.Epic;
+import com.agilesekeri.asugar_api.project.sprint.Sprint;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,10 +49,7 @@ public class ProjectService {
     }
 
     public Set<AppUser> getMemberSet(Long id) {
-        Project project = projectRepository
-                .findById(id).orElseThrow(() ->
-                        new IllegalArgumentException("Project does not exist"));
-
+        Project project = getProject(id);
         return project.getMembers();
     }
 
@@ -66,5 +65,15 @@ public class ProjectService {
         boolean result = project.removeMember(user);
         projectRepository.save(project);
         return result;
+    }
+
+    public Set<Sprint> getSprintSet(Long projectId) {
+        Project project = getProject(projectId);
+        return project.getSprints();
+    }
+
+    public Set<Epic> getEpicSet(Long projectId) {
+        Project project = getProject(projectId);
+        return project.getEpics();
     }
 }

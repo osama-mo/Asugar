@@ -71,8 +71,8 @@ public class AppUserController {
     }
 
     @PostMapping("/project/create")
-    public void createProject(@RequestParam String name, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String username = getJWTUsername(request, response);
+    public void createProject(@RequestParam String name, HttpServletRequest request) throws IOException {
+        String username = appUserService.getJWTUsername(request);
         if(username != null) {
             AppUser admin = appUserService.loadUserByUsername(username);
             projectService.createProject(name, admin);
@@ -80,9 +80,9 @@ public class AppUserController {
     }
 
     @GetMapping("/project/list")
-    public List<Pair<String, Long>> getProjectList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public List<Pair<String, Long>> getProjectList(HttpServletRequest request) throws IOException {
         List<Pair<String, Long>> result = new ArrayList<>();
-        String username = getJWTUsername(request, response);
+        String username = appUserService.getJWTUsername(request);
 
         if(username != null) {
             AppUser user = appUserService.loadUserByUsername(username);
@@ -95,36 +95,11 @@ public class AppUserController {
     }
 
     @DeleteMapping("/project/{projectId}")
-    public void deleteProject(@PathVariable("projectId") Long projectId, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String username = getJWTUsername(request, response);
+    public void deleteProject(@PathVariable("projectId") Long projectId, HttpServletRequest request) throws IOException {
+        String username = appUserService.getJWTUsername(request);
         if(username != null) {
             AppUser user = appUserService.loadUserByUsername(username);
             projectService.deleteProject(projectId, user.getId());
         }
-    }
-
-    String getJWTUsername(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String username = null;
-        String authorizationHeader = request.getHeader(AUTHORIZATION);
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            try {
-                String token = authorizationHeader.substring("Bearer ".length());
-                Algorithm algorithm = Algorithm.HMAC256(accessSecret);
-                JWTVerifier verifier = JWT.require(algorithm).build();
-                DecodedJWT decodedJWT = verifier.verify(token);
-                username = decodedJWT.getSubject();
-            } catch (Exception exception) {
-                response.setHeader("error", exception.getMessage());
-                response.setStatus(FORBIDDEN.value());
-                Map<String, String> error = new HashMap<>();
-                error.put("error_message", exception.getMessage());
-                response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
-                new ObjectMapper().writeValue(response.getOutputStream(), error);
-            }
-        } else {
-            throw new RuntimeException("Token is missing");
-        }
-
-        return username;
     }
 }

@@ -14,7 +14,7 @@
     <name>Asugar Api</name>
     <description>Asugar Api</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>11</java.version>
     </properties>
     <dependencies>
         <dependency>
