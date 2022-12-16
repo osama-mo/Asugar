@@ -31,7 +31,7 @@ public class ProjectController {
         if(members.contains(issuer)) {
             List<Pair<String, String>> list = new ArrayList<>();
             for(AppUser user : members)
-                list.add(new Pair<>(user.getFirstName(), user.getLastName()));
+                list.add(Pair.of(user.getFirstName(), user.getLastName()));
             return list;
         }
         else
