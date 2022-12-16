@@ -7,8 +7,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.util.Pair;
 import lombok.AllArgsConstructor;
+import org.springframework.data.util.Pair;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.MimeTypeUtils;
@@ -88,7 +88,7 @@ public class AppUserController {
             AppUser user = appUserService.loadUserByUsername(username);
             List<Project> list = projectService.getUserProjects(user);
             for(Project project : list)
-                result.add(new Pair<>(project.getName(), project.getId()));
+                result.add(Pair.of(project.getName(), project.getId()));
         }
 
         return result;

@@ -2,10 +2,8 @@ package com.agilesekeri.asugar_api.project;
 
 import com.agilesekeri.asugar_api.appuser.AppUser;
 import com.agilesekeri.asugar_api.appuser.AppUserService;
-import com.agilesekeri.asugar_api.project.sprint.Sprint;
-import javafx.util.Pair;
+import org.springframework.data.util.Pair;
 import lombok.AllArgsConstructor;
-import org.springframework.http.RequestEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @RestController
