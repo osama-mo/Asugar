@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from 'app/components/auth/shared/auth.service';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-list-project',
@@ -8,9 +10,26 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class ListProjectComponent implements OnInit {
 
-  constructor( private router: Router) { }
+  projects = []
+
+  constructor( private router: Router ,private authsurvice : AuthService) {
+
+    authsurvice.getProjectlist().subscribe(data =>{
+      this.projects = data}
+      ,error =>{
+        new Error(error)
+      })
+   }
 
   ngOnInit(): void {
+    document.body.className = "selector";
+  }
+
+  deleteProject(id:number){
+
+    this.authsurvice.deleteProject(id).subscribe(data=>{})
+    window.location.reload();
+
   }
 
   navigateToCreateProject() {

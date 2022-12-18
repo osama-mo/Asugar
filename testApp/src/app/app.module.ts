@@ -17,6 +17,7 @@ import { ListProjectComponent } from './components/project/list-project/list-pro
 import { CreateProjectComponent } from './components/project/create-project/create-project.component';
 import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 import { BacklogComponent } from './components/backlog/backlog.component';
+import { MembersListComponent } from './components/members/members-list/members-list.component';
 
 
 
@@ -38,6 +39,7 @@ export function playerFactory(): any {
     CreateProjectComponent,
     ResetPasswordComponent,
     BacklogComponent,
+    MembersListComponent,
   ],
   imports: [
     HttpClientModule,

@@ -4,8 +4,11 @@
 
 :root
 {
-    background:url(./assets/imgs/background.png);
-    background-position: 50%;
     --primary-color:#B73E3E;
     --secondary-color:#162328;
+}
+.selector {
+ background: linear-gradient(white,lightblue) no-repeat;
+ min-height: 100vh;
+ max-height: 1200px;
 }
