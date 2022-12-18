@@ -93,6 +93,15 @@ public class AppUser implements UserDetails {
         return enabled;
     }
 
+//    @Override
+//    public String toString() {
+//        StringBuilder builder = new StringBuilder();
+//
+//        builder.append("\n\"id\" : \"\"")
+//
+//        return builder.toString();
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

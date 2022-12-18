@@ -34,6 +34,9 @@ public class Project {
     @ManyToOne
     private AppUser admin;
 
+    @ManyToOne
+    private AppUser productOwner;
+
     @ManyToMany
     @JoinTable(
             name = "app_user_project",

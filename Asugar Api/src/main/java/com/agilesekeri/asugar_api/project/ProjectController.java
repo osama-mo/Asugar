@@ -2,16 +2,19 @@ package com.agilesekeri.asugar_api.project;
 
 import com.agilesekeri.asugar_api.appuser.AppUser;
 import com.agilesekeri.asugar_api.appuser.AppUserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.InvalidNullException;
 import org.springframework.data.util.Pair;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.InvalidTransactionException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @AllArgsConstructor
@@ -23,16 +26,23 @@ public class ProjectController {
 
 
     @GetMapping(path = "/members")
-    public List<Pair<String, String>> getMembers(@PathVariable Long projectId, HttpServletRequest request) throws IOException {
+    public void getMembers(@PathVariable Long projectId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         Set<AppUser> members = projectService.getMemberSet(projectId);
         String username = appUserService.getJWTUsername(request);
         AppUser issuer = appUserService.loadUserByUsername(username);
 
         if(members.contains(issuer)) {
-            List<Pair<String, String>> list = new ArrayList<>();
-            for(AppUser user : members)
-                list.add(Pair.of(user.getFirstName(), user.getLastName()));
-            return list;
+            List<Map<String, String>> list = new ArrayList<>();
+            for(AppUser user : members) {
+                Map<String, String> userInfo = new HashMap<>();
+                userInfo.put("First Name", user.getFirstName());
+                userInfo.put("Last Name", user.getLastName());
+                userInfo.put("Email Address", user.getUsername());
+                list.add(userInfo);
+            }
+
+            response.setContentType(APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), list);
         }
         else
             throw new IllegalCallerException("The request came from user not a member of the project");
@@ -67,8 +77,35 @@ public class ProjectController {
     }
 
     @GetMapping(path = "/members/{username}")
-    public void viewMember(@PathVariable Long projectId, @PathVariable String username) {
-        //TODO
+    public void viewMember(@PathVariable Long projectId, @PathVariable String username, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String issuerUsername = appUserService.getJWTUsername(request);
+        AppUser issuer = appUserService.loadUserByUsername(issuerUsername);
+        Project project = projectService.getProject(projectId);
+        Set<AppUser> members = project.getMembers();
+
+        if(!members.contains(issuer))
+            throw new IllegalCallerException("The issuer is not qualified for the operation");
+
+        AppUser target = appUserService.loadUserByUsername(username);
+        if(members.contains(target)) {
+            Map<String, String> userInfo = new HashMap<>();
+            userInfo.put("First Name", target.getFirstName());
+            userInfo.put("Last Name", target.getLastName());
+            userInfo.put("Email Address", target.getUsername());
+
+            if(project.getAdmin() == target)
+                userInfo.put("Title", "Admin");
+            else if(project.getProductOwner() == target)
+                userInfo.put("Title", "Product Owner");
+            else
+                userInfo.put("Title", "Member");
+
+            response.setContentType(APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), userInfo);
+        }
+
+        else
+           throw new InvalidTransactionException("The user is not a member of the project");
     }
 
     @GetMapping(path = "/sprints")
