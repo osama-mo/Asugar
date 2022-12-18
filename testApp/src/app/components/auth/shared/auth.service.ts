@@ -69,7 +69,6 @@ export class AuthService {
     const httpOptions = {
       headers: new HttpHeaders({
       'Authorization':  'Bearer ' + localStorage.getItem('accessToken')!
-
       })
     }
     return this.httpClient.post(`http://localhost:8080/user/project/create?name=${projectName}&username=${localStorage.getItem('username')}`, null, httpOptions)
@@ -97,6 +96,9 @@ export class AuthService {
 
   logout() {
     this.loggedIn.emit(false);
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('username');
+    localStorage.removeItem('accessToken');
     localStorage.clear();
   }
 

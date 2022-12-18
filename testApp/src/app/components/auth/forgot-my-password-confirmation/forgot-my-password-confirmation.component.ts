@@ -13,36 +13,59 @@ import { ForgotMyPasswordConfirmationRequestPayload } from './forgot-my-password
 export class ForgotMyPasswordConfirmationComponent implements OnInit {
   isError!: boolean;
 
+  pnqvisibility = 'hidden'
+  efvisibility = 'hidden'
+  gvisibility = 'hidden'
+
   fgmcForm = new FormGroup({
-    
+
     confirmationCode: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]), 
-    
+    password: new FormControl('', [Validators.required]),
+    passwordConfirm: new FormControl('',[Validators.required])
+
   })
 
   constructor(private authService: AuthService, private router: Router) {
     this.fgmcRequestPayload = {
       token: '',
-      password: ''
+      password: '',
     };
-   }
-   fgmcRequestPayload: ForgotMyPasswordConfirmationRequestPayload;
+  }
+  fgmcRequestPayload: ForgotMyPasswordConfirmationRequestPayload;
 
   ngOnInit(): void {
   }
 
-  forgotMyPasswordConfirmation(){
+  forgotMyPasswordConfirmation() {
+
+
+    this.pnqvisibility = 'hidden'
+    this.efvisibility = 'hidden'
+    this.gvisibility = 'hidden'
+
+    if (this.fgmcForm.get('confirmationCode')!.value?.length == 0 
+      || this.fgmcForm.get('password')!.value?.length == 0 
+      || this.fgmcForm.get('passwordConfirm')!.value?.length == 0  ) {
+      console.error("empty field!");
+      this.efvisibility = 'visible'
+    }
+    else if (this.fgmcForm.get('password')!.value != this.fgmcForm.get('passwordConfirm')!.value) {
+      console.error("passwords not equal");
+      this.pnqvisibility = 'visible'
+    }
+    else {
     this.fgmcRequestPayload.token = this.fgmcForm.get('confirmationCode')!.value;
     this.fgmcRequestPayload.password = this.fgmcForm.get('password')!.value;
-    this.authService.forgetMyPasswordConfirmation(this.fgmcRequestPayload).subscribe(data => {    
+    this.authService.forgetMyPasswordConfirmation(this.fgmcRequestPayload).subscribe(data => {
     }, error => {
-      
+
       this.isError = true;
       throwError(error);
     });
-    if(this.isError != true){
+    if (this.isError != true) {
       this.router.navigate(['']);
     }
   }
+}
 
 }
