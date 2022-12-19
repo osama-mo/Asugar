@@ -1,1 +1,87 @@
-<p>members-list works!</p>
+
+  <h3 class="projects-title"> Members</h3>
+  <div class="sidenav">
+    <button class="sidebutton">B A C K L O G</button>
+    <button class="sidebutton">I S S U E S</button>
+    <button class="sidebutton">S P R I N T S</button>
+    <button class="ActiveSidebutton">M E M B E R S</button>
+</div>
+  <div class = "project-list-container">
+
+       <div *ngFor="let item in projects"  class="rectangle">
+        <div class="circle"></div>
+        <span></span>
+        <span>
+        <div class="txt_field">
+          <h1 style="font-size:32px">{{item.name}}</h1>
+        </div>
+        </span>
+        <input routerLink="" type="submit" value="id :">
+        <span></span>              
+       </div>
+       
+       <div class="rectangle">
+        <div class="circle"><div class="nameSymbol">{{name[0].toUpperCase()}}{{surname[0]}}</div></div>
+        <span></span>
+        <span>
+        <div class="txt_field">
+          <h1 style="font-size:27px">Osama al moselli</h1>
+        </div>
+        </span>
+        <input routerLink="" type="submit" value="Sad">
+        <span></span>              
+       </div>
+       <div class="rectangle">
+        <div class="circle"><div class="nameSymbol">{{name[0].toUpperCase()}}{{surname[0]}}</div></div>
+        <span></span>
+        <span>
+        <div class="txt_field">
+          <h1 style="font-size:27px">Osama al moselli</h1>
+        </div>
+        </span>
+        <input routerLink="" type="submit" value="Sad">
+        <span></span>              
+       </div>
+
+       <div class="rectangle">
+        <div class="circle"><div class="nameSymbol">{{name[0].toUpperCase()}}{{surname[0]}}</div></div>
+        <span></span>
+        <span>
+        <div class="txt_field">
+          <h1 style="font-size:27px">Osama al moselli</h1>
+        </div>
+        </span>
+        <input routerLink="" type="submit" value="Sad">
+        <span></span>              
+       </div>
+
+       <div class="rectangle">
+        <div class="circle"><div class="nameSymbol">{{name[0].toUpperCase()}}{{surname[0]}}</div></div>
+        <span></span>
+        <span>
+        <div class="txt_field">
+          <h1 style="font-size:27px">Osama al moselli</h1>
+        </div>
+        </span>
+        <input routerLink="" type="submit" value="Sad">
+        <span></span>              
+       </div>
+
+
+
+
+        <div (click)="navigateToAddmember()"  class="rectangle">
+          <span></span>
+          <span>
+          <div class="txt_field">
+            <h1 style="font-size:32px; margin-bottom: 40px;">Add new member</h1>
+          </div>
+        </span>
+          <div class="txt_field">
+              <h5 style="font-size:128px">+</h5>
+            </div>
+          <span></span>
+          </div>
+  </div>
+
+

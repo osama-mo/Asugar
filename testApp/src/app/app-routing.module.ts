@@ -10,6 +10,7 @@ import { ResetPasswordComponent } from './components/auth/reset-password/reset-p
 import { ListProjectComponent } from './components/project/list-project/list-project.component';
 import { CreateProjectComponent } from './components/project/create-project/create-project.component';
 import { BacklogComponent } from './components/backlog/backlog.component';
+import { MembersListComponent } from './components/members/members-list/members-list.component';
 
 
 
@@ -22,7 +23,8 @@ const routes: Routes = [
   {path:'reset-password',component:ResetPasswordComponent},
   {path:'list-project',component:ListProjectComponent},
   {path:'create-project',component:CreateProjectComponent},
-  {path:'backlog',component:BacklogComponent}
+  {path:'backlog',component:BacklogComponent},
+  {path:'memberslist',component:MembersListComponent}
 
 ];
 

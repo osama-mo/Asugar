@@ -12,28 +12,33 @@ export class ListProjectComponent implements OnInit {
 
   projects = []
 
-  constructor( private router: Router ,private authsurvice : AuthService) {
+  constructor(private router: Router, private authsurvice: AuthService) {
 
-    authsurvice.getProjectlist().subscribe(data =>{
-      this.projects = data}
-      ,error =>{
+    authsurvice.getProjectlist().subscribe(data => {
+      this.projects = data
+    }
+      , error => {
         new Error(error)
       })
-   }
+  }
 
   ngOnInit(): void {
     document.body.className = "selector";
   }
 
-  deleteProject(id:number){
+  deleteProject(id: number) {
 
-    this.authsurvice.deleteProject(id).subscribe(data=>{})
+    this.authsurvice.deleteProject(id).subscribe(data => { })
     window.location.reload();
 
   }
 
   navigateToCreateProject() {
     this.router.navigate(['create-project'])
+  }
+
+  navigateToBacklog(projectId: String, projectName: String) {
+    this.router.navigate(['backlog'], { queryParams: { projectId: projectId, projectName: projectName } })
   }
 }
 

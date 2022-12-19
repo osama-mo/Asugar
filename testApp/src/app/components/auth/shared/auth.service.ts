@@ -140,4 +140,13 @@ export class AuthService {
     return this.httpClient.delete(`http://localhost:8080/user/project/${projectId}}}`, httpOptions)
   }
 
+  getMembersList(projectId : Number) : Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Authorization':  'Bearer ' + localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.get(`http://localhost:8080/${projectId}/members}`, httpOptions) 
+  }
+
 }

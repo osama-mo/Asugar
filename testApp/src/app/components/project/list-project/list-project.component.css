@@ -4,7 +4,6 @@
 .remove-button{
   color: blue;
   float: right;
-
   font-size: 25px;
   text-align: right;
   margin-right: 10px;
@@ -22,7 +21,6 @@ grid-template-columns: repeat(auto-fit, minmax(270px, 270px));
 width: 80vw;
 grid-gap: 3em;
 margin: auto;
-
 justify-content: space-around;
 
 }
@@ -32,7 +30,6 @@ justify-content: space-around;
   position: relative;
   top: 50%;
   left: 50%;
- 
   padding-left: 18px;
   padding-right: 18px;
   
