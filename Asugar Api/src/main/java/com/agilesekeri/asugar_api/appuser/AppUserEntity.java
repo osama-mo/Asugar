@@ -1,6 +1,7 @@
 package com.agilesekeri.asugar_api.appuser;
 
 import com.agilesekeri.asugar_api.project.Project;
+import com.agilesekeri.asugar_api.registration.token.RegistrationToken;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +16,13 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
-public class AppUser implements UserDetails {
+@Table(
+        name = "app_user",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "app_user_email_unique", columnNames = "email")
+        }
+)
+public class AppUserEntity implements UserDetails {
 
     @Id
     @SequenceGenerator(
@@ -27,11 +34,35 @@ public class AppUser implements UserDetails {
             strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
     )
+    @Column(name = "id")
     private Long id;
 
+    @Column(
+            name = "first_name",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String firstName;
+
+    @Column(
+            name = "last_name",
+            nullable = true,
+            columnDefinition = "TEXT"
+    )
     private String lastName;
+
+    @Column(
+            name = "email",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String email;
+
+    @Column(
+            name = "password",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String password;
 
 
@@ -40,10 +71,10 @@ public class AppUser implements UserDetails {
 
     private Boolean enabled = false;
 
-    public AppUser(String firstName,
-                   String lastName,
-                   String email,
-                   String password) {
+    public AppUserEntity(String firstName,
+                         String lastName,
+                         String email,
+                         String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -53,11 +84,6 @@ public class AppUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
     }
 
     @Override
@@ -80,14 +106,6 @@ public class AppUser implements UserDetails {
         return true;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
     @Override
     public boolean isEnabled() {
         return enabled;
@@ -106,7 +124,7 @@ public class AppUser implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        AppUser appUser = (AppUser) o;
+        AppUserEntity appUser = (AppUserEntity) o;
         return id != null && Objects.equals(id, appUser.id);
     }
 

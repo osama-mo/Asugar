@@ -1,12 +1,13 @@
 package com.agilesekeri.asugar_api.project;
 
-import com.agilesekeri.asugar_api.appuser.AppUser;
+import com.agilesekeri.asugar_api.appuser.AppUserEntity;
 import com.agilesekeri.asugar_api.project.epic.Epic;
+import com.agilesekeri.asugar_api.project.issue.AbstractIssue;
+import com.agilesekeri.asugar_api.project.issue.IssueEntity;
 import com.agilesekeri.asugar_api.project.sprint.Sprint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.Session;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -32,29 +33,48 @@ public class Project {
     private String name;
 
     @ManyToOne
-    private AppUser admin;
+    @JoinColumn(name = "admin_id", foreignKey = @ForeignKey(name = "fk_admin_id"))
+    private AppUserEntity admin;
 
     @ManyToOne
-    private AppUser productOwner;
+    @JoinColumn(name = "product_owner_id", foreignKey = @ForeignKey(name = "fk_product_owner_id"))
+    private AppUserEntity productOwner;
 
     @ManyToMany
     @JoinTable(
             name = "app_user_project",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<AppUser> members;
+            joinColumns = @JoinColumn(name = "project_id", foreignKey = @ForeignKey(name = "fk_project_id")),
+            inverseJoinColumns = @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_member_id")))
+    private Set<AppUserEntity> members;
 
-    @OneToMany
+    @OneToMany(mappedBy = "project")
     private Set<Sprint> sprints;
 
-    @OneToMany
+    @OneToMany(mappedBy = "project")
     private Set<Epic> Epics;
 
+    @OneToMany(mappedBy = "project")
+    private Set<AbstractIssue> issues;
+
+    @Column(
+            name = "created_at",
+            nullable = false
+    )
     private LocalDateTime createdAt;
+
+    @Column(
+            name = "planned_to",
+            nullable = true
+    )
     private LocalDateTime plannedTo;
+
+    @Column(
+            name = "ended_at",
+            nullable = true
+    )
     private LocalDateTime endedAt;
 
-    public Project(String name, AppUser admin) {
+    public Project(String name, AppUserEntity admin) {
         this.name = name;
         this.admin = admin;
         this.plannedTo = null;
@@ -64,11 +84,11 @@ public class Project {
         this.members.add(admin);
     }
 
-    public boolean addMember(AppUser user) {
+    public boolean addMember(AppUserEntity user) {
         return members.add(user);
     }
 
-    public boolean removeMember(AppUser user) {
+    public boolean removeMember(AppUserEntity user) {
         boolean result = members.remove(user);
         user.getProjects().remove(this);
         return result;
@@ -79,11 +99,11 @@ public class Project {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Project project = (Project) o;
-        return id.equals(project.id) && name.equals(project.name) && admin.equals(project.admin) && createdAt.equals(project.createdAt) && Objects.equals(plannedTo, project.plannedTo) && Objects.equals(endedAt, project.endedAt);
+        return id.equals(project.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, admin, createdAt, plannedTo, endedAt);
+        return Objects.hash(id, name, admin);
     }
 }

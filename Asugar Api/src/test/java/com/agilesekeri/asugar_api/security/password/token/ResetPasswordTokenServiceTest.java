@@ -6,10 +6,9 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.agilesekeri.asugar_api.appuser.AppUser;
+import com.agilesekeri.asugar_api.appuser.AppUserEntity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;
@@ -33,7 +32,7 @@ class ResetPasswordTokenServiceTest {
      */
     @Test
     void testSaveResetPasswordToken() {
-        AppUser appUser = new AppUser();
+        AppUserEntity appUser = new AppUserEntity();
         appUser.setEmail("jane.doe@example.org");
         appUser.setEnabled(true);
         appUser.setFirstName("Jane");
@@ -51,7 +50,7 @@ class ResetPasswordTokenServiceTest {
         resetPasswordToken.setToken("ABC123");
         when(resetPasswordTokenRepository.save((ResetPasswordToken) any())).thenReturn(resetPasswordToken);
 
-        AppUser appUser1 = new AppUser();
+        AppUserEntity appUser1 = new AppUserEntity();
         appUser1.setEmail("jane.doe@example.org");
         appUser1.setEnabled(true);
         appUser1.setFirstName("Jane");

@@ -1,6 +1,6 @@
 package com.agilesekeri.asugar_api.security.password;
 
-import com.agilesekeri.asugar_api.appuser.AppUser;
+import com.agilesekeri.asugar_api.appuser.AppUserEntity;
 import com.agilesekeri.asugar_api.appuser.AppUserService;
 import com.agilesekeri.asugar_api.email.EmailSender;
 import com.agilesekeri.asugar_api.security.password.token.ResetPasswordToken;
@@ -26,7 +26,7 @@ public class ResetPasswordService {
     private final EmailSender emailSender;
 
     public String changePasswordRequest(String email) {
-        AppUser appUser = appUserService.loadUserByUsername(email);
+        AppUserEntity appUser = appUserService.loadUserByUsername(email);
 
         String token = UUID.randomUUID().toString();
         ResetPasswordToken resetPasswordToken = new ResetPasswordToken(

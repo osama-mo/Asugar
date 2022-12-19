@@ -1,6 +1,6 @@
 package com.agilesekeri.asugar_api.registration;
 
-import com.agilesekeri.asugar_api.appuser.AppUser;
+import com.agilesekeri.asugar_api.appuser.AppUserEntity;
 import com.agilesekeri.asugar_api.appuser.AppUserService;
 import com.agilesekeri.asugar_api.email.EmailSender;
 import com.agilesekeri.asugar_api.email.EmailValidator;
@@ -33,7 +33,7 @@ public class RegistrationService {
             throw new IllegalStateException("email not valid");
         }
 
-        AppUser newUser = new AppUser(
+        AppUserEntity newUser = new AppUserEntity(
                 request.getFirstName(),
                 request.getLastName(),
                 request.getEmail(),
