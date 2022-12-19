@@ -18,6 +18,7 @@ import { CreateProjectComponent } from './components/project/create-project/crea
 import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 import { BacklogComponent } from './components/backlog/backlog.component';
 import { MembersListComponent } from './components/members/members-list/members-list.component';
+import { MemberDetailsComponent } from './components/members/member-details/member-details.component';
 
 
 
@@ -40,6 +41,7 @@ export function playerFactory(): any {
     ResetPasswordComponent,
     BacklogComponent,
     MembersListComponent,
+    MemberDetailsComponent,
   ],
   imports: [
     HttpClientModule,

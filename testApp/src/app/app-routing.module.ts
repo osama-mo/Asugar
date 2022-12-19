@@ -11,12 +11,13 @@ import { ListProjectComponent } from './components/project/list-project/list-pro
 import { CreateProjectComponent } from './components/project/create-project/create-project.component';
 import { BacklogComponent } from './components/backlog/backlog.component';
 import { MembersListComponent } from './components/members/members-list/members-list.component';
+import { MemberDetailsComponent } from './components/members/member-details/member-details.component';
 
 
 
 
 const routes: Routes = [
-  {path:'',component:ListProjectComponent},
+  {path:'',component:MemberDetailsComponent},
   {path:'signup',component:SignupComponent},
   {path:'forgot-my-password',component:ForgotMyPasswordComponent},
   {path:'forgot-my-password-confirmation',component:ForgotMyPasswordConfirmationComponent},
@@ -24,7 +25,8 @@ const routes: Routes = [
   {path:'list-project',component:ListProjectComponent},
   {path:'create-project',component:CreateProjectComponent},
   {path:'backlog',component:BacklogComponent},
-  {path:'memberslist',component:MembersListComponent}
+  {path:'memberslist',component:MembersListComponent},
+  {path:'member-details',component:MemberDetailsComponent},
 
 ];
 

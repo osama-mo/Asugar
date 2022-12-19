@@ -20,8 +20,8 @@ export class MembersListComponent implements OnInit {
 
   ngOnInit(): void {
     document.body.className = "selector";
-    this.projectId = this.route.snapshot.paramMap.get('projectId');
-    this.projectName = this.route.snapshot.paramMap.get('projectName');
+    this.projectId = this.route.snapshot.queryParamMap.get('projectId');
+    this.projectName = this.route.snapshot.queryParamMap.get('projectName');
 
     this.authsurvice.getMembersList(Number(this.projectId)).subscribe(
       data => {
@@ -34,5 +34,9 @@ export class MembersListComponent implements OnInit {
 
   navigateToAddmember() {
     this.router.navigate([''], { queryParams: { projectId: this.projectId,projectName:this.projectName} })
+  }
+  
+  navigateToMemberDetails(){
+    this.router.navigate(['member-details'], { queryParams: { projectId: this.projectId,projectName:this.projectName} })
   }
 }

@@ -148,5 +148,14 @@ export class AuthService {
     }
     return this.httpClient.get(`http://localhost:8080/${projectId}/members}`, httpOptions) 
   }
+  
+  getMembersDetails(userEmail: String) : Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Authorization':  'Bearer ' + localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.get(`http://localhost:8080/${userEmail}/members}`, httpOptions) 
+  }
 
 }
