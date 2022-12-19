@@ -1,6 +1,6 @@
 package com.agilesekeri.asugar_api.project.epic;
 
-import com.agilesekeri.asugar_api.appuser.AppUser;
+import com.agilesekeri.asugar_api.appuser.AppUserEntity;
 import com.agilesekeri.asugar_api.project.Project;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,13 +31,16 @@ public class Epic {
     private String description;
 
     @ManyToOne
+    @JoinColumn(name = "project_id", foreignKey = @ForeignKey(name = "fk_project_id"))
     private Project project;
 
     @ManyToOne
-    private AppUser reporter;
+    @JoinColumn(name = "reporter_id", foreignKey = @ForeignKey(name = "fk_reporter_id"))
+    private AppUserEntity reporter;
 
     @ManyToOne
-    private AppUser assignedTo;
+    @JoinColumn(name = "assigned_id", foreignKey = @ForeignKey(name = "fk_assigned_id"))
+    private AppUserEntity assigned;
 
     //TODO included issues
 
