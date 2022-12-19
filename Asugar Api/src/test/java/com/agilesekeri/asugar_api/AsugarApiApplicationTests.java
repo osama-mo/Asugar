@@ -1,18 +1,13 @@
 package com.agilesekeri.asugar_api;
 
-import com.agilesekeri.asugar_api.appuser.AppUser;
-import com.agilesekeri.asugar_api.appuser.AppUserController;
-import com.agilesekeri.asugar_api.appuser.AppUserRepository;
+import com.agilesekeri.asugar_api.appuser.AppUserEntity;
 import com.agilesekeri.asugar_api.appuser.AppUserService;
 import com.agilesekeri.asugar_api.email.EmailValidator;
 import com.agilesekeri.asugar_api.project.Project;
 import com.agilesekeri.asugar_api.project.ProjectController;
-import com.agilesekeri.asugar_api.project.ProjectRepository;
 import com.agilesekeri.asugar_api.project.ProjectService;
 import com.agilesekeri.asugar_api.registration.RegistrationController;
 import com.agilesekeri.asugar_api.registration.RegistrationRequest;
-import com.agilesekeri.asugar_api.registration.RegistrationService;
-import org.apache.catalina.LifecycleState;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -22,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -100,7 +93,7 @@ class AsugarApiApplicationTests {
     @Test
     @Order(7)
     void testCreateProject() {
-        AppUser appUser = appUserService.loadUserByUsername("email@test.com");
+        AppUserEntity appUser = appUserService.loadUserByUsername("email@test.com");
         assertTrue(appUserService.getProjectList(appUser.getId()).isEmpty());
 
         Project project = projectService.createProject("project test 1", appUser);
@@ -116,10 +109,10 @@ class AsugarApiApplicationTests {
     @Test
     @Order(8)
     void testGetProjectList() {
-        AppUser appUser = appUserService.loadUserByUsername("email@test.com");
+        AppUserEntity appUser = appUserService.loadUserByUsername("email@test.com");
         assertFalse(appUserService.getProjectList(appUser.getId()).isEmpty());
 
-        AppUser appUser2 = appUserService.loadUserByUsername("email2@test.com");
+        AppUserEntity appUser2 = appUserService.loadUserByUsername("email2@test.com");
         assertTrue(appUserService.getProjectList(appUser2.getId()).isEmpty());
 
         assertThrows(IllegalArgumentException.class, () -> appUserService.getProjectList(123L));
@@ -128,7 +121,7 @@ class AsugarApiApplicationTests {
     @Test
     @Order(10)
     void testAddMember() {
-        AppUser appUser = appUserService.loadUserByUsername("email2@test.com");
+        AppUserEntity appUser = appUserService.loadUserByUsername("email2@test.com");
         assertTrue(projectService.addMember(1L, appUser));
     }
 

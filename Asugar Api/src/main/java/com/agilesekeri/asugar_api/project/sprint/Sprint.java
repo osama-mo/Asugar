@@ -30,6 +30,7 @@ public class Sprint {
     private String description;
 
     @ManyToOne
+    @JoinColumn(name = "project_id", foreignKey = @ForeignKey(name = "fk_project_id"))
     private Project project;
 
     //TODO included issues

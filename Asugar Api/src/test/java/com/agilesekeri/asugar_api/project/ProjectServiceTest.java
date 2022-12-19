@@ -2,7 +2,7 @@ package com.agilesekeri.asugar_api.project;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.agilesekeri.asugar_api.appuser.AppUser;
+import com.agilesekeri.asugar_api.appuser.AppUserEntity;
 
 import java.util.HashSet;
 
@@ -19,11 +19,11 @@ class ProjectServiceTest {
     private ProjectService projectService;
 
     /**
-     * Method under test: {@link ProjectService#addMember(Long, AppUser)}
+     * Method under test: {@link ProjectService#addMember(Long, AppUserEntity)}
      */
     @Test
     void testAddMember() {
-        AppUser appUser = new AppUser();
+        AppUserEntity appUser = new AppUserEntity();
         appUser.setEmail("jane.doe@example.org");
         appUser.setEnabled(true);
         appUser.setFirstName("Jane");
@@ -35,11 +35,11 @@ class ProjectServiceTest {
     }
 
     /**
-     * Method under test: {@link ProjectService#addMember(Long, AppUser)}
+     * Method under test: {@link ProjectService#addMember(Long, AppUserEntity)}
      */
     @Test
     void testAddMember2() {
-        AppUser appUser = new AppUser();
+        AppUserEntity appUser = new AppUserEntity();
         appUser.setEmail("jane.doe@example.org");
         appUser.setEnabled(true);
         appUser.setFirstName("Jane");

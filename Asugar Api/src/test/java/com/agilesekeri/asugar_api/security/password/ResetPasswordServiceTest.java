@@ -10,18 +10,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.agilesekeri.asugar_api.appuser.AppUser;
+import com.agilesekeri.asugar_api.appuser.AppUserEntity;
 import com.agilesekeri.asugar_api.appuser.AppUserService;
 import com.agilesekeri.asugar_api.email.EmailSender;
 import com.agilesekeri.asugar_api.security.password.token.ResetPasswordToken;
 import com.agilesekeri.asugar_api.security.password.token.ResetPasswordTokenService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
-
-import org.junit.jupiter.api.Disabled;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,7 +50,7 @@ class ResetPasswordServiceTest {
      */
     @Test
     void testConfirmRequest() {
-        AppUser appUser = new AppUser();
+        AppUserEntity appUser = new AppUserEntity();
         appUser.setEmail("jane.doe@example.org");
         appUser.setEnabled(true);
         appUser.setFirstName("Jane");
@@ -80,7 +77,7 @@ class ResetPasswordServiceTest {
      */
     @Test
     void testConfirmRequest2() {
-        AppUser appUser = new AppUser();
+        AppUserEntity appUser = new AppUserEntity();
         appUser.setEmail("jane.doe@example.org");
         appUser.setEnabled(true);
         appUser.setFirstName("Jane");
@@ -89,7 +86,7 @@ class ResetPasswordServiceTest {
         appUser.setPassword("iloveyou");
         appUser.setProjects(new HashSet<>());
 
-        AppUser appUser1 = new AppUser();
+        AppUserEntity appUser1 = new AppUserEntity();
         appUser1.setEmail("jane.doe@example.org");
         appUser1.setEnabled(true);
         appUser1.setFirstName("Jane");
@@ -106,7 +103,7 @@ class ResetPasswordServiceTest {
         doNothing().when(resetPasswordToken).setExpiresAt((LocalDateTime) any());
         doNothing().when(resetPasswordToken).setId((Long) any());
         doNothing().when(resetPasswordToken).setToken((String) any());
-        doNothing().when(resetPasswordToken).setAppUser((AppUser) any());
+        doNothing().when(resetPasswordToken).setAppUser((AppUserEntity) any());
         resetPasswordToken.setAppUser(appUser);
         resetPasswordToken.setConfirmedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setCreatedAt(LocalDateTime.of(1, 1, 1, 1, 1));
@@ -128,7 +125,7 @@ class ResetPasswordServiceTest {
         verify(resetPasswordToken).setExpiresAt((LocalDateTime) any());
         verify(resetPasswordToken).setId((Long) any());
         verify(resetPasswordToken).setToken((String) any());
-        verify(resetPasswordToken).setAppUser((AppUser) any());
+        verify(resetPasswordToken).setAppUser((AppUserEntity) any());
         verify(emailSender).send((String) any(), (String) any());
     }
 
@@ -137,7 +134,7 @@ class ResetPasswordServiceTest {
      */
     @Test
     void testConfirmRequest3() {
-        AppUser appUser = new AppUser();
+        AppUserEntity appUser = new AppUserEntity();
         appUser.setEmail("jane.doe@example.org");
         appUser.setEnabled(true);
         appUser.setFirstName("Jane");
@@ -146,7 +143,7 @@ class ResetPasswordServiceTest {
         appUser.setPassword("iloveyou");
         appUser.setProjects(new HashSet<>());
 
-        AppUser appUser1 = new AppUser();
+        AppUserEntity appUser1 = new AppUserEntity();
         appUser1.setEmail("jane.doe@example.org");
         appUser1.setEnabled(true);
         appUser1.setFirstName("Jane");
@@ -163,7 +160,7 @@ class ResetPasswordServiceTest {
         doNothing().when(resetPasswordToken).setExpiresAt((LocalDateTime) any());
         doNothing().when(resetPasswordToken).setId((Long) any());
         doNothing().when(resetPasswordToken).setToken((String) any());
-        doNothing().when(resetPasswordToken).setAppUser((AppUser) any());
+        doNothing().when(resetPasswordToken).setAppUser((AppUserEntity) any());
         resetPasswordToken.setAppUser(appUser);
         resetPasswordToken.setConfirmedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setCreatedAt(LocalDateTime.of(1, 1, 1, 1, 1));
@@ -185,7 +182,7 @@ class ResetPasswordServiceTest {
         verify(resetPasswordToken).setExpiresAt((LocalDateTime) any());
         verify(resetPasswordToken).setId((Long) any());
         verify(resetPasswordToken).setToken((String) any());
-        verify(resetPasswordToken).setAppUser((AppUser) any());
+        verify(resetPasswordToken).setAppUser((AppUserEntity) any());
         verify(emailSender).send((String) any(), (String) any());
     }
 }

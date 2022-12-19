@@ -1,10 +1,8 @@
 package com.agilesekeri.asugar_api.project;
 
-import com.agilesekeri.asugar_api.appuser.AppUser;
+import com.agilesekeri.asugar_api.appuser.AppUserEntity;
 import com.agilesekeri.asugar_api.appuser.AppUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.InvalidNullException;
-import org.springframework.data.util.Pair;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,13 +25,13 @@ public class ProjectController {
 
     @GetMapping(path = "/members")
     public void getMembers(@PathVariable Long projectId, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Set<AppUser> members = projectService.getMemberSet(projectId);
+        Set<AppUserEntity> members = projectService.getMemberSet(projectId);
         String username = appUserService.getJWTUsername(request);
-        AppUser issuer = appUserService.loadUserByUsername(username);
+        AppUserEntity issuer = appUserService.loadUserByUsername(username);
 
         if(members.contains(issuer)) {
             List<Map<String, String>> list = new ArrayList<>();
-            for(AppUser user : members) {
+            for(AppUserEntity user : members) {
                 Map<String, String> userInfo = new HashMap<>();
                 userInfo.put("First Name", user.getFirstName());
                 userInfo.put("Last Name", user.getLastName());
@@ -51,13 +49,13 @@ public class ProjectController {
     @PutMapping(path = "/members")
     public boolean addMember(@PathVariable Long projectId, @RequestParam String username, HttpServletRequest request) throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
-        AppUser issuer = appUserService.loadUserByUsername(issuerUsername);
+        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
         Project project = projectService.getProject(projectId);
 
         if(project.getAdmin() != issuer)
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
-        AppUser user = appUserService.loadUserByUsername(username);
+        AppUserEntity user = appUserService.loadUserByUsername(username);
         projectService.addMember(projectId, user);
         return true;
     }
@@ -65,13 +63,13 @@ public class ProjectController {
     @DeleteMapping(path = "/members")
     public boolean removeMember(@PathVariable Long projectId, @RequestParam String username, HttpServletRequest request) throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
-        AppUser issuer = appUserService.loadUserByUsername(issuerUsername);
+        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
         Project project = projectService.getProject(projectId);
 
         if(project.getAdmin() != issuer)
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
-        AppUser user = appUserService.loadUserByUsername(username);
+        AppUserEntity user = appUserService.loadUserByUsername(username);
         projectService.removeMember(projectId, user);
         return true;
     }
@@ -79,14 +77,14 @@ public class ProjectController {
     @GetMapping(path = "/members/{username}")
     public void viewMember(@PathVariable Long projectId, @PathVariable String username, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
-        AppUser issuer = appUserService.loadUserByUsername(issuerUsername);
+        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
         Project project = projectService.getProject(projectId);
-        Set<AppUser> members = project.getMembers();
+        Set<AppUserEntity> members = project.getMembers();
 
         if(!members.contains(issuer))
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
-        AppUser target = appUserService.loadUserByUsername(username);
+        AppUserEntity target = appUserService.loadUserByUsername(username);
         if(members.contains(target)) {
             Map<String, String> userInfo = new HashMap<>();
             userInfo.put("First Name", target.getFirstName());

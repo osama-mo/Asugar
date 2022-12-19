@@ -74,7 +74,7 @@ public class AppUserController {
     public void createProject(@RequestParam String name, HttpServletRequest request) throws IOException {
         String username = appUserService.getJWTUsername(request);
         if(username != null) {
-            AppUser admin = appUserService.loadUserByUsername(username);
+            AppUserEntity admin = appUserService.loadUserByUsername(username);
             projectService.createProject(name, admin);
         }
     }
@@ -85,7 +85,7 @@ public class AppUserController {
         String username = appUserService.getJWTUsername(request);
 
         if(username != null) {
-            AppUser user = appUserService.loadUserByUsername(username);
+            AppUserEntity user = appUserService.loadUserByUsername(username);
             List<Project> list = projectService.getUserProjects(user);
             for(Project project : list)
                 result.add(Pair.of(project.getName(), project.getId()));
@@ -98,7 +98,7 @@ public class AppUserController {
     public void deleteProject(@PathVariable("projectId") Long projectId, HttpServletRequest request) throws IOException {
         String username = appUserService.getJWTUsername(request);
         if(username != null) {
-            AppUser user = appUserService.loadUserByUsername(username);
+            AppUserEntity user = appUserService.loadUserByUsername(username);
             projectService.deleteProject(projectId, user.getId());
         }
     }

@@ -1,6 +1,6 @@
 package com.agilesekeri.asugar_api.project;
 
-import com.agilesekeri.asugar_api.appuser.AppUser;
+import com.agilesekeri.asugar_api.appuser.AppUserEntity;
 import com.agilesekeri.asugar_api.project.epic.Epic;
 import com.agilesekeri.asugar_api.project.sprint.Sprint;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.Set;
 public class ProjectService {
     private ProjectRepository projectRepository;
 
-    public Project createProject(String projectName, AppUser admin) {
+    public Project createProject(String projectName, AppUserEntity admin) {
         Project project = new Project(projectName, admin);
         projectRepository.save(project);
         return project;
@@ -28,7 +28,7 @@ public class ProjectService {
                         new IllegalArgumentException("No project with this ID was found"));
     }
 
-    public List<Project> getUserProjects(AppUser user) {
+    public List<Project> getUserProjects(AppUserEntity user) {
         return projectRepository.findByMembers_Id(user.getId())
                 .orElseThrow(() ->
                         new IllegalArgumentException("There are no projects found for the user"));
@@ -45,19 +45,19 @@ public class ProjectService {
             throw new IllegalStateException("Not qualified to delete the project with the id " + projectId);
     }
 
-    public Set<AppUser> getMemberSet(Long id) {
+    public Set<AppUserEntity> getMemberSet(Long id) {
         Project project = getProject(id);
         return project.getMembers();
     }
 
-    public boolean addMember(Long projectId, AppUser user) {
+    public boolean addMember(Long projectId, AppUserEntity user) {
         Project project = getProject(projectId);
         boolean result = project.addMember(user);
         projectRepository.save(project);
         return result;
     }
 
-    public boolean removeMember(Long projectId, AppUser user) {
+    public boolean removeMember(Long projectId, AppUserEntity user) {
         Project project = getProject(projectId);
         boolean result = project.removeMember(user);
         projectRepository.save(project);

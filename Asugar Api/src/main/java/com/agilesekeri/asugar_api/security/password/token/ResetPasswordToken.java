@@ -1,12 +1,13 @@
 package com.agilesekeri.asugar_api.security.password.token;
 
 import com.agilesekeri.asugar_api.actionToken.ActionToken;
-import com.agilesekeri.asugar_api.appuser.AppUser;
+import com.agilesekeri.asugar_api.appuser.AppUserEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
@@ -19,14 +20,14 @@ public class ResetPasswordToken extends ActionToken {
     @ManyToOne
     @JoinColumn(
             nullable = false,
-            name = "reset_password_token_id"
+            foreignKey = @ForeignKey(name = "fk_user_id")
     )
-    private AppUser appUser;
+    private AppUserEntity appUser;
 
     public ResetPasswordToken(String token,
                               LocalDateTime createdAt,
                               LocalDateTime expiresAt,
-                              AppUser appUser) {
+                              AppUserEntity appUser) {
         super(token, createdAt, expiresAt);
         this.appUser = appUser;
     }
