@@ -14,21 +14,8 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-@PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "fk_subtask_id"))
 @Table(name = "subtask")
 public class SubtaskEntity extends AbstractIssue {
-    @Id
-    @SequenceGenerator(
-            name = "subtask_sequence",
-            sequenceName = "subtask_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "subtask_sequence"
-    )
-    private Long id;
-
     @ManyToOne
     @JoinColumn(name = "parent_issue", foreignKey = @ForeignKey(name = "fk_parent_issue_id"))
     private IssueEntity parentIssue;

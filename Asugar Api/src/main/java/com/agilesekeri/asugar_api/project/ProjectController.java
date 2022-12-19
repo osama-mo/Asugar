@@ -22,7 +22,6 @@ public class ProjectController {
 
     private final AppUserService appUserService;
 
-
     @GetMapping(path = "/members")
     public void getMembers(@PathVariable Long projectId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         Project project = projectService.getProject(projectId);

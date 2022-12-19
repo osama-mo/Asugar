@@ -25,6 +25,7 @@ import static com.agilesekeri.asugar_api.project.enums.TaskConditionEnum.TODO;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "abstract_issue")
 public abstract class AbstractIssue {
     @Id
     @SequenceGenerator(
