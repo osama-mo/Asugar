@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.InvalidTransactionException;
 import java.io.IOException;
 import java.util.*;
 
@@ -24,7 +23,7 @@ public class ProjectController {
 
     @GetMapping(path = "/members")
     public void getMembers(@PathVariable Long projectId, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Project project = projectService.getProject(projectId);
+        ProjectEntity project = projectService.getProject(projectId);
         Set<AppUserEntity> members = project.getMembers();
         String username = appUserService.getJWTUsername(request);
         AppUserEntity issuer = appUserService.loadUserByUsername(username);
@@ -57,7 +56,7 @@ public class ProjectController {
     public boolean addMember(@PathVariable Long projectId, @RequestParam String username, HttpServletRequest request) throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
         AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
-        Project project = projectService.getProject(projectId);
+        ProjectEntity project = projectService.getProject(projectId);
 
         if(project.getAdmin() != issuer)
             throw new IllegalCallerException("The issuer is not qualified for the operation");
@@ -71,7 +70,7 @@ public class ProjectController {
     public boolean removeMember(@PathVariable Long projectId, @RequestParam String username, HttpServletRequest request) throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
         AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
-        Project project = projectService.getProject(projectId);
+        ProjectEntity project = projectService.getProject(projectId);
 
         if(project.getAdmin() != issuer)
             throw new IllegalCallerException("The issuer is not qualified for the operation");

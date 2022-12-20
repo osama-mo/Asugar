@@ -1,6 +1,6 @@
 package com.agilesekeri.asugar_api.appuser;
 
-import com.agilesekeri.asugar_api.project.Project;
+import com.agilesekeri.asugar_api.project.ProjectEntity;
 import com.agilesekeri.asugar_api.project.ProjectService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -72,7 +72,7 @@ public class AppUserService implements UserDetailsService {
                 .findByEmail(email).isPresent();
     }
 
-    public List<Project> getProjectList(Long userId) {
+    public List<ProjectEntity> getProjectList(Long userId) {
         AppUserEntity user = appUserRepository.findById(userId)
                 .orElseThrow(() ->
                         new IllegalArgumentException("There are no projects were found for the user"));

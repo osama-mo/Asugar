@@ -1,7 +1,7 @@
 package com.agilesekeri.asugar_api.project.epic;
 
 import com.agilesekeri.asugar_api.appuser.AppUserEntity;
-import com.agilesekeri.asugar_api.project.Project;
+import com.agilesekeri.asugar_api.project.ProjectEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Epic {
+public class EpicEntity {
     @Id
     @SequenceGenerator(
             name = "epic_sequence",
@@ -32,7 +32,7 @@ public class Epic {
 
     @ManyToOne
     @JoinColumn(name = "project_id", foreignKey = @ForeignKey(name = "fk_project_id"))
-    private Project project;
+    private ProjectEntity project;
 
     @ManyToOne
     @JoinColumn(name = "reporter_id", foreignKey = @ForeignKey(name = "fk_reporter_id"))

@@ -10,10 +10,10 @@ import java.util.Optional;
 @Repository
 @Transactional(readOnly = true)
 public interface ProjectRepository
-    extends JpaRepository<Project, Long>
+    extends JpaRepository<ProjectEntity, Long>
 {
     @Override
-    Optional<Project> findById(Long id);
+    Optional<ProjectEntity> findById(Long id);
 
-    Optional<List<Project>> findByMembers_Id(Long member);
+    Optional<List<ProjectEntity>> findByMembers_Id(Long member);
 }

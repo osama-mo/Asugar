@@ -1,7 +1,6 @@
 package com.agilesekeri.asugar_api.appuser;
 
-import com.agilesekeri.asugar_api.project.Project;
-import com.agilesekeri.asugar_api.registration.token.RegistrationToken;
+import com.agilesekeri.asugar_api.project.ProjectEntity;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
@@ -67,7 +66,7 @@ public class AppUserEntity implements UserDetails {
 
 
     @ManyToMany(mappedBy = "members")
-    private Set<Project> projects;
+    private Set<ProjectEntity> projects;
 
     private Boolean enabled = false;
 

@@ -28,7 +28,7 @@ class RegistrationTokenServiceTest {
     private RegistrationTokenService registrationTokenService;
 
     /**
-     * Method under test: {@link RegistrationTokenService#saveConfirmationToken(RegistrationToken)}
+     * Method under test: {@link RegistrationTokenService#saveConfirmationToken(RegistrationTokenEntity)}
      */
     @Test
     void testSaveConfirmationToken() {
@@ -41,14 +41,14 @@ class RegistrationTokenServiceTest {
         appUser.setPassword("iloveyou");
         appUser.setProjects(new HashSet<>());
 
-        RegistrationToken registrationToken = new RegistrationToken();
+        RegistrationTokenEntity registrationToken = new RegistrationTokenEntity();
         registrationToken.setAppUser(appUser);
         registrationToken.setConfirmedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         registrationToken.setCreatedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         registrationToken.setExpiresAt(LocalDateTime.of(1, 1, 1, 1, 1));
         registrationToken.setId(123L);
         registrationToken.setToken("ABC123");
-        when(registrationTokenRepository.save((RegistrationToken) any())).thenReturn(registrationToken);
+        when(registrationTokenRepository.save((RegistrationTokenEntity) any())).thenReturn(registrationToken);
 
         AppUserEntity appUser1 = new AppUserEntity();
         appUser1.setEmail("jane.doe@example.org");
@@ -59,7 +59,7 @@ class RegistrationTokenServiceTest {
         appUser1.setPassword("iloveyou");
         appUser1.setProjects(new HashSet<>());
 
-        RegistrationToken registrationToken1 = new RegistrationToken();
+        RegistrationTokenEntity registrationToken1 = new RegistrationTokenEntity();
         registrationToken1.setAppUser(appUser1);
         registrationToken1.setConfirmedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         registrationToken1.setCreatedAt(LocalDateTime.of(1, 1, 1, 1, 1));
@@ -67,7 +67,7 @@ class RegistrationTokenServiceTest {
         registrationToken1.setId(123L);
         registrationToken1.setToken("ABC123");
         registrationTokenService.saveConfirmationToken(registrationToken1);
-        verify(registrationTokenRepository).save((RegistrationToken) any());
+        verify(registrationTokenRepository).save((RegistrationTokenEntity) any());
         assertEquals(appUser, registrationToken1.getAppUser());
         assertEquals("ABC123", registrationToken1.getToken());
         assertEquals(123L, registrationToken1.getId().longValue());

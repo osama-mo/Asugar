@@ -1,6 +1,6 @@
 package com.agilesekeri.asugar_api.project.sprint;
 
-import com.agilesekeri.asugar_api.project.Project;
+import com.agilesekeri.asugar_api.project.ProjectEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Sprint {
+public class SprintEntity {
     @Id
     @SequenceGenerator(
             name = "sprint_sequence",
@@ -31,7 +31,7 @@ public class Sprint {
 
     @ManyToOne
     @JoinColumn(name = "project_id", foreignKey = @ForeignKey(name = "fk_project_id"))
-    private Project project;
+    private ProjectEntity project;
 
     //TODO included issues
 

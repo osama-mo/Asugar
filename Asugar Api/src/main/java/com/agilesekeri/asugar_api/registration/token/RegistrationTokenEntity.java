@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RegistrationToken extends ActionToken {
+public class RegistrationTokenEntity extends ActionToken {
     @ManyToOne
     @JoinColumn(
             nullable = false,
@@ -21,10 +21,10 @@ public class RegistrationToken extends ActionToken {
     )
     private AppUserEntity appUser;
 
-    public RegistrationToken(String token,
-                             LocalDateTime createdAt,
-                             LocalDateTime expiresAt,
-                             AppUserEntity appUser) {
+    public RegistrationTokenEntity(String token,
+                                   LocalDateTime createdAt,
+                                   LocalDateTime expiresAt,
+                                   AppUserEntity appUser) {
         super(token, createdAt, expiresAt);
         this.appUser = appUser;
     }

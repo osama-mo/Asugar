@@ -12,11 +12,11 @@ public class RegistrationTokenService {
 
     private final RegistrationTokenRepository registrationTokenRepository;
 
-    public void saveConfirmationToken(RegistrationToken token) {
+    public void saveConfirmationToken(RegistrationTokenEntity token) {
         registrationTokenRepository.save(token);
     }
 
-    public Optional<RegistrationToken> getToken(String token) {
+    public Optional<RegistrationTokenEntity> getToken(String token) {
         return registrationTokenRepository.findByToken(token);
     }
 

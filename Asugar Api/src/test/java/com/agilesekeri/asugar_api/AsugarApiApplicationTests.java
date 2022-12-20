@@ -3,7 +3,7 @@ package com.agilesekeri.asugar_api;
 import com.agilesekeri.asugar_api.appuser.AppUserEntity;
 import com.agilesekeri.asugar_api.appuser.AppUserService;
 import com.agilesekeri.asugar_api.email.EmailValidator;
-import com.agilesekeri.asugar_api.project.Project;
+import com.agilesekeri.asugar_api.project.ProjectEntity;
 import com.agilesekeri.asugar_api.project.ProjectController;
 import com.agilesekeri.asugar_api.project.ProjectService;
 import com.agilesekeri.asugar_api.registration.RegistrationController;
@@ -96,7 +96,7 @@ class AsugarApiApplicationTests {
         AppUserEntity appUser = appUserService.loadUserByUsername("email@test.com");
         assertTrue(appUserService.getProjectList(appUser.getId()).isEmpty());
 
-        Project project = projectService.createProject("project test 1", appUser);
+        ProjectEntity project = projectService.createProject("project test 1", appUser);
         assertNotNull(project.getCreatedAt());
         assertNull(project.getPlannedTo());
         assertNull(project.getEndedAt());

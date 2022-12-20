@@ -1,6 +1,6 @@
 package com.agilesekeri.asugar_api.appuser;
 
-import com.agilesekeri.asugar_api.project.Project;
+import com.agilesekeri.asugar_api.project.ProjectEntity;
 import com.agilesekeri.asugar_api.project.ProjectService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -86,8 +86,8 @@ public class AppUserController {
 
         if(username != null) {
             AppUserEntity user = appUserService.loadUserByUsername(username);
-            List<Project> list = projectService.getUserProjects(user);
-            for(Project project : list)
+            List<ProjectEntity> list = projectService.getUserProjects(user);
+            for(ProjectEntity project : list)
                 result.add(Pair.of(project.getName(), project.getId()));
         }
 

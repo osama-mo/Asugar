@@ -1,10 +1,9 @@
 package com.agilesekeri.asugar_api.project;
 
 import com.agilesekeri.asugar_api.appuser.AppUserEntity;
-import com.agilesekeri.asugar_api.project.epic.Epic;
+import com.agilesekeri.asugar_api.project.epic.EpicEntity;
 import com.agilesekeri.asugar_api.project.issue.AbstractIssue;
-import com.agilesekeri.asugar_api.project.issue.IssueEntity;
-import com.agilesekeri.asugar_api.project.sprint.Sprint;
+import com.agilesekeri.asugar_api.project.sprint.SprintEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +16,7 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Project {
+public class ProjectEntity {
     @Id
     @SequenceGenerator(
             name = "project_sequence",
@@ -48,10 +47,10 @@ public class Project {
     private Set<AppUserEntity> members;
 
     @OneToMany(mappedBy = "project")
-    private Set<Sprint> sprints;
+    private Set<SprintEntity> sprints;
 
     @OneToMany(mappedBy = "project")
-    private Set<Epic> Epics;
+    private Set<EpicEntity> Epics;
 
     @OneToMany(mappedBy = "project")
     private Set<AbstractIssue> issues;
@@ -74,7 +73,7 @@ public class Project {
     )
     private LocalDateTime endedAt;
 
-    public Project(String name, AppUserEntity admin) {
+    public ProjectEntity(String name, AppUserEntity admin) {
         this.name = name;
         this.admin = admin;
         this.plannedTo = null;
@@ -98,7 +97,7 @@ public class Project {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Project project = (Project) o;
+        ProjectEntity project = (ProjectEntity) o;
         return id.equals(project.id);
     }
 

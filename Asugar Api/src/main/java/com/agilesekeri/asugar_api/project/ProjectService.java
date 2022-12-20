@@ -1,8 +1,8 @@
 package com.agilesekeri.asugar_api.project;
 
 import com.agilesekeri.asugar_api.appuser.AppUserEntity;
-import com.agilesekeri.asugar_api.project.epic.Epic;
-import com.agilesekeri.asugar_api.project.sprint.Sprint;
+import com.agilesekeri.asugar_api.project.epic.EpicEntity;
+import com.agilesekeri.asugar_api.project.sprint.SprintEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,26 +16,26 @@ import java.util.Set;
 public class ProjectService {
     private ProjectRepository projectRepository;
 
-    public Project createProject(String projectName, AppUserEntity admin) {
-        Project project = new Project(projectName, admin);
+    public ProjectEntity createProject(String projectName, AppUserEntity admin) {
+        ProjectEntity project = new ProjectEntity(projectName, admin);
         projectRepository.save(project);
         return project;
     }
 
-    public Project getProject(Long projectId) {
+    public ProjectEntity getProject(Long projectId) {
         return projectRepository.findById(projectId)
                 .orElseThrow( () ->
                         new IllegalArgumentException("No project with this ID was found"));
     }
 
-    public List<Project> getUserProjects(AppUserEntity user) {
+    public List<ProjectEntity> getUserProjects(AppUserEntity user) {
         return projectRepository.findByMembers_Id(user.getId())
                 .orElseThrow(() ->
                         new IllegalArgumentException("There are no projects found for the user"));
     }
 
     public void deleteProject(Long projectId, Long userId){
-        Project target = projectRepository.findById(projectId)
+        ProjectEntity target = projectRepository.findById(projectId)
                 .orElseThrow( () ->
                         new IllegalStateException("No project with id " + projectId + " was found to delete"));
 
@@ -46,31 +46,31 @@ public class ProjectService {
     }
 
     public Set<AppUserEntity> getMemberSet(Long id) {
-        Project project = getProject(id);
+        ProjectEntity project = getProject(id);
         return project.getMembers();
     }
 
     public boolean addMember(Long projectId, AppUserEntity user) {
-        Project project = getProject(projectId);
+        ProjectEntity project = getProject(projectId);
         boolean result = project.addMember(user);
         projectRepository.save(project);
         return result;
     }
 
     public boolean removeMember(Long projectId, AppUserEntity user) {
-        Project project = getProject(projectId);
+        ProjectEntity project = getProject(projectId);
         boolean result = project.removeMember(user);
         projectRepository.save(project);
         return result;
     }
 
-    public Set<Sprint> getSprintSet(Long projectId) {
-        Project project = getProject(projectId);
+    public Set<SprintEntity> getSprintSet(Long projectId) {
+        ProjectEntity project = getProject(projectId);
         return project.getSprints();
     }
 
-    public Set<Epic> getEpicSet(Long projectId) {
-        Project project = getProject(projectId);
+    public Set<EpicEntity> getEpicSet(Long projectId) {
+        ProjectEntity project = getProject(projectId);
         return project.getEpics();
     }
 }

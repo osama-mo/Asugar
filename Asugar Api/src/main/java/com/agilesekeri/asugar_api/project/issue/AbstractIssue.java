@@ -1,13 +1,12 @@
 package com.agilesekeri.asugar_api.project.issue;
 
 import com.agilesekeri.asugar_api.appuser.AppUserEntity;
-import com.agilesekeri.asugar_api.project.Project;
+import com.agilesekeri.asugar_api.project.ProjectEntity;
 import com.agilesekeri.asugar_api.project.enums.IssueTypeEnum;
 import com.agilesekeri.asugar_api.project.enums.TaskConditionEnum;
-import com.agilesekeri.asugar_api.project.epic.Epic;
-import com.agilesekeri.asugar_api.project.sprint.Sprint;
+import com.agilesekeri.asugar_api.project.epic.EpicEntity;
+import com.agilesekeri.asugar_api.project.sprint.SprintEntity;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -45,15 +44,15 @@ public abstract class AbstractIssue {
 
     @ManyToOne
     @JoinColumn(name = "project_id", foreignKey = @ForeignKey(name = "ik_project_id"))
-    private Project project;
+    private ProjectEntity project;
 
     @ManyToOne
     @JoinColumn(name = "epic_id", foreignKey = @ForeignKey(name = "ik_epic_id"))
-    private Epic epic;
+    private EpicEntity epic;
 
     @ManyToOne
     @JoinColumn(name = "sprint_id", foreignKey = @ForeignKey(name = "ik_sprint_id"))
-    private Sprint sprint;
+    private SprintEntity sprint;
 
     private Integer manHour;
 
@@ -73,7 +72,7 @@ public abstract class AbstractIssue {
     private LocalDateTime plannedTo;
     private LocalDateTime endedAt;
 
-    public AbstractIssue(String title, Project project, AppUserEntity creator, IssueTypeEnum issueType) {
+    public AbstractIssue(String title, ProjectEntity project, AppUserEntity creator, IssueTypeEnum issueType) {
         this.title = title;
         this.description = null;
         this.project = project;

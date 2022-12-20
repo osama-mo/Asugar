@@ -12,9 +12,9 @@ import java.util.Optional;
 @Repository
 @Transactional(readOnly = true)
 public interface RegistrationTokenRepository
-        extends JpaRepository<RegistrationToken, Long> {
+        extends JpaRepository<RegistrationTokenEntity, Long> {
 
-    Optional<RegistrationToken> findByToken(String token);
+    Optional<RegistrationTokenEntity> findByToken(String token);
 
     @Transactional
     @Modifying

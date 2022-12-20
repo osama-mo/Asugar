@@ -4,7 +4,7 @@ import com.agilesekeri.asugar_api.appuser.AppUserEntity;
 import com.agilesekeri.asugar_api.appuser.AppUserService;
 import com.agilesekeri.asugar_api.email.EmailSender;
 import com.agilesekeri.asugar_api.email.EmailValidator;
-import com.agilesekeri.asugar_api.registration.token.RegistrationToken;
+import com.agilesekeri.asugar_api.registration.token.RegistrationTokenEntity;
 import com.agilesekeri.asugar_api.registration.token.RegistrationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -52,7 +52,7 @@ public class RegistrationService {
         }
 
         String token = UUID.randomUUID().toString();
-        RegistrationToken confirmationToken = new RegistrationToken(
+        RegistrationTokenEntity confirmationToken = new RegistrationTokenEntity(
                 token,
                 LocalDateTime.now(),
                 LocalDateTime.now().plusMinutes(15),
@@ -84,7 +84,7 @@ public class RegistrationService {
 
     @Transactional
     public String confirmToken(String token) {
-        RegistrationToken registrationToken = registrationTokenService
+        RegistrationTokenEntity registrationToken = registrationTokenService
                 .getToken(token)
                 .orElseThrow(() ->
                         new IllegalStateException("token not found"));
@@ -97,7 +97,7 @@ public class RegistrationService {
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
             String newToken = UUID.randomUUID().toString();
-            RegistrationToken newRegistrationToken = new RegistrationToken(
+            RegistrationTokenEntity newRegistrationToken = new RegistrationTokenEntity(
                     newToken,
                     LocalDateTime.now(),
                     LocalDateTime.now().plusMinutes(15),
