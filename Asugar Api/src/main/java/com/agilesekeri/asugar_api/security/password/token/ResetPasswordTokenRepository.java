@@ -18,7 +18,7 @@ public interface ResetPasswordTokenRepository
 
     @Transactional
     @Modifying
-    @Query("UPDATE ResetPasswordToken c " +
+    @Query("UPDATE ResetPasswordTokenEntity c " +
             "SET c.confirmedAt = ?2 " +
             "WHERE c.token = ?1")
     int updateConfirmedAt(String token,

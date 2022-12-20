@@ -2,8 +2,8 @@ package com.agilesekeri.asugar_api.project.issue;
 
 import com.agilesekeri.asugar_api.appuser.AppUserEntity;
 import com.agilesekeri.asugar_api.project.ProjectEntity;
-import com.agilesekeri.asugar_api.project.enums.IssueTypeEnum;
-import com.agilesekeri.asugar_api.project.enums.TaskConditionEnum;
+import com.agilesekeri.asugar_api.model.enums.IssueTypeEnum;
+import com.agilesekeri.asugar_api.model.enums.TaskConditionEnum;
 import com.agilesekeri.asugar_api.project.epic.EpicEntity;
 import com.agilesekeri.asugar_api.project.sprint.SprintEntity;
 import lombok.*;
@@ -11,7 +11,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-import static com.agilesekeri.asugar_api.project.enums.TaskConditionEnum.TODO;
+import static com.agilesekeri.asugar_api.model.enums.TaskConditionEnum.TODO;
 
 //@Getter
 //@Setter

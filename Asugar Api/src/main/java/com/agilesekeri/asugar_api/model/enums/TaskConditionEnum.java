@@ -1,4 +1,4 @@
-package com.agilesekeri.asugar_api.project.enums;
+package com.agilesekeri.asugar_api.model.enums;
 
 public enum TaskConditionEnum {
     TODO,
