@@ -3,7 +3,7 @@ package com.agilesekeri.asugar_api.security.password;
 import com.agilesekeri.asugar_api.appuser.AppUserEntity;
 import com.agilesekeri.asugar_api.appuser.AppUserService;
 import com.agilesekeri.asugar_api.email.EmailSender;
-import com.agilesekeri.asugar_api.security.password.token.ResetPasswordToken;
+import com.agilesekeri.asugar_api.security.password.token.ResetPasswordTokenEntity;
 import com.agilesekeri.asugar_api.security.password.token.ResetPasswordTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,7 +29,7 @@ public class ResetPasswordService {
         AppUserEntity appUser = appUserService.loadUserByUsername(email);
 
         String token = UUID.randomUUID().toString();
-        ResetPasswordToken resetPasswordToken = new ResetPasswordToken(
+        ResetPasswordTokenEntity resetPasswordToken = new ResetPasswordTokenEntity(
                 token,
                 LocalDateTime.now(),
                 LocalDateTime.now().plusMinutes(15),
@@ -49,7 +49,7 @@ public class ResetPasswordService {
 
     @Transactional
     public String confirmRequest(String token, String newPassword) {
-        ResetPasswordToken resetPasswordToken = resetPasswordTokenService
+        ResetPasswordTokenEntity resetPasswordToken = resetPasswordTokenService
                 .getToken(token)
                 .orElseThrow(() ->
                         new IllegalStateException("token not found"));
@@ -62,7 +62,7 @@ public class ResetPasswordService {
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
             String newToken = UUID.randomUUID().toString();
-            ResetPasswordToken newResetPasswordToken = new ResetPasswordToken(
+            ResetPasswordTokenEntity newResetPasswordToken = new ResetPasswordTokenEntity(
                     newToken,
                     LocalDateTime.now(),
                     LocalDateTime.now().plusMinutes(15),

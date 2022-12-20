@@ -12,9 +12,9 @@ import java.util.Optional;
 @Repository
 @Transactional(readOnly = true)
 public interface ResetPasswordTokenRepository
-        extends JpaRepository<ResetPasswordToken, Long> {
+        extends JpaRepository<ResetPasswordTokenEntity, Long> {
 
-    Optional<ResetPasswordToken> findByToken(String token);
+    Optional<ResetPasswordTokenEntity> findByToken(String token);
 
     @Transactional
     @Modifying

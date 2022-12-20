@@ -12,11 +12,11 @@ public class ResetPasswordTokenService {
 
     private final ResetPasswordTokenRepository resetPasswordTokenRepository;
 
-    public void saveResetPasswordToken(ResetPasswordToken token) {
+    public void saveResetPasswordToken(ResetPasswordTokenEntity token) {
         resetPasswordTokenRepository.save(token);
     }
 
-    public Optional<ResetPasswordToken> getToken(String token) {
+    public Optional<ResetPasswordTokenEntity> getToken(String token) {
         return resetPasswordTokenRepository.findByToken(token);
     }
 

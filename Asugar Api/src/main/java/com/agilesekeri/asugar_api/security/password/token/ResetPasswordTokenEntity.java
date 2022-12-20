@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ResetPasswordToken extends ActionToken {
+public class ResetPasswordTokenEntity extends ActionToken {
     @ManyToOne
     @JoinColumn(
             nullable = false,
@@ -24,10 +24,10 @@ public class ResetPasswordToken extends ActionToken {
     )
     private AppUserEntity appUser;
 
-    public ResetPasswordToken(String token,
-                              LocalDateTime createdAt,
-                              LocalDateTime expiresAt,
-                              AppUserEntity appUser) {
+    public ResetPasswordTokenEntity(String token,
+                                    LocalDateTime createdAt,
+                                    LocalDateTime expiresAt,
+                                    AppUserEntity appUser) {
         super(token, createdAt, expiresAt);
         this.appUser = appUser;
     }

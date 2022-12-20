@@ -28,7 +28,7 @@ class ResetPasswordTokenServiceTest {
     private ResetPasswordTokenService resetPasswordTokenService;
 
     /**
-     * Method under test: {@link ResetPasswordTokenService#saveResetPasswordToken(ResetPasswordToken)}
+     * Method under test: {@link ResetPasswordTokenService#saveResetPasswordToken(ResetPasswordTokenEntity)}
      */
     @Test
     void testSaveResetPasswordToken() {
@@ -41,14 +41,14 @@ class ResetPasswordTokenServiceTest {
         appUser.setPassword("iloveyou");
         appUser.setProjects(new HashSet<>());
 
-        ResetPasswordToken resetPasswordToken = new ResetPasswordToken();
+        ResetPasswordTokenEntity resetPasswordToken = new ResetPasswordTokenEntity();
         resetPasswordToken.setAppUser(appUser);
         resetPasswordToken.setConfirmedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setCreatedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setExpiresAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setId(123L);
         resetPasswordToken.setToken("ABC123");
-        when(resetPasswordTokenRepository.save((ResetPasswordToken) any())).thenReturn(resetPasswordToken);
+        when(resetPasswordTokenRepository.save((ResetPasswordTokenEntity) any())).thenReturn(resetPasswordToken);
 
         AppUserEntity appUser1 = new AppUserEntity();
         appUser1.setEmail("jane.doe@example.org");
@@ -59,7 +59,7 @@ class ResetPasswordTokenServiceTest {
         appUser1.setPassword("iloveyou");
         appUser1.setProjects(new HashSet<>());
 
-        ResetPasswordToken resetPasswordToken1 = new ResetPasswordToken();
+        ResetPasswordTokenEntity resetPasswordToken1 = new ResetPasswordTokenEntity();
         resetPasswordToken1.setAppUser(appUser1);
         resetPasswordToken1.setConfirmedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken1.setCreatedAt(LocalDateTime.of(1, 1, 1, 1, 1));
@@ -67,7 +67,7 @@ class ResetPasswordTokenServiceTest {
         resetPasswordToken1.setId(123L);
         resetPasswordToken1.setToken("ABC123");
         resetPasswordTokenService.saveResetPasswordToken(resetPasswordToken1);
-        verify(resetPasswordTokenRepository).save((ResetPasswordToken) any());
+        verify(resetPasswordTokenRepository).save((ResetPasswordTokenEntity) any());
         assertEquals(appUser, resetPasswordToken1.getAppUser());
         assertEquals("ABC123", resetPasswordToken1.getToken());
         assertEquals(123L, resetPasswordToken1.getId().longValue());
