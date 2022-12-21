@@ -16,7 +16,7 @@ import javax.persistence.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @SuperBuilder
-//@PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "fk_subtask_id"))
+@PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "fk_subtask_id"))
 @Table(name = "subtask")
 public class SubtaskEntity extends AbstractIssue {
     @ManyToOne

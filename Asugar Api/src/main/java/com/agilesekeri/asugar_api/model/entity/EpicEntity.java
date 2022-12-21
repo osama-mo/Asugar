@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Setter
 @Getter
+@Table(name = "epic")
 public class EpicEntity {
     @Id
     @SequenceGenerator(
@@ -29,7 +30,7 @@ public class EpicEntity {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "project", foreignKey = @ForeignKey(name = "fk_project_id"))
+    @JoinColumn(name = "project_id", foreignKey = @ForeignKey(name = "fk_project_id"))
     private ProjectEntity project;
 
     @ManyToOne

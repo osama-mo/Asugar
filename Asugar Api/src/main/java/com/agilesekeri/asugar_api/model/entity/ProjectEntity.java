@@ -13,6 +13,7 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @Entity
+@Table(name = "project")
 public class ProjectEntity {
     @Id
     @SequenceGenerator(

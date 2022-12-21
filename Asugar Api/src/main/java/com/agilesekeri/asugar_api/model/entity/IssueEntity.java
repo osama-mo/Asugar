@@ -16,7 +16,7 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-//@PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "fk_issue_id"))
+@PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "fk_issue_id"))
 @Table(name = "issue")
 public class IssueEntity extends AbstractIssue {
 

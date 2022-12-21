@@ -17,6 +17,7 @@ import java.util.Set;
 @Transactional
 public class ProjectService {
     private ProjectRepository projectRepository;
+    private final AppUserService appUserService;
 
     public ProjectEntity createProject(String projectName, AppUserEntity admin) {
         ProjectEntity project = new ProjectEntity(projectName, admin);
@@ -64,6 +65,12 @@ public class ProjectService {
         boolean result = project.removeMember(user);
         projectRepository.save(project);
         return result;
+    }
+
+    public void setProductOwner(Long productId, String username) {
+        ProjectEntity product = getProject(productId);
+        AppUserEntity user = appUserService.loadUserByUsername(username);
+        product.setProductOwner(user);
     }
 
     public Set<SprintEntity> getSprintSet(Long projectId) {

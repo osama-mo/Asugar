@@ -82,6 +82,19 @@ public class ProjectController {
         return true;
     }
 
+    @PutMapping(path = "/members")
+    public boolean setProductOwner(@PathVariable Long projectId, @RequestParam String username, HttpServletRequest request) throws IOException {
+        String issuerUsername = appUserService.getJWTUsername(request);
+        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
+        ProjectEntity project = projectService.getProject(projectId);
+
+        if(project.getAdmin() != issuer)
+            throw new IllegalCallerException("The issuer is not qualified for the operation");
+
+        projectService.setProductOwner(projectId, username);
+        return true;
+    }
+
     @GetMapping(path = "/sprints")
     public void getSprints(@PathVariable Long projectId, HttpServletResponse response) {
         //TODO
