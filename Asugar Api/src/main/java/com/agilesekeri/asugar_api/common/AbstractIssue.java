@@ -7,6 +7,7 @@ import com.agilesekeri.asugar_api.model.enums.TaskConditionEnum;
 import com.agilesekeri.asugar_api.model.entity.EpicEntity;
 import com.agilesekeri.asugar_api.model.entity.SprintEntity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,13 +18,14 @@ import static com.agilesekeri.asugar_api.model.enums.TaskConditionEnum.TODO;
 //@Setter
 //@MappedSuperclass
 //@NoArgsConstructor
-//@SuperBuilder
 //@AllArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@SuperBuilder
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "abstract_issue")
 public abstract class AbstractIssue {
     @Id
@@ -71,23 +73,6 @@ public abstract class AbstractIssue {
     private LocalDateTime createdAt;
     private LocalDateTime plannedTo;
     private LocalDateTime endedAt;
-
-    public AbstractIssue(String title, ProjectEntity project, AppUserEntity creator, IssueTypeEnum issueType) {
-        this.title = title;
-        this.description = null;
-        this.project = project;
-        this.epic = null;
-        this.sprint = null;
-        this.manHour = 0;
-        this.condition = TODO;
-        this.issueType = issueType;
-        this.creator = creator;
-        this.assigned = null;
-        this.createdAt = LocalDateTime.now();
-        this.plannedTo = null;
-        this.endedAt = null;
-    }
-
     public void complete() {
         this.endedAt = LocalDateTime.now();
     }

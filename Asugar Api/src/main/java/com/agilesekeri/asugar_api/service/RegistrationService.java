@@ -32,12 +32,11 @@ public class RegistrationService {
             throw new IllegalStateException("email not valid");
         }
 
-        AppUserEntity newUser = new AppUserEntity(
-                request.getFirstName(),
-                request.getLastName(),
-                request.getEmail(),
-                request.getPassword()
-        );
+        AppUserEntity newUser = AppUserEntity.builder()
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .email(request.getEmail())
+                .password(request.getPassword()).build();
 
         try {
             appUserService.signUpUser(newUser);

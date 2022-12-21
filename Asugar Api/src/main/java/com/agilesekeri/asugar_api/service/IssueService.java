@@ -1,18 +1,12 @@
 package com.agilesekeri.asugar_api.service;
 
-import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
-import com.agilesekeri.asugar_api.service.AppUserService;
-import com.agilesekeri.asugar_api.repository.IssueRepository;
+import com.agilesekeri.asugar_api.model.entity.*;
 import com.agilesekeri.asugar_api.model.request.IssueCreateRequest;
 import com.agilesekeri.asugar_api.model.request.IssueGenericUpdateRequest;
-import com.agilesekeri.asugar_api.model.entity.IssueEntity;
+import com.agilesekeri.asugar_api.repository.IssueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.time.LocalDateTime;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -20,26 +14,24 @@ public class IssueService {
     // TODO: project id belirtildiginde bir issue icin, o projenin varligini check et.
     private final IssueRepository issueRepository;
     private final AppUserService appUserService;
+    private final ProjectService projectService;
+    private final EpicService epicService;
+    private final SprintService sprintService;
 
-    public void createIssue(IssueCreateRequest issueCreateRequest){
-        // TODO: Change below code to work with JWT, request sender will be used as creator.
-        //AppUserEntity creator = appUserService.loadUserByUsername(issueCreateRequest.getUsername());
-//        IssueEntity issueEntity = IssueEntity.builder()
-//                .projectId(issueCreateRequest.getProjectId())
-//                .title(issueCreateRequest.getTitle())
-//                .creator(creator)
-//                .epicId(issueCreateRequest.getEpicId())
-//                .sprintId(issueCreateRequest.getSprintId())
-//                .issueType(issueCreateRequest.getIssueType())
-//                .build();
+    public void createIssue(IssueCreateRequest issueCreateRequest) {
+        AppUserEntity creator = appUserService.loadUserByUsername(issueCreateRequest.getUserName());
+        ProjectEntity project = projectService.getProject(issueCreateRequest.getProjectId());
+        EpicEntity epic = epicService.getEpic(issueCreateRequest.getEpicId());
+        SprintEntity sprint = sprintService.getSprint(issueCreateRequest.getSprintId());
 
-        IssueEntity issueEntity = new IssueEntity();
-        issueEntity.setTitle(issueCreateRequest.getTitle());
-        issueEntity.setProject(issueCreateRequest.getProject());
-        issueEntity.setEpic(issueCreateRequest.getEpic());
-        issueEntity.setSprint(issueCreateRequest.getSprint());
-        issueEntity.setIssueType(issueCreateRequest.getIssueType());
-
+        IssueEntity issueEntity = IssueEntity.builder()
+                .project(project)
+                .title(issueCreateRequest.getTitle())
+                .creator(creator)
+                .epic(epic)
+                .sprint(sprint)
+                .issueType(issueCreateRequest.getIssueType())
+                .build();
 
         issueRepository.save(issueEntity);
     }

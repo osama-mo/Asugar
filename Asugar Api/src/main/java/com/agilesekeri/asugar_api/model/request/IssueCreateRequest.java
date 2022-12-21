@@ -1,5 +1,6 @@
 package com.agilesekeri.asugar_api.model.request;
 
+import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
 import com.agilesekeri.asugar_api.model.entity.EpicEntity;
 import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
 import com.agilesekeri.asugar_api.model.entity.SprintEntity;
@@ -14,13 +15,15 @@ import lombok.Data;
 @AllArgsConstructor
 public class IssueCreateRequest {
     @NotNull
+    private final String userName;
+    @NotNull
     private final String title;
     @NotNull
-    private final ProjectEntity project;
+    private final Long projectId;
     @NotNull
-    private final EpicEntity epic;
+    private final Long epicId;
     @NotNull
-    private final SprintEntity sprint;
+    private final Long sprintId;
     @NotNull
     private final IssueTypeEnum issueType;
 }

@@ -13,7 +13,9 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
+@Builder
 @Table(
         name = "app_user",
         uniqueConstraints = {
@@ -67,17 +69,18 @@ public class AppUserEntity implements UserDetails {
     @ManyToMany(mappedBy = "members")
     private Set<ProjectEntity> projects;
 
+    @Builder.Default
     private Boolean enabled = false;
 
-    public AppUserEntity(String firstName,
-                         String lastName,
-                         String email,
-                         String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
+//    public AppUserEntity(String firstName,
+//                         String lastName,
+//                         String email,
+//                         String password) {
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.email = email;
+//        this.password = password;
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

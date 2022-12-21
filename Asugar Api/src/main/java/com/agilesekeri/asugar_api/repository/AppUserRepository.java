@@ -16,6 +16,7 @@ public interface AppUserRepository
         extends JpaRepository<AppUserEntity, Long> {
     Optional<AppUserEntity> findByEmail(String email);
 
+    @Override
     Optional<AppUserEntity> findById(Long id);
 
     @Transactional

@@ -29,7 +29,7 @@ public class EpicEntity {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "project_id", foreignKey = @ForeignKey(name = "fk_project_id"))
+    @JoinColumn(name = "project", foreignKey = @ForeignKey(name = "fk_project_id"))
     private ProjectEntity project;
 
     @ManyToOne
