@@ -10,11 +10,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.agilesekeri.asugar_api.appuser.AppUserEntity;
-import com.agilesekeri.asugar_api.appuser.AppUserService;
+import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
+import com.agilesekeri.asugar_api.service.AppUserService;
 import com.agilesekeri.asugar_api.email.EmailSender;
-import com.agilesekeri.asugar_api.security.password.token.ResetPasswordTokenEntity;
-import com.agilesekeri.asugar_api.security.password.token.ResetPasswordTokenService;
+import com.agilesekeri.asugar_api.model.entity.ResetPasswordTokenEntity;
+import com.agilesekeri.asugar_api.service.ResetPasswordService;
+import com.agilesekeri.asugar_api.service.ResetPasswordTokenService;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;

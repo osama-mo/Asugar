@@ -2,10 +2,11 @@ package com.agilesekeri.asugar_api.project;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.agilesekeri.asugar_api.appuser.AppUserEntity;
+import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
 
 import java.util.HashSet;
 
+import com.agilesekeri.asugar_api.service.ProjectService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

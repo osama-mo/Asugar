@@ -1,13 +1,13 @@
 package com.agilesekeri.asugar_api;
 
-import com.agilesekeri.asugar_api.appuser.AppUserEntity;
-import com.agilesekeri.asugar_api.appuser.AppUserService;
+import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
+import com.agilesekeri.asugar_api.service.AppUserService;
 import com.agilesekeri.asugar_api.email.EmailValidator;
-import com.agilesekeri.asugar_api.project.ProjectEntity;
-import com.agilesekeri.asugar_api.project.ProjectController;
-import com.agilesekeri.asugar_api.project.ProjectService;
-import com.agilesekeri.asugar_api.registration.RegistrationController;
-import com.agilesekeri.asugar_api.registration.RegistrationRequest;
+import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
+import com.agilesekeri.asugar_api.controller.ProjectController;
+import com.agilesekeri.asugar_api.service.ProjectService;
+import com.agilesekeri.asugar_api.controller.RegistrationController;
+import com.agilesekeri.asugar_api.model.request.RegistrationRequest;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

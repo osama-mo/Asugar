@@ -6,11 +6,14 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.agilesekeri.asugar_api.appuser.AppUserEntity;
+import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 
+import com.agilesekeri.asugar_api.model.entity.RegistrationTokenEntity;
+import com.agilesekeri.asugar_api.repository.RegistrationTokenRepository;
+import com.agilesekeri.asugar_api.service.RegistrationTokenService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
