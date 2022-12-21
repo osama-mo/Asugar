@@ -158,4 +158,6 @@ export class AuthService {
     return this.httpClient.get(`http://localhost:8080/${userEmail}/members}`, httpOptions) 
   }
 
+  addMember(){
+  }
 }

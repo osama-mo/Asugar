@@ -1,0 +1,9 @@
+<div cdkDropListGroup>
+    <div class="example-container"  >
+      <h2>To do</h2>
+
+      <div cdkDropList #listOne="cdkDropList" [cdkDropListConnectedTo]="[listTwo]"></div>
+<div cdkDropList #listTwo="cdkDropList" [cdkDropListConnectedTo]="[listOne]"></div>
+    </div>
+    </div>
+    
