@@ -16,7 +16,8 @@ export class SprintsListComponent implements OnInit {
   ];
 
   done = [
-    'Get up'
+    'Get up',
+    ''
   ];
   todoList = ['root', 'child1', 'child2']
   drop(event: CdkDragDrop<string[]>) {
