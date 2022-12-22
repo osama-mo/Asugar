@@ -1,0 +1,183 @@
+@import url(https://fonts.googleapis.com/css?family=Share);
+
+.sidenav {
+    height: 100%;
+    width: 12vw;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgba(143, 206, 233 , .5);
+    overflow-x: hidden;
+    padding-top: 20px;
+    backdrop-filter: blur(2px);
+    border-style: solid;
+    border-width: 4px;
+    border-color: #22597D;
+    margin-top: 55px;
+}
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+
+    backdrop-filter: blur(2px);
+}
+
+.sidenav a:hover {
+    color: #22597D;
+}
+
+.main {
+    margin-left: 160px;
+    /* Same as the width of the sidenav */
+    font-size: 28px;
+    /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+.sidebutton {
+    width: 200px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    height: 52px;
+    border-color: #22597D;
+    border-radius: 36px;
+    border-width: 5px;
+    background-color: #8FCEE9;
+    text-decoration: bold;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: bolder;
+    text-shadow: black;
+    -webkit-text-stroke-width: 2px;
+}
+
+.ActiveSidebutton {
+    width: 200px;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    height: 52px;
+    border-color: #22597D;
+    border-radius: 36px;
+    border-width: 5px;
+    background-color: #22597D;
+    text-decoration: bold;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: bolder;
+    -webkit-text-stroke-width: 2px;
+}
+
+
+.rectangle1 {
+    margin-top: 8vh;
+    margin-left: calc(50% + 6vw);
+    transform: translateX(-50%);
+    width: 60vw;
+    border-radius: 20px;
+    height: 60vh;
+    background-color: rgba(143, 206, 233 , .2);
+    backdrop-filter: blur(20px);
+    border: solid;
+    border-color: #22597D;
+    border-width: 4px;
+}
+
+.rectangle2 {
+    float: left;
+    margin-top: 2vh;
+    margin-left: 2vh;
+    width: 25vw;
+    border-radius: 20px;
+    height: 13vh;
+    background-color: rgb(143, 206, 233 );
+    backdrop-filter: blur(20px);
+    border: solid;
+    border-color: #22597D;
+    border-width: 4px;
+}
+
+.circle {
+    float: left;
+    height: 100px;
+    width: 100px;
+    margin-left: 1vw;
+    border-style: solid;
+    border-radius: 60px;
+    border-color: #22597D;
+    border-width: 4px;
+    background-color: #269531;
+    margin-top: 1vh;
+    margin-bottom: -50px;
+  }
+  .nameSymbol{
+    font-size: 40px;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .userName{
+    font-size: 1.4vmax;
+    font-weight: bold;
+    margin-left:130px;
+    margin-top: 1vw;
+  }
+  
+  .rectangle3{
+    width: 20vw;
+    padding-top: 5px;
+    background-color:#22597D;
+    height: 7vh;
+    float: right;
+    color: white;
+    font-size: 32px;
+    text-align: center;
+    border-radius: 18px;
+    margin-top: 4vw;
+    margin-right: 6vw;
+  }
+  .rectangle4{
+    padding-top: 5px;
+    width: 20vw;
+    background-color:#22597D;
+    height: 7vh;
+    float: left;
+    position: fixed;
+    margin-top: 20vh;
+    margin-left: 4vw;
+    color: white;
+    font-size: 32px;
+    text-align: center;
+    border-radius: 18px;
+  }
+  .rectangle5{
+    padding-top: 5px;
+    width: 20vw;
+    margin-left: 33vw;
+    height: 7vh;
+    float: right;
+    color: black;
+    position: fixed;
+    font-size: 32px;
+    text-align: center;
+    border-radius: 18px;
+  }

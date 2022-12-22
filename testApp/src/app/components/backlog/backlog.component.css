@@ -22,7 +22,9 @@
 }
 
 .sidenav {
-  backdrop-filter: blur(2px);
+
+  padding: 0 10px;
+
     height: 100%;
     width: 200px;
     position: fixed;
@@ -199,6 +201,7 @@ form .txt_field{
   text-decoration: underline;
 }
 input[type="submit"]{
+  position: absolute;
   width: 184px;
   height: 58px;
   border: 1px solid;

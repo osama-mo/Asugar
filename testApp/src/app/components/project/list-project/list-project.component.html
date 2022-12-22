@@ -1,48 +1,46 @@
-<body>
 
+  <h3 class="projects-title"> Projects</h3>
+  <div class = "project-list-container">
 
-<!--     <div class="center">-->
-
-<!--        <h6 style="font-size: 48px">PROJECTS</h6>-->
-<!--        <div class="rectangle">-->
-<!--        <div class="square"></div>-->
-<!--        <span></span>-->
-<!--        <span>-->
-
-<!--        <div class="txt_field">-->
-<!--          <h1 style="font-size:32px">Ghost Busters</h1>-->
-
-<!--        </div>-->
-<!--        </span>-->
-
-
-<!--        <input routerLink="" type="submit" value="7 members">-->
-<!--        <span></span>-->
-<!--        </div>-->
-<!--     </div>-->
-    <div class="center">
-        <div (click)="navigateToCreateProject()"  class="rectangle">
+       <div *ngFor="let item in projects"  class="rectangle">
+        <div (click)="deleteProject(item.id)" class="remove-button">X</div>
+        <div class="square"></div>
         <span></span>
         <span>
-
         <div class="txt_field">
-          <h1 style="font-size:32px">CREATE NEW PROJECT</h1>
-
+          <h1 style="font-size:32px">Ghost Busters</h1>
         </div>
         </span>
-
-
-        <!--  forgot my Password btn  -->
-
-        <!--  signup btn  -->
-        <div class="txt_field">
-            <h5 style="font-size:128px">+</h5>
-
-          </div>
+        <input routerLink="" type="submit" value="id :">
         <span></span>
         </div>
-    </div>
-    <!-- </div> -->
+        <div (click)="navigateToBacklog('123123','GhostBusters')"  class="rectangle">
+          <div  class="remove-button">X</div>
+          <div class="square"></div>
+          <span></span>
+          <span>
+          <div class="txt_field">
+            <h1 style="font-size:32px">Ghost Busters</h1>
+          </div>
+          </span>
+          <input routerLink="" type="submit" value="id :">
+          <span></span>
+          </div>
+        <div (click)="navigateToCreateProject()"  class="rectangle">
+          <span></span>
+          <span>
+  
+          <div class="txt_field">
+            <h1 style="font-size:32px">CREATE NEW PROJECT</h1>
+  
+          </div>
+        </span>
+          <div class="txt_field">
+              <h5 style="font-size:128px">+</h5>
+  
+            </div>
+          <span></span>
+          </div>
+  </div>
 
-    </body>
 

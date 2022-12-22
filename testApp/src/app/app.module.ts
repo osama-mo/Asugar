@@ -17,6 +17,11 @@ import { ListProjectComponent } from './components/project/list-project/list-pro
 import { CreateProjectComponent } from './components/project/create-project/create-project.component';
 import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 import { BacklogComponent } from './components/backlog/backlog.component';
+import { MembersListComponent } from './components/members/members-list/members-list.component';
+import { MemberDetailsComponent } from './components/members/member-details/member-details.component';
+import { AddMemberComponent } from './components/members/add-member/add-member.component';
+import { SprintsListComponent } from './components/sprints/sprints-list/sprints-list.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
@@ -38,8 +43,13 @@ export function playerFactory(): any {
     CreateProjectComponent,
     ResetPasswordComponent,
     BacklogComponent,
+    MembersListComponent,
+    MemberDetailsComponent,
+    AddMemberComponent,
+    SprintsListComponent,
   ],
   imports: [
+    DragDropModule,
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
