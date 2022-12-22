@@ -67,7 +67,7 @@ export class AuthService {
     return this.httpClient.post(`http://localhost:8080/password_reset`, null,httpOptions)
   }
 
-  
+
 
   getJwtToken() {
     return localStorage.getItem('accessToken');

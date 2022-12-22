@@ -19,7 +19,9 @@ import { SprintsListComponent } from './components/sprints/sprints-list/sprints-
 
 
 const routes: Routes = [
+
   {path:'',component:SprintsListComponent},
+
   {path:'signup',component:SignupComponent},
   {path:'forgot-my-password',component:ForgotMyPasswordComponent},
   {path:'forgot-my-password-confirmation',component:ForgotMyPasswordConfirmationComponent},
