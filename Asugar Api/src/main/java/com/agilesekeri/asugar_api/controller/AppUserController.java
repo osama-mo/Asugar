@@ -56,7 +56,7 @@ public class AppUserController {
 
         if(username != null) {
             AppUserEntity user = appUserService.loadUserByUsername(username);
-            List<ProjectEntity> list = projectService.getUserProjects(user);
+            List<ProjectEntity> list = projectService.getUserProjects(user.getId());
             for(ProjectEntity project : list)
                 result.add(Map.of("id", project.getId().toString(), "name", project.getName()));
         }

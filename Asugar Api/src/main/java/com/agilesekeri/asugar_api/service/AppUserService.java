@@ -94,17 +94,15 @@ public class AppUserService implements UserDetailsService {
         if(refresh_token != null) {
             try {
                 Algorithm refreshAlgorithm = Algorithm.HMAC256(refreshSecret);
-                Algorithm accessAlgorithm = Algorithm.HMAC256(accessSecret);
-
                 JWTVerifier verifier = JWT.require(refreshAlgorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
-
                 String username = decodedJWT.getSubject();
                 loadUserByUsername(username);
 
+                Algorithm accessAlgorithm = Algorithm.HMAC256(accessSecret);
                 String access_token = JWT.create()
                         .withSubject(username)
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 6000))
+                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
                         .sign(accessAlgorithm);
 

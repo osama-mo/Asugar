@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -32,8 +31,8 @@ public class ProjectService {
                         new IllegalArgumentException("No project with this ID was found"));
     }
 
-    public List<ProjectEntity> getUserProjects(AppUserEntity user) {
-        return projectRepository.findByMembers_Id(user.getId())
+    public List<ProjectEntity> getUserProjects(Long userID) {
+        return projectRepository.findByMembers_Id(userID)
                 .orElseThrow(() ->
                         new IllegalArgumentException("There are no projects found for the user"));
     }
@@ -49,10 +48,10 @@ public class ProjectService {
             throw new IllegalStateException("Not qualified to delete the project with the id " + projectId);
     }
 
-    public Set<AppUserEntity> getMemberSet(Long id) {
-        ProjectEntity project = getProject(id);
-        return project.getMembers();
-    }
+//    public Set<AppUserEntity> getMemberSet(Long id) {
+//        ProjectEntity project = getProject(id);
+//        return project.getMembers();
+//    }
 
     public boolean addMember(Long projectId, AppUserEntity user) {
         ProjectEntity project = getProject(projectId);
