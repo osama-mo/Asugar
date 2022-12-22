@@ -25,7 +25,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    public final static byte[] accessSecret = new byte[128];
+    public final static byte[] accessSecret = new byte[128] ;
     public final static byte[] refreshSecret = new byte[128];
 
     private final AuthenticationManager authenticationManager;
@@ -34,7 +34,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         this.authenticationManager = authenticationManager;
 
         SecureRandom rand = new SecureRandom();
-        rand.nextBytes(accessSecret);
+//        rand.nextBytes(accessSecret);
+        for(int i = 0; i < 128; ++i)
+            accessSecret[i] = (byte) i;
+
         rand.nextBytes(refreshSecret);
     }
 
@@ -61,7 +64,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         Algorithm accessAlgorithm = Algorithm.HMAC256(accessSecret);
         String accessToken = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+//                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(accessAlgorithm);
 

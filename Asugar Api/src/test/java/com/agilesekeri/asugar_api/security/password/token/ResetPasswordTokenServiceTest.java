@@ -6,11 +6,14 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.agilesekeri.asugar_api.appuser.AppUser;
+import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashSet;
 
+import com.agilesekeri.asugar_api.model.entity.ResetPasswordTokenEntity;
+import com.agilesekeri.asugar_api.repository.ResetPasswordTokenRepository;
+import com.agilesekeri.asugar_api.service.ResetPasswordTokenService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,38 +31,38 @@ class ResetPasswordTokenServiceTest {
     private ResetPasswordTokenService resetPasswordTokenService;
 
     /**
-     * Method under test: {@link ResetPasswordTokenService#saveResetPasswordToken(ResetPasswordToken)}
+     * Method under test: {@link ResetPasswordTokenService#saveResetPasswordToken(ResetPasswordTokenEntity)}
      */
     @Test
     void testSaveResetPasswordToken() {
-        AppUser appUser = new AppUser();
+        AppUserEntity appUser = new AppUserEntity();
         appUser.setEmail("jane.doe@example.org");
         appUser.setEnabled(true);
         appUser.setFirstName("Jane");
         appUser.setId(123L);
         appUser.setLastName("Doe");
         appUser.setPassword("iloveyou");
-        appUser.setProjects(new ArrayList<>());
+        appUser.setProjects(new HashSet<>());
 
-        ResetPasswordToken resetPasswordToken = new ResetPasswordToken();
+        ResetPasswordTokenEntity resetPasswordToken = new ResetPasswordTokenEntity();
         resetPasswordToken.setAppUser(appUser);
         resetPasswordToken.setConfirmedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setCreatedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setExpiresAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setId(123L);
         resetPasswordToken.setToken("ABC123");
-        when(resetPasswordTokenRepository.save((ResetPasswordToken) any())).thenReturn(resetPasswordToken);
+        when(resetPasswordTokenRepository.save((ResetPasswordTokenEntity) any())).thenReturn(resetPasswordToken);
 
-        AppUser appUser1 = new AppUser();
+        AppUserEntity appUser1 = new AppUserEntity();
         appUser1.setEmail("jane.doe@example.org");
         appUser1.setEnabled(true);
         appUser1.setFirstName("Jane");
         appUser1.setId(123L);
         appUser1.setLastName("Doe");
         appUser1.setPassword("iloveyou");
-        appUser1.setProjects(new ArrayList<>());
+        appUser1.setProjects(new HashSet<>());
 
-        ResetPasswordToken resetPasswordToken1 = new ResetPasswordToken();
+        ResetPasswordTokenEntity resetPasswordToken1 = new ResetPasswordTokenEntity();
         resetPasswordToken1.setAppUser(appUser1);
         resetPasswordToken1.setConfirmedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken1.setCreatedAt(LocalDateTime.of(1, 1, 1, 1, 1));
@@ -67,7 +70,7 @@ class ResetPasswordTokenServiceTest {
         resetPasswordToken1.setId(123L);
         resetPasswordToken1.setToken("ABC123");
         resetPasswordTokenService.saveResetPasswordToken(resetPasswordToken1);
-        verify(resetPasswordTokenRepository).save((ResetPasswordToken) any());
+        verify(resetPasswordTokenRepository).save((ResetPasswordTokenEntity) any());
         assertEquals(appUser, resetPasswordToken1.getAppUser());
         assertEquals("ABC123", resetPasswordToken1.getToken());
         assertEquals(123L, resetPasswordToken1.getId().longValue());

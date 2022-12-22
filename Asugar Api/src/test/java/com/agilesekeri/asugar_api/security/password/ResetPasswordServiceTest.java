@@ -10,17 +10,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.agilesekeri.asugar_api.appuser.AppUser;
-import com.agilesekeri.asugar_api.appuser.AppUserService;
+import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
+import com.agilesekeri.asugar_api.service.AppUserService;
 import com.agilesekeri.asugar_api.email.EmailSender;
-import com.agilesekeri.asugar_api.security.password.token.ResetPasswordToken;
-import com.agilesekeri.asugar_api.security.password.token.ResetPasswordTokenService;
+import com.agilesekeri.asugar_api.model.entity.ResetPasswordTokenEntity;
+import com.agilesekeri.asugar_api.service.ResetPasswordService;
+import com.agilesekeri.asugar_api.service.ResetPasswordTokenService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Optional;
-
-import org.junit.jupiter.api.Disabled;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -52,23 +51,23 @@ class ResetPasswordServiceTest {
      */
     @Test
     void testConfirmRequest() {
-        AppUser appUser = new AppUser();
+        AppUserEntity appUser = new AppUserEntity();
         appUser.setEmail("jane.doe@example.org");
         appUser.setEnabled(true);
         appUser.setFirstName("Jane");
         appUser.setId(123L);
         appUser.setLastName("Doe");
         appUser.setPassword("iloveyou");
-        appUser.setProjects(new ArrayList<>());
+        appUser.setProjects(new HashSet<>());
 
-        ResetPasswordToken resetPasswordToken = new ResetPasswordToken();
+        ResetPasswordTokenEntity resetPasswordToken = new ResetPasswordTokenEntity();
         resetPasswordToken.setAppUser(appUser);
         resetPasswordToken.setConfirmedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setCreatedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setExpiresAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setId(123L);
         resetPasswordToken.setToken("ABC123");
-        Optional<ResetPasswordToken> ofResult = Optional.of(resetPasswordToken);
+        Optional<ResetPasswordTokenEntity> ofResult = Optional.of(resetPasswordToken);
         when(resetPasswordTokenService.getToken((String) any())).thenReturn(ofResult);
         assertThrows(IllegalStateException.class, () -> resetPasswordService.confirmRequest("ABC123", "iloveyou"));
         verify(resetPasswordTokenService).getToken((String) any());
@@ -79,24 +78,24 @@ class ResetPasswordServiceTest {
      */
     @Test
     void testConfirmRequest2() {
-        AppUser appUser = new AppUser();
+        AppUserEntity appUser = new AppUserEntity();
         appUser.setEmail("jane.doe@example.org");
         appUser.setEnabled(true);
         appUser.setFirstName("Jane");
         appUser.setId(123L);
         appUser.setLastName("Doe");
         appUser.setPassword("iloveyou");
-        appUser.setProjects(new ArrayList<>());
+        appUser.setProjects(new HashSet<>());
 
-        AppUser appUser1 = new AppUser();
+        AppUserEntity appUser1 = new AppUserEntity();
         appUser1.setEmail("jane.doe@example.org");
         appUser1.setEnabled(true);
         appUser1.setFirstName("Jane");
         appUser1.setId(123L);
         appUser1.setLastName("Doe");
         appUser1.setPassword("iloveyou");
-        appUser1.setProjects(new ArrayList<>());
-        ResetPasswordToken resetPasswordToken = mock(ResetPasswordToken.class);
+        appUser1.setProjects(new HashSet<>());
+        ResetPasswordTokenEntity resetPasswordToken = mock(ResetPasswordTokenEntity.class);
         when(resetPasswordToken.getAppUser()).thenReturn(appUser1);
         when(resetPasswordToken.getConfirmedAt()).thenReturn(null);
         when(resetPasswordToken.getExpiresAt()).thenReturn(LocalDateTime.of(1, 1, 1, 1, 1));
@@ -105,20 +104,20 @@ class ResetPasswordServiceTest {
         doNothing().when(resetPasswordToken).setExpiresAt((LocalDateTime) any());
         doNothing().when(resetPasswordToken).setId((Long) any());
         doNothing().when(resetPasswordToken).setToken((String) any());
-        doNothing().when(resetPasswordToken).setAppUser((AppUser) any());
+        doNothing().when(resetPasswordToken).setAppUser((AppUserEntity) any());
         resetPasswordToken.setAppUser(appUser);
         resetPasswordToken.setConfirmedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setCreatedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setExpiresAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setId(123L);
         resetPasswordToken.setToken("ABC123");
-        Optional<ResetPasswordToken> ofResult = Optional.of(resetPasswordToken);
-        doNothing().when(resetPasswordTokenService).saveResetPasswordToken((ResetPasswordToken) any());
+        Optional<ResetPasswordTokenEntity> ofResult = Optional.of(resetPasswordToken);
+        doNothing().when(resetPasswordTokenService).saveResetPasswordToken((ResetPasswordTokenEntity) any());
         when(resetPasswordTokenService.getToken((String) any())).thenReturn(ofResult);
         doNothing().when(emailSender).send((String) any(), (String) any());
         assertEquals("token expired, a new one is sent.", resetPasswordService.confirmRequest("ABC123", "iloveyou"));
         verify(resetPasswordTokenService).getToken((String) any());
-        verify(resetPasswordTokenService).saveResetPasswordToken((ResetPasswordToken) any());
+        verify(resetPasswordTokenService).saveResetPasswordToken((ResetPasswordTokenEntity) any());
         verify(resetPasswordToken, atLeast(1)).getAppUser();
         verify(resetPasswordToken).getConfirmedAt();
         verify(resetPasswordToken).getExpiresAt();
@@ -127,7 +126,7 @@ class ResetPasswordServiceTest {
         verify(resetPasswordToken).setExpiresAt((LocalDateTime) any());
         verify(resetPasswordToken).setId((Long) any());
         verify(resetPasswordToken).setToken((String) any());
-        verify(resetPasswordToken).setAppUser((AppUser) any());
+        verify(resetPasswordToken).setAppUser((AppUserEntity) any());
         verify(emailSender).send((String) any(), (String) any());
     }
 
@@ -136,24 +135,24 @@ class ResetPasswordServiceTest {
      */
     @Test
     void testConfirmRequest3() {
-        AppUser appUser = new AppUser();
+        AppUserEntity appUser = new AppUserEntity();
         appUser.setEmail("jane.doe@example.org");
         appUser.setEnabled(true);
         appUser.setFirstName("Jane");
         appUser.setId(123L);
         appUser.setLastName("Doe");
         appUser.setPassword("iloveyou");
-        appUser.setProjects(new ArrayList<>());
+        appUser.setProjects(new HashSet<>());
 
-        AppUser appUser1 = new AppUser();
+        AppUserEntity appUser1 = new AppUserEntity();
         appUser1.setEmail("jane.doe@example.org");
         appUser1.setEnabled(true);
         appUser1.setFirstName("Jane");
         appUser1.setId(123L);
         appUser1.setLastName("Doe");
         appUser1.setPassword("iloveyou");
-        appUser1.setProjects(new ArrayList<>());
-        ResetPasswordToken resetPasswordToken = mock(ResetPasswordToken.class);
+        appUser1.setProjects(new HashSet<>());
+        ResetPasswordTokenEntity resetPasswordToken = mock(ResetPasswordTokenEntity.class);
         when(resetPasswordToken.getAppUser()).thenReturn(appUser1);
         when(resetPasswordToken.getConfirmedAt()).thenReturn(null);
         when(resetPasswordToken.getExpiresAt()).thenReturn(LocalDateTime.of(1, 1, 1, 1, 1));
@@ -162,20 +161,20 @@ class ResetPasswordServiceTest {
         doNothing().when(resetPasswordToken).setExpiresAt((LocalDateTime) any());
         doNothing().when(resetPasswordToken).setId((Long) any());
         doNothing().when(resetPasswordToken).setToken((String) any());
-        doNothing().when(resetPasswordToken).setAppUser((AppUser) any());
+        doNothing().when(resetPasswordToken).setAppUser((AppUserEntity) any());
         resetPasswordToken.setAppUser(appUser);
         resetPasswordToken.setConfirmedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setCreatedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setExpiresAt(LocalDateTime.of(1, 1, 1, 1, 1));
         resetPasswordToken.setId(123L);
         resetPasswordToken.setToken("ABC123");
-        Optional<ResetPasswordToken> ofResult = Optional.of(resetPasswordToken);
-        doNothing().when(resetPasswordTokenService).saveResetPasswordToken((ResetPasswordToken) any());
+        Optional<ResetPasswordTokenEntity> ofResult = Optional.of(resetPasswordToken);
+        doNothing().when(resetPasswordTokenService).saveResetPasswordToken((ResetPasswordTokenEntity) any());
         when(resetPasswordTokenService.getToken((String) any())).thenReturn(ofResult);
         doThrow(new IllegalStateException()).when(emailSender).send((String) any(), (String) any());
         assertThrows(IllegalStateException.class, () -> resetPasswordService.confirmRequest("ABC123", "iloveyou"));
         verify(resetPasswordTokenService).getToken((String) any());
-        verify(resetPasswordTokenService).saveResetPasswordToken((ResetPasswordToken) any());
+        verify(resetPasswordTokenService).saveResetPasswordToken((ResetPasswordTokenEntity) any());
         verify(resetPasswordToken, atLeast(1)).getAppUser();
         verify(resetPasswordToken).getConfirmedAt();
         verify(resetPasswordToken).getExpiresAt();
@@ -184,7 +183,7 @@ class ResetPasswordServiceTest {
         verify(resetPasswordToken).setExpiresAt((LocalDateTime) any());
         verify(resetPasswordToken).setId((Long) any());
         verify(resetPasswordToken).setToken((String) any());
-        verify(resetPasswordToken).setAppUser((AppUser) any());
+        verify(resetPasswordToken).setAppUser((AppUserEntity) any());
         verify(emailSender).send((String) any(), (String) any());
     }
 }

@@ -6,11 +6,14 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.agilesekeri.asugar_api.appuser.AppUser;
+import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashSet;
 
+import com.agilesekeri.asugar_api.model.entity.RegistrationTokenEntity;
+import com.agilesekeri.asugar_api.repository.RegistrationTokenRepository;
+import com.agilesekeri.asugar_api.service.RegistrationTokenService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,38 +31,38 @@ class RegistrationTokenServiceTest {
     private RegistrationTokenService registrationTokenService;
 
     /**
-     * Method under test: {@link RegistrationTokenService#saveConfirmationToken(RegistrationToken)}
+     * Method under test: {@link RegistrationTokenService#saveConfirmationToken(RegistrationTokenEntity)}
      */
     @Test
     void testSaveConfirmationToken() {
-        AppUser appUser = new AppUser();
+        AppUserEntity appUser = new AppUserEntity();
         appUser.setEmail("jane.doe@example.org");
         appUser.setEnabled(true);
         appUser.setFirstName("Jane");
         appUser.setId(123L);
         appUser.setLastName("Doe");
         appUser.setPassword("iloveyou");
-        appUser.setProjects(new ArrayList<>());
+        appUser.setProjects(new HashSet<>());
 
-        RegistrationToken registrationToken = new RegistrationToken();
+        RegistrationTokenEntity registrationToken = new RegistrationTokenEntity();
         registrationToken.setAppUser(appUser);
         registrationToken.setConfirmedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         registrationToken.setCreatedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         registrationToken.setExpiresAt(LocalDateTime.of(1, 1, 1, 1, 1));
         registrationToken.setId(123L);
         registrationToken.setToken("ABC123");
-        when(registrationTokenRepository.save((RegistrationToken) any())).thenReturn(registrationToken);
+        when(registrationTokenRepository.save((RegistrationTokenEntity) any())).thenReturn(registrationToken);
 
-        AppUser appUser1 = new AppUser();
+        AppUserEntity appUser1 = new AppUserEntity();
         appUser1.setEmail("jane.doe@example.org");
         appUser1.setEnabled(true);
         appUser1.setFirstName("Jane");
         appUser1.setId(123L);
         appUser1.setLastName("Doe");
         appUser1.setPassword("iloveyou");
-        appUser1.setProjects(new ArrayList<>());
+        appUser1.setProjects(new HashSet<>());
 
-        RegistrationToken registrationToken1 = new RegistrationToken();
+        RegistrationTokenEntity registrationToken1 = new RegistrationTokenEntity();
         registrationToken1.setAppUser(appUser1);
         registrationToken1.setConfirmedAt(LocalDateTime.of(1, 1, 1, 1, 1));
         registrationToken1.setCreatedAt(LocalDateTime.of(1, 1, 1, 1, 1));
@@ -67,7 +70,7 @@ class RegistrationTokenServiceTest {
         registrationToken1.setId(123L);
         registrationToken1.setToken("ABC123");
         registrationTokenService.saveConfirmationToken(registrationToken1);
-        verify(registrationTokenRepository).save((RegistrationToken) any());
+        verify(registrationTokenRepository).save((RegistrationTokenEntity) any());
         assertEquals(appUser, registrationToken1.getAppUser());
         assertEquals("ABC123", registrationToken1.getToken());
         assertEquals(123L, registrationToken1.getId().longValue());

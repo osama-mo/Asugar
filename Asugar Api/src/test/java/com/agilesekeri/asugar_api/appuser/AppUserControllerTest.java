@@ -1,7 +1,10 @@
 package com.agilesekeri.asugar_api.appuser;
 
-import com.agilesekeri.asugar_api.project.ProjectRepository;
-import com.agilesekeri.asugar_api.project.ProjectService;
+import com.agilesekeri.asugar_api.controller.AppUserController;
+import com.agilesekeri.asugar_api.repository.AppUserRepository;
+import com.agilesekeri.asugar_api.repository.ProjectRepository;
+import com.agilesekeri.asugar_api.service.AppUserService;
+import com.agilesekeri.asugar_api.service.ProjectService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +34,28 @@ class AppUserControllerTest {
 
     @MockBean
     private ProjectRepository projectRepository;
+
+
+    @Test
+    void testCreateProject() throws Exception {
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/project/create")
+                .param("name", "foo")
+                .param("username", "foo");
+        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(appUserController)
+                .build()
+                .perform(requestBuilder);
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    void testGetProjectList() throws Exception {
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/project/list")
+                .param("username", "foo");
+        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(appUserController)
+                .build()
+                .perform(requestBuilder);
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 
     /**
      * Method under test: {@link AppUserController#refreshToken(HttpServletRequest, HttpServletResponse)}
