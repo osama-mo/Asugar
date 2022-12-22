@@ -22,7 +22,8 @@ export class SignupComponent implements OnInit {
   signupRequestPayload: SignupRequestPayload;
 
   signupForm = new FormGroup({
-    username: new FormControl('', Validators.required),
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required),
     passwordConfirm: new FormControl('', Validators.required)
@@ -34,7 +35,8 @@ export class SignupComponent implements OnInit {
     private toastr: ToastrService) {
 
     this.signupRequestPayload = {
-      username: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: ''
     };
@@ -54,7 +56,8 @@ export class SignupComponent implements OnInit {
 
 
     if (this.signupForm.get('email')!.value?.length == 0 
-      || this.signupForm.get('username')!.value?.length ==  0
+      || this.signupForm.get('firstName')!.value?.length ==  0
+      || this.signupForm.get('lastName')!.value?.length ==  0
       || this.signupForm.get('password')!.value?.length == 0 
       || this.signupForm.get('passwordConfirm')!.value?.length == 0  ) {
       console.error("empty field!");
@@ -66,7 +69,8 @@ export class SignupComponent implements OnInit {
     }
     else {
       this.signupRequestPayload.email = this.signupForm.get('email')!.value;
-      this.signupRequestPayload.username = this.signupForm.get('username')!.value;
+      this.signupRequestPayload.firstName = this.signupForm.get('firstName')!.value;
+      this.signupRequestPayload.lastName = this.signupForm.get('lastName')!.value;
       this.signupRequestPayload.password = this.signupForm.get('password')!.value;
 
       this.authService.signup(this.signupRequestPayload)

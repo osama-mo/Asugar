@@ -114,7 +114,7 @@ export class AuthService {
   createProject(projectName: String | null) {
     const httpOptions = {
       headers: new HttpHeaders({
-      'Authorization':  'Bearer ' + localStorage.getItem('accessToken')!
+      'Authorization': localStorage.getItem('accessToken')!
       })
     }
     return this.httpClient.post(`http://localhost:8080/user/project/create?name=${projectName}&username=${localStorage.getItem('username')}`, null, httpOptions)
@@ -125,34 +125,34 @@ export class AuthService {
   getProjectlist() : Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
-      'Authorization':  'Bearer ' + localStorage.getItem('accessToken')!
+      'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.get(`http://localhost:8080/user/project/list}`, httpOptions) 
+    return this.httpClient.get(`http://localhost:8080/user/project/list`, httpOptions) 
   }
 
-  deleteProject(projectId: number | null){
+  deleteProject(projectId: number){
     const httpOptions = {
       headers: new HttpHeaders({
-      'Authorization':  'Bearer ' + localStorage.getItem('accessToken')!
+      'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.delete(`http://localhost:8080/user/project/${projectId}}}`, httpOptions)
+    return this.httpClient.delete(`http://localhost:8080/user/project/${projectId}`, httpOptions)
   }
 
   getMembersList(projectId : Number) : Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
-      'Authorization':  'Bearer ' + localStorage.getItem('accessToken')!
+      'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.get(`http://localhost:8080/${projectId}/members}`, httpOptions) 
+    return this.httpClient.get(`http://localhost:8080/${projectId}/members`, httpOptions) 
   }
   
   getMembersDetails(userEmail: String) : Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
-      'Authorization':  'Bearer ' + localStorage.getItem('accessToken')!
+      'Authorization': localStorage.getItem('accessToken')!
       })
     }
     return this.httpClient.get(`http://localhost:8080/${userEmail}/members}`, httpOptions) 

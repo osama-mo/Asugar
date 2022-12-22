@@ -34,7 +34,7 @@ export class CreateProjectComponent implements OnInit {
     else{
       this.projectName =this.createProjectForm.get('projectName')!.value ;
       this.authService.createProject(this.projectName).subscribe(data => {
-        this.router.navigate(['backlog']);
+        this.router.navigate(['list-project']);
       },
       error => {
       console.log(error);

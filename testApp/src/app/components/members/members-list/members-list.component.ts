@@ -11,9 +11,14 @@ export class MembersListComponent implements OnInit {
   projectId: String | null = "";
   projectName: String | null = "";
 
-  members = []
-  name = "Osama";
-  surname = "Al moselli";
+  members = [
+    {
+      FirstName : "",
+      Title: '',
+      LastName: '',
+      EmailAddress: ''
+    }
+  ]
   constructor(private route: ActivatedRoute, private router: Router, private authsurvice: AuthService) {
 
   }
@@ -25,6 +30,7 @@ export class MembersListComponent implements OnInit {
 
     this.authsurvice.getMembersList(Number(this.projectId)).subscribe(
       data => {
+        console.log(data)
         this.members = data
       }
       ,error => {

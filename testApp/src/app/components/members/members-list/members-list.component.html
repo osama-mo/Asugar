@@ -8,67 +8,17 @@
 </div>
   <div class = "project-list-container">
 
-       <div *ngFor="let item in projects"  class="rectangle">
+       <div *ngFor="let item of members"  class="rectangle">
         <div class="circle"></div>
         <span></span>
         <span>
         <div class="txt_field">
-          <h1 style="font-size:32px">{{item.name}}</h1>
+          <h1 style="font-size:32px">{{item.FirstName}}</h1>
         </div>
         </span>
         <input routerLink="" type="submit" value="id :">
         <span></span>              
        </div>
-       
-       <div class="rectangle">
-        <div class="circle"><div class="nameSymbol">{{name[0].toUpperCase()}}{{surname[0]}}</div></div>
-        <span></span>
-        <span>
-        <div class="txt_field">
-          <h1 style="font-size:27px">Osama al moselli</h1>
-        </div>
-        </span>
-        <input routerLink="" type="submit" value="Sad">
-        <span></span>              
-       </div>
-       <div class="rectangle">
-        <div class="circle"><div class="nameSymbol">{{name[0].toUpperCase()}}{{surname[0]}}</div></div>
-        <span></span>
-        <span>
-        <div class="txt_field">
-          <h1 style="font-size:27px">Osama al moselli</h1>
-        </div>
-        </span>
-        <input routerLink="" type="submit" value="Sad">
-        <span></span>              
-       </div>
-
-       <div class="rectangle">
-        <div class="circle"><div class="nameSymbol">{{name[0].toUpperCase()}}{{surname[0]}}</div></div>
-        <span></span>
-        <span>
-        <div class="txt_field">
-          <h1 style="font-size:27px">Osama al moselli</h1>
-        </div>
-        </span>
-        <input routerLink="" type="submit" value="Sad">
-        <span></span>              
-       </div>
-
-       <div class="rectangle">
-        <div class="circle"><div class="nameSymbol">{{name[0].toUpperCase()}}{{surname[0]}}</div></div>
-        <span></span>
-        <span>
-        <div class="txt_field">
-          <h1 style="font-size:27px">Osama al moselli</h1>
-        </div>
-        </span>
-        <input routerLink="" type="submit" value="Sad">
-        <span></span>              
-       </div>
-
-
-
 
         <div (click)="navigateToAddmember()"  class="rectangle">
           <span></span>

@@ -2,30 +2,18 @@
   <h3 class="projects-title"> Projects</h3>
   <div class = "project-list-container">
 
-       <div *ngFor="let item in projects"  class="rectangle">
-        <div (click)="deleteProject(item.id)" class="remove-button">X</div>
-        <div class="square"></div>
+       <div *ngFor="let project of projects"  class="rectangle" >
+        <div (click)="deleteProject(project.second)" class="remove-button">X</div>
+        <div class="square" (click)="navigateToBacklog(project.second,project.first)"></div>
         <span></span>
         <span>
         <div class="txt_field">
-          <h1 style="font-size:32px">Ghost Busters</h1>
+          <h1 style="font-size:32px">{{project.first}}</h1>
         </div>
         </span>
-        <input routerLink="" type="submit" value="id :">
+        <input routerLink="" type="submit" value="id :{{project.second}}" >
         <span></span>
         </div>
-        <div (click)="navigateToBacklog('123123','GhostBusters')"  class="rectangle">
-          <div  class="remove-button">X</div>
-          <div class="square"></div>
-          <span></span>
-          <span>
-          <div class="txt_field">
-            <h1 style="font-size:32px">Ghost Busters</h1>
-          </div>
-          </span>
-          <input routerLink="" type="submit" value="id :">
-          <span></span>
-          </div>
         <div (click)="navigateToCreateProject()"  class="rectangle">
           <span></span>
           <span>
