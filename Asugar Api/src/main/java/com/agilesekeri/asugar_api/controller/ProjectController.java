@@ -34,17 +34,17 @@ public class ProjectController {
             List<Map<String, String>> list = new ArrayList<>();
             for(AppUserEntity user : members) {
                 Map<String, String> userInfo = new HashMap<>();
-                userInfo.put("First Name", user.getFirstName());
-                userInfo.put("Last Name", user.getLastName());
-                userInfo.put("Email Address", user.getUsername());
+                userInfo.put("first_name", user.getFirstName());
+                userInfo.put("last_name", user.getLastName());
+                userInfo.put("email", user.getUsername());
                 list.add(userInfo);
 
                 if(project.getAdmin() == user)
-                    userInfo.put("Title", "Admin");
+                    userInfo.put("title", "Admin");
                 else if(project.getProductOwner() == user)
-                    userInfo.put("Title", "Product Owner");
+                    userInfo.put("title", "Product Owner");
                 else
-                    userInfo.put("Title", "Member");
+                    userInfo.put("title", "Member");
             }
 
             response.setContentType(APPLICATION_JSON_VALUE);
