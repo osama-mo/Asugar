@@ -26,9 +26,6 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @AllArgsConstructor
 @Transactional
 public class AppUserService implements UserDetailsService {
-
-    private final ProjectService projectService;
-
     private final static String USER_NOT_FOUND_MSG =
             "User with the email %s was not found";
 
@@ -71,13 +68,6 @@ public class AppUserService implements UserDetailsService {
     public boolean userExists(String email) {
         return appUserRepository
                 .findByEmail(email).isPresent();
-    }
-
-    public List<ProjectEntity> getProjectList(Long userId) {
-        AppUserEntity user = appUserRepository.findById(userId)
-                .orElseThrow(() ->
-                        new IllegalArgumentException("There are no projects were found for the user"));
-        return projectService.getUserProjects(user);
     }
 
     public String getJWTUsername(HttpServletRequest request) throws IOException {
