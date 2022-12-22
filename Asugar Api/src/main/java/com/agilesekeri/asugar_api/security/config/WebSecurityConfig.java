@@ -21,10 +21,8 @@ public class WebSecurityConfig {
                 "/registration",
                 "/registration/**",
                 "/login/**",
-                "/token/refresh",
-//                "/token/refresh/**",
+                "/user/token/refresh",
                 "/password_reset").permitAll();
-//        http.authorizeRequests().antMatchers(GET, "/user/**").hasAnyAuthority("ROLE_USER");
         http.authorizeRequests().anyRequest().authenticated();
         http.apply(CustomDsl.customDsl());
         http.cors();

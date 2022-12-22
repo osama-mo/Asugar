@@ -30,22 +30,16 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
         if(request.getServletPath().equals("/login") ||
-                request.getServletPath().equals("/token/refresh")) {
+                request.getServletPath().equals("/user/token/refresh")) {
             filterChain.doFilter(request, response);
         } else {
-            String authorizationHeader = request.getHeader(AUTHORIZATION);
-            if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String accessToken = request.getHeader(AUTHORIZATION);
+            if(accessToken != null) {
                 try {
-                    String token = authorizationHeader.substring("Bearer ".length());
                     Algorithm algorithm = Algorithm.HMAC256(accessSecret);
                     JWTVerifier verifier = JWT.require(algorithm).build();
-                    DecodedJWT decodedJWT = verifier.verify(token);
+                    DecodedJWT decodedJWT = verifier.verify(accessToken);
                     String username = decodedJWT.getSubject();
-//                    String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
-//                    Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-//                    stream(roles).forEach(role -> {
-//                        authorities.add(new SimpleGrantedAuthority(role));
-//                    });
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(username, null, null);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
