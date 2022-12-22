@@ -82,7 +82,7 @@ public class ProjectController {
         return true;
     }
 
-    @PutMapping(path = "/members")
+    @PutMapping(path = "/product_owner")
     public boolean setProductOwner(@PathVariable Long projectId, @RequestParam String username, HttpServletRequest request) throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
         AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
@@ -91,7 +91,9 @@ public class ProjectController {
         if(project.getAdmin() != issuer)
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
-        projectService.setProductOwner(projectId, username);
+        AppUserEntity user = appUserService.loadUserByUsername(issuerUsername);
+
+        projectService.setProductOwner(projectId, user);
         return true;
     }
 
