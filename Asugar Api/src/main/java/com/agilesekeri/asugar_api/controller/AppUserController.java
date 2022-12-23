@@ -37,39 +37,7 @@ public class AppUserController {
 
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String authorizationHeader = request.getHeader(AUTHORIZATION);
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            try {
-                String refresh_token = authorizationHeader.substring("Bearer ".length());
-
-                Algorithm refreshAlgorithm = Algorithm.HMAC256(refreshSecret);
-                Algorithm accessAlgorithm = Algorithm.HMAC256(accessSecret);
-                JWTVerifier verifier = JWT.require(refreshAlgorithm).build();
-                DecodedJWT decodedJWT = verifier.verify(refresh_token);
-
-                String username = decodedJWT.getSubject();
-                UserDetails userDetails = appUserService.loadUserByUsername(username);
-                String access_token = JWT.create()
-                        .withSubject(userDetails.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
-                        .withIssuer(request.getRequestURL().toString())
-                        .sign(accessAlgorithm);
-                Map<String, String> tokens = new HashMap<>();
-                tokens.put("accessToken", access_token);
-                tokens.put("refreshToken", refresh_token);
-                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-            }catch (Exception exception) {
-                response.setHeader("error", exception.getMessage());
-                response.setStatus(FORBIDDEN.value());
-                Map<String, String> error = new HashMap<>();
-                error.put("error_message", exception.getMessage());
-                response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
-                new ObjectMapper().writeValue(response.getOutputStream(), error);
-            }
-        } else {
-            throw new RuntimeException("Token is missing");
-        }
+        appUserService.genRefreshToken(request, response);
     }
 
     @PostMapping("/project/create")
@@ -82,18 +50,19 @@ public class AppUserController {
     }
 
     @GetMapping("/project/list")
-    public List<Pair<String, Long>> getProjectList(HttpServletRequest request) throws IOException {
-        List<Pair<String, Long>> result = new ArrayList<>();
+    public void getProjectList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        List<Map<String, String>> result = new ArrayList<>();
         String username = appUserService.getJWTUsername(request);
 
         if(username != null) {
             AppUserEntity user = appUserService.loadUserByUsername(username);
-            List<ProjectEntity> list = projectService.getUserProjects(user);
+            List<ProjectEntity> list = projectService.getUserProjects(user.getId());
             for(ProjectEntity project : list)
-                result.add(Pair.of(project.getName(), project.getId()));
+                result.add(Map.of("id", project.getId().toString(), "name", project.getName()));
         }
 
-        return result;
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        new ObjectMapper().writeValue(response.getOutputStream(), result);
     }
 
     @DeleteMapping("/project/{projectId}")

@@ -34,17 +34,17 @@ public class ProjectController {
             List<Map<String, String>> list = new ArrayList<>();
             for(AppUserEntity user : members) {
                 Map<String, String> userInfo = new HashMap<>();
-                userInfo.put("First Name", user.getFirstName());
-                userInfo.put("Last Name", user.getLastName());
-                userInfo.put("Email Address", user.getUsername());
+                userInfo.put("first_name", user.getFirstName());
+                userInfo.put("last_name", user.getLastName());
+                userInfo.put("email", user.getUsername());
                 list.add(userInfo);
 
                 if(project.getAdmin() == user)
-                    userInfo.put("Title", "Admin");
+                    userInfo.put("title", "Admin");
                 else if(project.getProductOwner() == user)
-                    userInfo.put("Title", "Product Owner");
+                    userInfo.put("title", "Product Owner");
                 else
-                    userInfo.put("Title", "Member");
+                    userInfo.put("title", "Member");
             }
 
             response.setContentType(APPLICATION_JSON_VALUE);
@@ -64,8 +64,7 @@ public class ProjectController {
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
         AppUserEntity user = appUserService.loadUserByUsername(username);
-        projectService.addMember(projectId, user);
-        return true;
+        return projectService.addMember(projectId, user);
     }
 
     @DeleteMapping(path = "/members")
@@ -78,12 +77,11 @@ public class ProjectController {
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
         AppUserEntity user = appUserService.loadUserByUsername(username);
-        projectService.removeMember(projectId, user);
-        return true;
+        return projectService.removeMember(projectId, user);
     }
 
     @PutMapping(path = "/product_owner")
-    public boolean setProductOwner(@PathVariable Long projectId, @RequestParam String username, HttpServletRequest request) throws IOException {
+    public void setProductOwner(@PathVariable Long projectId, @RequestParam String username, HttpServletRequest request) throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
         AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
         ProjectEntity project = projectService.getProject(projectId);
@@ -91,10 +89,9 @@ public class ProjectController {
         if(project.getAdmin() != issuer)
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
-        AppUserEntity user = appUserService.loadUserByUsername(issuerUsername);
+        AppUserEntity user = appUserService.loadUserByUsername(username);
 
         projectService.setProductOwner(projectId, user);
-        return true;
     }
 
     @GetMapping(path = "/sprints")
@@ -105,5 +102,29 @@ public class ProjectController {
 //        for(var sprint : set) {
 //
 //        }
+    }
+
+    @PostMapping(path = "/sprints")
+    public void createSprint(@PathVariable Long projectId, @RequestParam String sprintName, HttpServletRequest request) throws IOException {
+        String issuerUsername = appUserService.getJWTUsername(request);
+        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
+        ProjectEntity project = projectService.getProject(projectId);
+
+        if(project.getMembers().contains(issuer))
+            throw new IllegalCallerException("The issuer is not qualified for the operation");
+
+        projectService.createSprint(project, sprintName, issuer);
+    }
+
+    @PostMapping(path = "/epics")
+    public void createEpic(@PathVariable Long projectId, @RequestParam String epicName, HttpServletRequest request) throws IOException {
+        String issuerUsername = appUserService.getJWTUsername(request);
+        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
+        ProjectEntity project = projectService.getProject(projectId);
+
+        if(project.getMembers().contains(issuer))
+            throw new IllegalCallerException("The issuer is not qualified for the operation");
+
+        projectService.createEpic(project, epicName, issuer);
     }
 }

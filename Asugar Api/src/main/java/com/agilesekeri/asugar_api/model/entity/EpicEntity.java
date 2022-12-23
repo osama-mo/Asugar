@@ -1,16 +1,17 @@
 package com.agilesekeri.asugar_api.model.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
-@NoArgsConstructor
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "epic")
 public class EpicEntity {
     @Id
@@ -35,13 +36,14 @@ public class EpicEntity {
 
     @ManyToOne
     @JoinColumn(name = "reporter_id", foreignKey = @ForeignKey(name = "fk_reporter_id"))
-    private AppUserEntity reporter;
+    private AppUserEntity creator;
 
     @ManyToOne
     @JoinColumn(name = "assigned_id", foreignKey = @ForeignKey(name = "fk_assigned_id"))
-    private AppUserEntity assigned;
+    private AppUserEntity assignedTo;
 
-    //TODO included issues
+    @OneToMany(mappedBy = "epic")
+    private Set<IssueEntity> includedIssues;
 
     private LocalDateTime createdAt;
 

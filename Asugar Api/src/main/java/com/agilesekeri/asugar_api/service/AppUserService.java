@@ -7,28 +7,35 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MimeTypeUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.agilesekeri.asugar_api.security.authentication.CustomAuthenticationFilter.accessSecret;
+import static com.agilesekeri.asugar_api.security.authentication.CustomAuthenticationFilter.refreshSecret;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 
 @Service
 @AllArgsConstructor
 @Transactional
 public class AppUserService implements UserDetailsService {
-
-    private final ProjectService projectService;
-
     private final static String USER_NOT_FOUND_MSG =
             "User with the email %s was not found";
 
@@ -73,19 +80,44 @@ public class AppUserService implements UserDetailsService {
                 .findByEmail(email).isPresent();
     }
 
-    public List<ProjectEntity> getProjectList(Long userId) {
-        AppUserEntity user = appUserRepository.findById(userId)
-                .orElseThrow(() ->
-                        new IllegalArgumentException("There are no projects were found for the user"));
-        return projectService.getUserProjects(user);
-    }
-
     public String getJWTUsername(HttpServletRequest request) throws IOException {
-
-        String token = request.getHeader(AUTHORIZATION).substring("Bearer ".length());
+        String token = request.getHeader(AUTHORIZATION);
         Algorithm algorithm = Algorithm.HMAC256(accessSecret);
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = verifier.verify(token);
         return decodedJWT.getSubject();
+    }
+
+    public void genRefreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String refresh_token = request.getHeader(AUTHORIZATION);
+        Map<String, String> responseMap = new HashMap<>();
+        if(refresh_token != null) {
+            try {
+                Algorithm refreshAlgorithm = Algorithm.HMAC256(refreshSecret);
+                JWTVerifier verifier = JWT.require(refreshAlgorithm).build();
+                DecodedJWT decodedJWT = verifier.verify(refresh_token);
+                String username = decodedJWT.getSubject();
+                loadUserByUsername(username);
+
+                Algorithm accessAlgorithm = Algorithm.HMAC256(accessSecret);
+                String access_token = JWT.create()
+                        .withSubject(username)
+                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                        .withIssuer(request.getRequestURL().toString())
+                        .sign(accessAlgorithm);
+
+                responseMap.put("accessToken", access_token);
+                responseMap.put("refreshToken", refresh_token);
+            }catch (Exception exception) {
+                response.setHeader("error", exception.getMessage());
+                response.setStatus(FORBIDDEN.value());
+                responseMap.put("error_message", exception.getMessage());
+            }
+        } else {
+            throw new RuntimeException("Token is missing");
+        }
+
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        new ObjectMapper().writeValue(response.getOutputStream(), responseMap);
     }
 }

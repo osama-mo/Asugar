@@ -6,6 +6,8 @@ import com.agilesekeri.asugar_api.email.EmailValidator;
 import com.agilesekeri.asugar_api.model.request.RegistrationRequest;
 import com.agilesekeri.asugar_api.model.entity.RegistrationTokenEntity;
 import lombok.AllArgsConstructor;
+import org.springframework.data.util.Pair;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,11 +24,10 @@ public class RegistrationService {
     private final EmailSender emailSender;
 
 
-    public String register(RegistrationRequest request) {
+    public Pair<String, HttpStatus> register(RegistrationRequest request) {
         boolean isValidEmail = emailValidator.
                 test(request.getEmail());
-
-        String message;
+        Pair<String, HttpStatus> message;
 
         if (!isValidEmail) {
             throw new IllegalStateException("email not valid");
@@ -40,13 +41,13 @@ public class RegistrationService {
 
         try {
             appUserService.signUpUser(newUser);
-            message = "A confirmation email is sent";
+            message = Pair.of("A confirmation email is sent", HttpStatus.ACCEPTED);
         } catch (IllegalStateException c) {
             newUser = appUserService.loadUserByUsername(newUser.getEmail());
             if(!newUser.getEnabled())
-                message = "The given email is already registered but not confirmed, a new confirmation email is sent.";
+                message = Pair.of("The given email is already registered but not confirmed, a new confirmation email is sent.", HttpStatus.ACCEPTED);
             else
-                throw new IllegalStateException("The given email is already registered.");
+                message = Pair.of("The given email is already registered.", HttpStatus.ALREADY_REPORTED);
         }
 
         String token = UUID.randomUUID().toString();
@@ -62,7 +63,7 @@ public class RegistrationService {
         try {
             sendVerificationEmail(token, request.getEmail(), request.getFirstName());
         } catch (Exception e) {
-            throw new IllegalStateException("email server not available");
+            message = Pair.of("email server not available", HttpStatus.SERVICE_UNAVAILABLE);
         }
 
         return message;
@@ -81,14 +82,15 @@ public class RegistrationService {
     }
 
     @Transactional
-    public String confirmToken(String token) {
+    public Pair<String, HttpStatus> confirmToken(String token) {
         RegistrationTokenEntity registrationToken = registrationTokenService
-                .getToken(token)
-                .orElseThrow(() ->
-                        new IllegalStateException("token not found"));
+                .getToken(token).orElse(null);
+
+        if(registrationToken == null)
+            return Pair.of("Token not found", HttpStatus.NOT_FOUND);
 
         if (registrationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("email already confirmed");
+            return Pair.of("email already confirmed", HttpStatus.ALREADY_REPORTED);
         }
 
         LocalDateTime expiredAt = registrationToken.getExpiresAt();
@@ -110,13 +112,14 @@ public class RegistrationService {
                     registrationToken.getAppUser().getFirstName()
             );
 
-            return "token expired, a new one is sent.";
+            return Pair.of("token expired, a new one is sent.", HttpStatus.ACCEPTED);
         }
 
         registrationTokenService.setConfirmedAt(token);
         appUserService.enableAppUser(
                 registrationToken.getAppUser().getEmail());
-        return "confirmed";
+
+        return Pair.of("confirmed", HttpStatus.ACCEPTED);
     }
 
     private String buildEmail(String name, String link) {
