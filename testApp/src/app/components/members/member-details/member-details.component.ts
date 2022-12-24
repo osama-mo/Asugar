@@ -10,7 +10,9 @@ import { MemberDetailsResponse } from './member-details-response';
 })
 export class MemberDetailsComponent implements OnInit {
 
-  userEmail: String | null = "";
+  projectId: String | null = "";
+  projectName: String | null = "";
+
   memberdetails: MemberDetailsResponse;
 
 
@@ -27,14 +29,12 @@ export class MemberDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.userEmail = this.route.snapshot.queryParamMap.get('userEmail');
-    this.authsurvice.getMembersDetails(this.userEmail!).subscribe(
-      data => {
-        this.memberdetails = data
-      }
-      ,error => {
-        new Error(error)
-      })
+    this.memberdetails.Email = this.route.snapshot.queryParamMap.get('email');
+    this.projectId = this.route.snapshot.queryParamMap.get('projectId');
+    this.projectName = this.route.snapshot.queryParamMap.get('projectName');
+    this.memberdetails.firstName = this.route.snapshot.queryParamMap.get('fn');
+    this.memberdetails.LastName= this.route.snapshot.queryParamMap.get('ln');
+    this.memberdetails.title = this.route.snapshot.queryParamMap.get('title');
   }
 
 }

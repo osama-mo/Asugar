@@ -3,15 +3,15 @@
   <div class = "project-list-container">
 
        <div *ngFor="let project of projects"  class="rectangle" >
-        <div (click)="deleteProject(project.second)" class="remove-button">X</div>
-        <div class="square" (click)="navigateToBacklog(project.second,project.first)"></div>
+        <div (click)="deleteProject(project.id)" class="remove-button">X</div>
+        <div class="square" (click)="navigateToBacklog(project.id,project.name)"></div>
         <span></span>
         <span>
         <div class="txt_field">
-          <h1 style="font-size:32px">{{project.first}}</h1>
+          <h1 style="font-size:32px">{{project.name}}</h1>
         </div>
         </span>
-        <input routerLink="" type="submit" value="id :{{project.second}}" >
+        <input routerLink="" type="submit" value="id :{{project.id}}" >
         <span></span>
         </div>
         <div (click)="navigateToCreateProject()"  class="rectangle">

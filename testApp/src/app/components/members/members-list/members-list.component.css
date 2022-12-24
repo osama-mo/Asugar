@@ -116,7 +116,6 @@
   position: relative;
   top: 50%;
   left: 50%;
-
   padding-left: 18px;
   padding-right: 18px;
 
@@ -124,6 +123,7 @@
 
 
 .circle {
+
   height: 120px;
   width: 120px;
   margin-left: 60px;
@@ -133,6 +133,7 @@
   border-width: 4px;
   background-color: #269531;
   margin-top: 20px;
+  padding-top: 2vh;
   margin-bottom: -50px;
 }
 

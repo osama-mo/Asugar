@@ -30,6 +30,7 @@ const routes: Routes = [
   {path:'backlog',component:BacklogComponent},
   {path:'memberslist',component:MembersListComponent},
   {path:'member-details',component:MemberDetailsComponent},
+  {path:'add-member',component:AddMemberComponent}
 
 ];
 

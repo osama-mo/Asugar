@@ -13,10 +13,10 @@ export class MembersListComponent implements OnInit {
 
   members = [
     {
-      FirstName : "",
-      Title: '',
-      LastName: '',
-      EmailAddress: ''
+      last_name: "",
+      title: '',
+      first_name: '',
+      email: ''
     }
   ]
   constructor(private route: ActivatedRoute, private router: Router, private authsurvice: AuthService) {
@@ -33,16 +33,16 @@ export class MembersListComponent implements OnInit {
         console.log(data)
         this.members = data
       }
-      ,error => {
+      , error => {
         new Error(error)
       })
   }
 
   navigateToAddmember() {
-    this.router.navigate([''], { queryParams: { projectId: this.projectId,projectName:this.projectName} })
+    this.router.navigate(['add-member'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
-  
-  navigateToMemberDetails(){
-    this.router.navigate(['member-details'], { queryParams: { projectId: this.projectId,projectName:this.projectName} })
+
+  navigateToMemberDetails(memberemail: string, membertitle: string, memberfn: string, memberln: string) {
+    this.router.navigate(['member-details'], { queryParams: { projectId: this.projectId, projectName: this.projectName, email: memberemail, title: membertitle, fn: memberfn, ln: memberln } })
   }
 }

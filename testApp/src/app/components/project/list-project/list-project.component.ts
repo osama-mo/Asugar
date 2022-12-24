@@ -12,8 +12,8 @@ import { throwError } from 'rxjs';
 export class ListProjectComponent implements OnInit {
   projects = [
     {
-      first: "blablabla",
-      second: 123
+      name: "blablabla",
+      id: 123
     }
   ]
  
@@ -22,6 +22,7 @@ export class ListProjectComponent implements OnInit {
     
 
     authsurvice.getProjectlist().subscribe(data => {
+      console.log(data)
       this.projects = data
     }
       , error => {
