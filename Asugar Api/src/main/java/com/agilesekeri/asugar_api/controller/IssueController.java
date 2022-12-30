@@ -1,5 +1,8 @@
 package com.agilesekeri.asugar_api.controller;
 
+import com.agilesekeri.asugar_api.model.dto.AbstractIssueDTO;
+import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
+import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
 import com.agilesekeri.asugar_api.service.AppUserService;
 import com.agilesekeri.asugar_api.service.ProjectService;
 import com.agilesekeri.asugar_api.service.IssueService;
@@ -12,10 +15,12 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("/user/issue")
+@RequestMapping("/{projectId}/issues")
 @RequiredArgsConstructor
 @Getter
 @Setter
@@ -26,8 +31,33 @@ public class IssueController {
 
     // TODO: Gotta return the DTO's at POST/PUT/PATCH requests.
     @PostMapping("/create")
-    public void createIssue(@RequestBody IssueCreateRequest issueCreateRequest) {
-        issueService.createIssue(issueCreateRequest);
+    public void createIssue(@PathVariable Long projectId,
+                            @RequestBody IssueCreateRequest issueCreateRequest,
+                            HttpServletRequest request)
+            throws IOException {
+        String issuerUsername = appUserService.getJWTUsername(request);
+        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
+        ProjectEntity project = projectService.getProject(projectId);
+
+        if(!project.getMembers().contains(issuer))
+            throw new IllegalCallerException("The issuer is not qualified for the operation");
+
+        issueService.createIssue(issueCreateRequest, issuer, project);
+    }
+
+    @DeleteMapping("/delete")
+    public void deleteIssue(@PathVariable Long projectId,
+                            @RequestParam Long issueId,
+                            HttpServletRequest request)
+            throws IOException {
+        String issuerUsername = appUserService.getJWTUsername(request);
+        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
+        ProjectEntity project = projectService.getProject(projectId);
+
+        if(!project.getMembers().contains(issuer))
+            throw new IllegalCallerException("The issuer is not qualified for the operation");
+
+        issueService.deleteIssue(issueId);
     }
 
     // TODO: Need DTO's for GET requests.
@@ -38,8 +68,8 @@ public class IssueController {
 
     // I may need user to login aswell
     @GetMapping("/info/{issueId}")
-    public String viewInfo(@PathVariable Long issueId) {
-        return issueService.viewInfo(issueId);
+    public AbstractIssueDTO viewInfo(@PathVariable Long issueId) {
+        return issueService.getIssueInfo(issueId);
     }
 
 //    @PatchMapping("/update-condition/{issueId}/{conditionType}")
@@ -63,5 +93,4 @@ public class IssueController {
     public void updateIssue(@PathVariable("issueId") Long issueId, @RequestBody IssueGenericUpdateRequest issueGenericUpdateRequest){
         issueService.updateIssue(issueId, issueGenericUpdateRequest);
     }
-
 }
