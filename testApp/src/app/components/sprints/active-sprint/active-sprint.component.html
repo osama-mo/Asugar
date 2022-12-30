@@ -1,0 +1,48 @@
+
+
+
+<div class="page">
+    <div class="sidenav">
+        <button class="sidebutton">B A C K L O G</button>
+        <button class="sidebutton">I S S U E S</button>
+        <button class="ActiveSidebutton">S P R I N T </button>
+        <button class="sidebutton">M E M B E R S</button>
+      </div>
+    <div class="example-container">
+        <div class="title">To do</div>
+
+        <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
+            [cdkDropListConnectedTo]="[inprogressList,doneList]" class="example-list"
+            (cdkDropListDropped)="drop($event)" id='root'>
+            <div class="example-box" *ngFor="let item of todo" cdkDrag>
+                <div class="issueId">{{item.issueId}}</div><span></span>
+                <div class="issueDes">{{item.issueDescription}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="example-container">
+        <div class="title">In progress</div>
+        <div cdkDropList #inprogressList="cdkDropList" [cdkDropListData]="inProgress"
+            [cdkDropListConnectedTo]="[doneList,todoList]" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of inProgress" cdkDrag>
+                <div class="issueId">{{item.issueId}}</div><span></span>
+                <div class="issueDes">{{item.issueDescription}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="example-container">
+        <div class="title">Done</div>
+        <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
+            [cdkDropListConnectedTo]="[inprogressList,todoList]" class="example-list"
+            (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of done" cdkDrag>
+                <div class="issueId">{{item.issueId}}</div><span></span>
+                <div class="issueDes">{{item.issueDescription}}</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
