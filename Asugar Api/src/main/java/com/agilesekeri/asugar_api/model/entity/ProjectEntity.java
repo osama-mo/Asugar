@@ -45,7 +45,7 @@ public class ProjectEntity {
     private Set<AppUserEntity> members;
 
     @OneToMany(mappedBy = "project")
-    private Set<SprintEntity> sprints;
+    private List<SprintEntity> sprints;
 
     @OneToMany(mappedBy = "project")
     private Set<EpicEntity> Epics;

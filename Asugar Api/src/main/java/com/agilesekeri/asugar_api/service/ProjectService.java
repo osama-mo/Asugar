@@ -1,17 +1,24 @@
 package com.agilesekeri.asugar_api.service;
 
+import com.agilesekeri.asugar_api.common.AbstractIssue;
+import com.agilesekeri.asugar_api.model.dto.AbstractIssueDTO;
+import com.agilesekeri.asugar_api.model.dto.IssueDTO;
 import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
 import com.agilesekeri.asugar_api.model.entity.EpicEntity;
 import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
 import com.agilesekeri.asugar_api.model.entity.SprintEntity;
+import com.agilesekeri.asugar_api.model.enums.IssueTypeEnum;
+import com.agilesekeri.asugar_api.model.enums.TaskConditionEnum;
+import com.agilesekeri.asugar_api.repository.IssueRepository;
 import com.agilesekeri.asugar_api.repository.ProjectRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.Callable;
 
 @Service
 @AllArgsConstructor
@@ -19,9 +26,12 @@ import java.util.Set;
 public class ProjectService {
     private ProjectRepository projectRepository;
 
+    private final SprintService sprintService;
+
     public ProjectEntity createProject(String projectName, AppUserEntity admin) {
         ProjectEntity project = new ProjectEntity(projectName, admin);
         projectRepository.save(project);
+        sprintService.initializeProject(project);
         return project;
     }
 
@@ -48,11 +58,6 @@ public class ProjectService {
             throw new IllegalStateException("Not qualified to delete the project with the id " + projectId);
     }
 
-//    public Set<AppUserEntity> getMemberSet(Long id) {
-//        ProjectEntity project = getProject(id);
-//        return project.getMembers();
-//    }
-
     public boolean addMember(Long projectId, AppUserEntity user) {
         ProjectEntity project = getProject(projectId);
         boolean result = project.addMember(user);
@@ -72,24 +77,62 @@ public class ProjectService {
         product.setProductOwner(user);
     }
 
-    public SprintEntity getSprint(ProjectEntity project, String sprintName) {
-        var sprintSet = project.getSprints();
+    public Set<AbstractIssueDTO> getIssuesToDo(ProjectEntity project) {
+        Pair<SprintEntity, SprintEntity> sprints = sprintService.getMainSprints(project);
+        SprintEntity active = sprints.getFirst();
+        SprintEntity next = sprints.getSecond();
 
-        for(SprintEntity sprint : sprintSet)
-            if (sprint.getTitle().equals(sprintName))
-                return sprint;
+        Set<AbstractIssueDTO> result = new HashSet<>();
+        for(AbstractIssue issue : project.getIssues()) {
+            if(issue.getCondition() != TaskConditionEnum.DONE &&
+                    (issue.getSprint() == active ||
+                     issue.getSprint() == next ||
+                     issue.getSprint() == null)) {
+                result.add(AbstractIssueDTO.builder()
+                        .id(issue.getId())
+                        .issueType(issue.getIssueType().name())
+                        .assignedUsername(issue.getAssigned().getUsername())
+                        .condition(issue.getCondition().name())
+                        .manHour(issue.getManHour())
+                        .description(issue.getDescription())
+                        .creatorUsername(issue.getCreator().getUsername())
+                        .epicId(issue.getEpic().getId())
+                        .sprint(String.valueOf((Callable<String>) () -> {
+                            if(issue.getSprint() == active)
+                                return "Active";
+                            else if(issue.getSprint() == next)
+                                return "Next";
+                            else
+                                return "NULL";
+                        }))
+                        .createdAt(issue.getCreatedAt())
+                        .title(issue.getTitle())
+                        .build());
+            }
+        }
 
-        return null;
+        return result;
     }
 
-    public EpicEntity getEpic(ProjectEntity project, String epicName) {
-        var sprintSet = project.getEpics();
+    public Set<AbstractIssueDTO> getAllIssues(ProjectEntity project) {
+        Set<AbstractIssueDTO> result = new HashSet<>();
+        for(AbstractIssue issue : project.getIssues()) {
+            result.add(AbstractIssueDTO.builder()
+                    .id(issue.getId())
+                    .issueType(issue.getIssueType().name())
+                    .assignedUsername(issue.getAssigned().getUsername())
+                    .condition(issue.getCondition().name())
+                    .manHour(issue.getManHour())
+                    .description(issue.getDescription())
+                    .creatorUsername(issue.getCreator().getUsername())
+                    .epicId(issue.getEpic().getId())
+                    .sprint(project.getName().charAt(0) + issue.getSprint().getId().toString())
+                    .createdAt(issue.getCreatedAt())
+                    .title(issue.getTitle())
+                    .build());
+        }
 
-        for(EpicEntity epic : sprintSet)
-            if (epic.getTitle().equals(epicName))
-                return epic;
-
-        return null;
+        return result;
     }
 
 //    public Set<SprintEntity> getSprintSet(Long projectId) {
@@ -102,17 +145,14 @@ public class ProjectService {
 //        return project.getEpics();
 //    }
 
-    public void createSprint(ProjectEntity project, String sprintName, AppUserEntity creator) {
-        if(getSprint(project, sprintName) != null)
-            throw new IllegalArgumentException("A sprint with the same name already exists.");
+    public EpicEntity getEpic(ProjectEntity project, String epicName) {
+        var sprintSet = project.getEpics();
 
-        SprintEntity newSprint = SprintEntity.builder()
-                .createdAt(LocalDateTime.now())
-                .title(sprintName)
-                .project(project)
-                .creator(creator).build();
+        for(EpicEntity epic : sprintSet)
+            if (epic.getTitle().equals(epicName))
+                return epic;
 
-        project.getSprints().add(newSprint);
+        return null;
     }
 
     public void createEpic(ProjectEntity project, String epicName, AppUserEntity creator) {
@@ -123,7 +163,8 @@ public class ProjectService {
                 .createdAt(LocalDateTime.now())
                 .title(epicName)
                 .project(project)
-                .creator(creator).build();
+                .creator(creator)
+                .build();
 
         project.getEpics().add(newEpic);
     }

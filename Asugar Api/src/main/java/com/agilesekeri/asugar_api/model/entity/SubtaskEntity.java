@@ -22,15 +22,4 @@ public class SubtaskEntity extends AbstractIssue {
     @ManyToOne
     @JoinColumn(name = "parent_issue", foreignKey = @ForeignKey(name = "fk_parent_issue_id"))
     private IssueEntity parentIssue;
-
-//    SubtaskEntity(String title,
-//                  ProjectEntity project,
-//                  AppUserEntity creator,
-//                  EpicEntity epic,
-//                  SprintEntity sprint,
-//                  IssueTypeEnum issueType,
-//                  IssueEntity parentIssue) {
-//        super(title, project, creator, issueType, epic, sprint);
-//        this.parentIssue = parentIssue;
-//    }
 }
