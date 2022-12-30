@@ -15,15 +15,19 @@ import lombok.Data;
 @AllArgsConstructor
 public class IssueCreateRequest {
     @NotNull
-    private final String userName;
-    @NotNull
     private final String title;
-    @NotNull
-    private final Long projectId;
-    @NotNull
+
+    private final String description;
+
+//    @NotNull
+//    private final Long projectId;
+
     private final Long epicId;
-    @NotNull
-    private final Long sprintId;
+
+    private final String sprint;
+
+    private final int manHour;
+
     @NotNull
     private final IssueTypeEnum issueType;
 }
