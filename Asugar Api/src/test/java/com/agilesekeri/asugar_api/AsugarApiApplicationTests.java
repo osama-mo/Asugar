@@ -51,25 +51,26 @@ class AsugarApiApplicationTests {
 
     }
 
-//    @Test
-//    @Order(2)
-//    void testRegister() throws IOException {
-//        RegistrationRequest request = new RegistrationRequest("Enes", "Onur", "email@test.com", "pass");
-//        HttpServletResponse response = new Response();
-//        registrationController.register(request, response);
-//        assertEquals("A confirmation email is sent" , response.getOutputStream().toString());
-//
-//        RegistrationRequest request2 = new RegistrationRequest("Enes", "Onur", "@test.com", "pass");
-//        assertThrows(IllegalStateException.class , () -> registrationController.register(request2));
-//
-//        RegistrationRequest request3 = new RegistrationRequest("Enes", "Onur", "email@test.com", "pass");
-//        assertEquals("The given email is already registered but not confirmed, a new confirmation email is sent." , registrationController.register(request3));
-//
-//        RegistrationRequest request4 = new RegistrationRequest("Can", "tarık", "email2@test.com", "pass");
-//        registrationController.register(request4);
-//        assertEquals(1, appUserService.enableAppUser("email2@test.com"));
-//        assertThrows(IllegalStateException.class , () -> registrationController.register(request4));
-//    }
+    @Test
+    @Order(2)
+    void testRegister() throws IOException {
+        RegistrationRequest request = new RegistrationRequest("Enes", "Onur", "email@test.com", "pass");
+        HttpServletResponse response = new Response();
+        registrationController.register(request, response);
+        assertEquals("A confirmation email is sent" , response.getOutputStream().toString());
+
+        RegistrationRequest request2 = new RegistrationRequest("Enes", "Onur", "@test.com", "pass");
+        assertThrows(IllegalStateException.class , () -> registrationController.register(request2, response));
+
+        RegistrationRequest request3 = new RegistrationRequest("Enes", "Onur", "email@test.com", "pass");
+        registrationController.register(request3, response);
+        assertEquals("The given email is already registered but not confirmed, a new confirmation email is sent." , response.getOutputStream().toString());
+
+        RegistrationRequest request4 = new RegistrationRequest("Can", "tarık", "email2@test.com", "pass");
+        registrationController.register(request4, response);
+        assertEquals(1, appUserService.enableAppUser("email2@test.com"));
+        assertThrows(IllegalStateException.class , () -> registrationController.register(request4, response));
+    }
 
     @Test
     @Order(3)

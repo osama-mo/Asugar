@@ -112,4 +112,48 @@ export class AuthService {
   }
 
 
+  getProjectlist() : Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.get(`http://localhost:8080/user/project/list`, httpOptions)
+  }
+
+  deleteProject(projectId: number){
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.delete(`http://localhost:8080/user/project/${projectId}`, httpOptions)
+  }
+
+  getMembersList(projectId : Number) : Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.get(`http://localhost:8080/${projectId}/members`, httpOptions)
+  }
+
+  getMembersDetails(projectId:String,userEmail: String) : Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.get(`http://localhost:8080/${projectId}/members/${userEmail}`, httpOptions)
+  }
+
+  addMember(projectId:String,userEmail: String){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.post(`http://localhost:8080/${projectId}/members?username=${userEmail}`, httpOptions)
+  }
 }
