@@ -21,7 +21,7 @@ import { ActiveSprintComponent } from './components/sprints/active-sprint/active
 
 const routes: Routes = [
 
-  {path:'',component:ActiveSprintComponent},
+  {path:'',component:LoginComponent},
   {path:'signup',component:SignupComponent},
   {path:'forgot-my-password',component:ForgotMyPasswordComponent},
   {path:'forgot-my-password-confirmation',component:ForgotMyPasswordConfirmationComponent},
