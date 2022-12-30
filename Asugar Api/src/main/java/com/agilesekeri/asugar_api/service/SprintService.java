@@ -19,31 +19,9 @@ import java.util.ListIterator;
 public class SprintService {
     private final SprintRepository sprintRepository;
 
-//    public SprintEntity getSprint(Long id) {
-//        return sprintRepository.findById(id)
-//                .orElseThrow( () ->
-//                        new IllegalArgumentException("No sprint with this id was found"));
-//    }
-
     public void initializeProject(ProjectEntity project) {
         createSprint(project).setStartedAt(LocalDateTime.now());
         createSprint(project);
-    }
-
-    public Pair<SprintEntity, SprintEntity> getMainSprints(ProjectEntity project) {
-        ListIterator<SprintEntity> listIterator = project.getSprints().listIterator(project.getSprints().size());
-        SprintEntity active = null, next = null;
-
-        while (listIterator.hasPrevious()) {
-            next = active;
-            active = (SprintEntity) listIterator.previous();
-            if(active.getStartedAt() != null && active.getEndedAt() == null)
-                break;
-        }
-
-        assert active != null;
-        assert next != null;
-        return Pair.of(active, next);
     }
 
     public SprintEntity createSprint(ProjectEntity project) {
@@ -53,30 +31,4 @@ public class SprintService {
 
         return sprintRepository.save(newSprint);
     }
-
-    public void finishActiveSprint(ProjectEntity project) {
-        Pair<SprintEntity, SprintEntity> sprints = getMainSprints(project);
-        SprintEntity active = sprints.getFirst();
-        SprintEntity next = sprints.getSecond();
-
-        for(AbstractIssue issue : active.getIncludedIssues()) {
-            if(issue.getCondition() != TaskConditionEnum.DONE)
-                issue.setSprint(null);
-        }
-
-        active.setEndedAt(LocalDateTime.now());
-        next.setStartedAt(LocalDateTime.now());
-
-        createSprint(project);
-    }
-
-//    public SprintEntity getSprint(ProjectEntity project, ) {
-//        var sprintSet = project.getSprints();
-//
-//        for(SprintEntity sprint : sprintSet)
-//            if (sprint.getLabel().equals(label))
-//                return sprint;
-//
-//        return null;
-//    }
 }
