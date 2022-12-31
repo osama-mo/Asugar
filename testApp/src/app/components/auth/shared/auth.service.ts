@@ -7,6 +7,8 @@ import { LoginResponse } from '../login/login-response.payload';
 import { map, tap } from 'rxjs/operators';
 import { ForgotMyPasswordRequestPayload } from '../forgot-my-password/forgot-my-password-request-payload';
 import { ForgotMyPasswordConfirmationRequestPayload } from '../forgot-my-password-confirmation/forgot-my-password-confirmation-request.payload';
+import { ProjectRequsetPayload } from 'app/components/project/list-project/project-request-payload';
+import { Data } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -65,15 +67,7 @@ export class AuthService {
     return this.httpClient.post(`http://localhost:8080/password_reset`, null,httpOptions)
   }
 
-  createProject(projectName: String | null) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-      'Authorization':  'Bearer ' + localStorage.getItem('accessToken')!
 
-      })
-    }
-    return this.httpClient.post(`http://localhost:8080/user/project/create?name=${projectName}&username=${localStorage.getItem('username')}`, null, httpOptions)
-  }
 
   getJwtToken() {
     return localStorage.getItem('accessToken');
@@ -97,6 +91,9 @@ export class AuthService {
 
   logout() {
     this.loggedIn.emit(false);
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('username');
+    localStorage.removeItem('accessToken');
     localStorage.clear();
   }
 
@@ -111,7 +108,15 @@ export class AuthService {
     return this.getJwtToken() != null;
   }
 
-
+  createProject(projectName: String | null) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.post(`http://localhost:8080/user/project/create?name=${projectName}&username=${localStorage.getItem('username')}`, null, httpOptions)
+  }
+  
   getProjectlist() : Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
@@ -138,7 +143,7 @@ export class AuthService {
     }
     return this.httpClient.get(`http://localhost:8080/${projectId}/members`, httpOptions)
   }
-
+  
   getMembersDetails(projectId:String,userEmail: String) : Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({

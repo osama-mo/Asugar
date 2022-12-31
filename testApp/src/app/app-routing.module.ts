@@ -10,11 +10,17 @@ import { ResetPasswordComponent } from './components/auth/reset-password/reset-p
 import { ListProjectComponent } from './components/project/list-project/list-project.component';
 import { CreateProjectComponent } from './components/project/create-project/create-project.component';
 import { BacklogComponent } from './components/backlog/backlog.component';
+import { MembersListComponent } from './components/members/members-list/members-list.component';
+import { MemberDetailsComponent } from './components/members/member-details/member-details.component';
+import { AddMemberComponent } from './components/members/add-member/add-member.component';
+import { SprintsListComponent } from './components/sprints/sprints-list/sprints-list.component';
+import { ActiveSprintComponent } from './components/sprints/active-sprint/active-sprint.component';
 
 
 
 
 const routes: Routes = [
+
   {path:'',component:LoginComponent},
   {path:'signup',component:SignupComponent},
   {path:'forgot-my-password',component:ForgotMyPasswordComponent},
@@ -22,7 +28,10 @@ const routes: Routes = [
   {path:'reset-password',component:ResetPasswordComponent},
   {path:'list-project',component:ListProjectComponent},
   {path:'create-project',component:CreateProjectComponent},
-  {path:'backlog',component:BacklogComponent}
+  {path:'backlog',component:BacklogComponent},
+  {path:'memberslist',component:MembersListComponent},
+  {path:'member-details',component:MemberDetailsComponent},
+  {path:'add-member',component:AddMemberComponent}
 
 ];
 
