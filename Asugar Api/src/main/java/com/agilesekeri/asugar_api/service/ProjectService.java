@@ -27,7 +27,13 @@ public class ProjectService {
     private final SprintService sprintService;
 
     public ProjectEntity createProject(String projectName, AppUserEntity admin) {
+        admin.getProjectsCreated().forEach((projectEntity) -> {
+            if(projectEntity.getName().equals(projectName))
+                throw new IllegalArgumentException("The same user can not create two projects with the same name");
+        });
+
         ProjectEntity project = new ProjectEntity(projectName, admin);
+        admin.getProjectsCreated().add(project);
         projectRepository.save(project);
         sprintService.initializeProject(project);
         return project;
@@ -66,15 +72,9 @@ public class ProjectService {
                         new IllegalArgumentException("There are no projects found for the user"));
     }
 
-    public void deleteProject(Long projectId, Long userId){
-        ProjectEntity target = projectRepository.findById(projectId)
-                .orElseThrow( () ->
-                        new IllegalStateException("No project with id " + projectId + " was found to delete"));
-
-        if(target.getAdmin().getId().equals(userId))
-            projectRepository.deleteById(projectId);
-        else
-            throw new IllegalStateException("Not qualified to delete the project with the id " + projectId);
+    public void deleteProject(ProjectEntity project, AppUserEntity user){
+        user.getProjectsCreated().remove(project);
+        projectRepository.deleteById(project.getId());
     }
 
     public boolean addMember(Long projectId, AppUserEntity user) {
@@ -160,7 +160,7 @@ public class ProjectService {
                     (issue.getSprint() == active ||
                      issue.getSprint() == next ||
                      issue.getSprint() == null)) {
-                AbstractIssueDTO.AbstractIssueDTOBuilder builder = AbstractIssueDTO.builder()
+                AbstractIssueDTO.AbstractIssueDTOBuilder<?, ?> builder = AbstractIssueDTO.builder()
                         .id(issue.getId())
                         .issueType(issue.getIssueType().name())
                         .condition(issue.getCondition().name())
@@ -196,7 +196,7 @@ public class ProjectService {
     public Set<AbstractIssueDTO> getAllIssues(ProjectEntity project) {
         Set<AbstractIssueDTO> result = new HashSet<>();
         for(AbstractIssue issue : project.getIssues()) {
-            AbstractIssueDTO.AbstractIssueDTOBuilder builder = AbstractIssueDTO.builder()
+            AbstractIssueDTO.AbstractIssueDTOBuilder<?, ?> builder = AbstractIssueDTO.builder()
                     .id(issue.getId())
                     .issueType(issue.getIssueType().name())
                     .condition(issue.getCondition().name())

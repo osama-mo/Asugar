@@ -1,6 +1,7 @@
 package com.agilesekeri.asugar_api;
 
 import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
+import com.agilesekeri.asugar_api.repository.ProjectRepository;
 import com.agilesekeri.asugar_api.service.AppUserService;
 import com.agilesekeri.asugar_api.email.EmailValidator;
 import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
@@ -8,6 +9,7 @@ import com.agilesekeri.asugar_api.controller.ProjectController;
 import com.agilesekeri.asugar_api.service.ProjectService;
 import com.agilesekeri.asugar_api.controller.RegistrationController;
 import com.agilesekeri.asugar_api.model.request.RegistrationRequest;
+import com.agilesekeri.asugar_api.service.RegistrationService;
 import org.apache.catalina.connector.Response;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -40,10 +42,15 @@ class AsugarApiApplicationTests {
     private RegistrationController registrationController;
 
     @Autowired
+    private RegistrationService registrationService;
+
+    @Autowired
     private ProjectService projectService;
 
     @Autowired
     private ProjectController projectController;
+    @Autowired
+    private ProjectRepository projectRepository;
 
     @Test
     @Order(1)
@@ -55,21 +62,18 @@ class AsugarApiApplicationTests {
     @Order(2)
     void testRegister() throws IOException {
         RegistrationRequest request = new RegistrationRequest("Enes", "Onur", "email@test.com", "pass");
-        HttpServletResponse response = new Response();
-        registrationController.register(request, response);
-        assertEquals("A confirmation email is sent" , response.getOutputStream().toString());
+        assertEquals("A confirmation email is sent" , registrationService.register(request).getFirst());
 
         RegistrationRequest request2 = new RegistrationRequest("Enes", "Onur", "@test.com", "pass");
-        assertThrows(IllegalStateException.class , () -> registrationController.register(request2, response));
+        assertThrows(IllegalStateException.class , () -> registrationService.register(request2));
 
         RegistrationRequest request3 = new RegistrationRequest("Enes", "Onur", "email@test.com", "pass");
-        registrationController.register(request3, response);
-        assertEquals("The given email is already registered but not confirmed, a new confirmation email is sent." , response.getOutputStream().toString());
+        assertEquals("The given email is already registered but not confirmed, a new confirmation email is sent." , registrationService.register(request3).getFirst());
 
         RegistrationRequest request4 = new RegistrationRequest("Can", "tarık", "email2@test.com", "pass");
-        registrationController.register(request4, response);
+        registrationService.register(request4);
         assertEquals(1, appUserService.enableAppUser("email2@test.com"));
-        assertThrows(IllegalStateException.class , () -> registrationController.register(request4, response));
+        assertEquals("The given email is already registered.", registrationService.register(request4).getFirst());
     }
 
     @Test
@@ -133,6 +137,15 @@ class AsugarApiApplicationTests {
     void testAddMember() {
         AppUserEntity appUser = appUserService.loadUserByUsername("email2@test.com");
         assertTrue(projectService.addMember(1L, appUser));
+    }
+
+    @Test
+    @Order(11)
+    void testRemoveMember() {
+        AppUserEntity appUser = appUserService.loadUserByUsername("email2@test.com");
+        assertTrue(projectService.removeMember(1L, appUser));
+        assertFalse(projectService.getUserProjects(appUser.getId())
+                .contains(projectRepository.findById(1L).get()));
     }
 
     /**
