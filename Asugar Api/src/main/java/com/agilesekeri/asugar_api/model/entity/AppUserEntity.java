@@ -69,18 +69,11 @@ public class AppUserEntity implements UserDetails {
     @ManyToMany(mappedBy = "members")
     private Set<ProjectEntity> projects;
 
+    @OneToMany(mappedBy = "creator")
+    private Set<ProjectEntity> projectsCreated;
+
     @Builder.Default
     private Boolean enabled = false;
-
-//    public AppUserEntity(String firstName,
-//                         String lastName,
-//                         String email,
-//                         String password) {
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.email = email;
-//        this.password = password;
-//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -111,15 +104,6 @@ public class AppUserEntity implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
-
-//    @Override
-//    public String toString() {
-//        StringBuilder builder = new StringBuilder();
-//
-//        builder.append("\n\"id\" : \"\"")
-//
-//        return builder.toString();
-//    }
 
     @Override
     public boolean equals(Object o) {

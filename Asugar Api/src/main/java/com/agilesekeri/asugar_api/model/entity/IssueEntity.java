@@ -22,14 +22,4 @@ public class IssueEntity extends AbstractIssue {
 
     @OneToMany(mappedBy = "parentIssue")
     private Collection<SubtaskEntity> subtasks;
-
-//    public IssueEntity(String title,
-//                       ProjectEntity project,
-//                       AppUserEntity creator,
-//                       EpicEntity epic,
-//                       SprintEntity sprint,
-//                       IssueTypeEnum issueType) {
-//        super(title, project, creator, issueType, epic, sprint);
-//        this.subtasks = new HashSet<>();
-//    }
 }

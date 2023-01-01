@@ -67,10 +67,13 @@ public class AppUserController {
 
     @DeleteMapping("/project/{projectId}")
     public void deleteProject(@PathVariable("projectId") Long projectId, HttpServletRequest request) throws IOException {
-        String username = appUserService.getJWTUsername(request);
-        if(username != null) {
-            AppUserEntity user = appUserService.loadUserByUsername(username);
-            projectService.deleteProject(projectId, user.getId());
-        }
+        String issuerUsername = appUserService.getJWTUsername(request);
+        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
+        ProjectEntity project = projectService.getProject(projectId);
+
+        if(project.getAdmin() != issuer)
+            throw new IllegalCallerException("The issuer is not qualified for the operation");
+
+        projectService.deleteProject(project.getId());
     }
 }

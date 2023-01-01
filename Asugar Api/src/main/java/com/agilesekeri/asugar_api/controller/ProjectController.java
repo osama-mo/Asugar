@@ -1,9 +1,10 @@
 package com.agilesekeri.asugar_api.controller;
 
 import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
-import com.agilesekeri.asugar_api.service.AppUserService;
+import com.agilesekeri.asugar_api.model.enums.Role;
+import com.agilesekeri.asugar_api.model.request.IssueCreateRequest;
+import com.agilesekeri.asugar_api.service.*;
 import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
-import com.agilesekeri.asugar_api.service.ProjectService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,39 +24,38 @@ public class ProjectController {
 
     private final AppUserService appUserService;
 
+    private final IssueService issueService;
+
+    private final EpicService epicService;
+
+    private final SprintService sprintService;
+
     @GetMapping(path = "/members")
-    public void getMembers(@PathVariable Long projectId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void getMembers(@PathVariable Long projectId,
+                           HttpServletRequest request,
+                           HttpServletResponse response)
+            throws IOException {
         ProjectEntity project = projectService.getProject(projectId);
-        Set<AppUserEntity> members = project.getMembers();
         String username = appUserService.getJWTUsername(request);
         AppUserEntity issuer = appUserService.loadUserByUsername(username);
 
-        if(members.contains(issuer)) {
-            List<Map<String, String>> list = new ArrayList<>();
-            for(AppUserEntity user : members) {
-                Map<String, String> userInfo = new HashMap<>();
-                userInfo.put("first_name", user.getFirstName());
-                userInfo.put("last_name", user.getLastName());
-                userInfo.put("email", user.getUsername());
-                list.add(userInfo);
-
-                if(project.getAdmin() == user)
-                    userInfo.put("title", "Admin");
-                else if(project.getProductOwner() == user)
-                    userInfo.put("title", "Product Owner");
-                else
-                    userInfo.put("title", "Member");
-            }
-
+        if(project.getMembers().contains(issuer)) {
             response.setContentType(APPLICATION_JSON_VALUE);
-            new ObjectMapper().writeValue(response.getOutputStream(), list);
+            new ObjectMapper().writeValue(response.getOutputStream(), projectService.getMembersInfo(project.getId()));
         }
-        else
-            throw new IllegalCallerException("The request came from user not a member of the project");
+        else {
+            response.setContentType(APPLICATION_JSON_VALUE);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            new ObjectMapper().writeValue(response.getOutputStream(), "The request came from user not a member of the project");
+        }
     }
 
+
     @PutMapping(path = "/members")
-    public boolean addMember(@PathVariable Long projectId, @RequestParam String username, HttpServletRequest request) throws IOException {
+    public boolean addMember(@PathVariable Long projectId,
+                             @RequestParam String username,
+                             HttpServletRequest request)
+            throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
         AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
         ProjectEntity project = projectService.getProject(projectId);
@@ -63,12 +63,15 @@ public class ProjectController {
         if(project.getAdmin() != issuer)
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
-        AppUserEntity user = appUserService.loadUserByUsername(username);
-        return projectService.addMember(projectId, user);
+//        AppUserEntity user = appUserService.loadUserByUsername(username);
+        return projectService.addMember(projectId, username);
     }
 
     @DeleteMapping(path = "/members")
-    public boolean removeMember(@PathVariable Long projectId, @RequestParam String username, HttpServletRequest request) throws IOException {
+    public boolean removeMember(@PathVariable Long projectId,
+                                @RequestParam String username,
+                                HttpServletRequest request)
+            throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
         AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
         ProjectEntity project = projectService.getProject(projectId);
@@ -76,12 +79,15 @@ public class ProjectController {
         if(project.getAdmin() != issuer)
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
-        AppUserEntity user = appUserService.loadUserByUsername(username);
-        return projectService.removeMember(projectId, user);
+//        AppUserEntity user = appUserService.loadUserByUsername(username);
+        return projectService.removeMember(projectId, username);
     }
 
     @PutMapping(path = "/product_owner")
-    public void setProductOwner(@PathVariable Long projectId, @RequestParam String username, HttpServletRequest request) throws IOException {
+    public void setProductOwner(@PathVariable Long projectId,
+                                @RequestParam String username,
+                                HttpServletRequest request)
+            throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
         AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
         ProjectEntity project = projectService.getProject(projectId);
@@ -94,37 +100,89 @@ public class ProjectController {
         projectService.setProductOwner(projectId, user);
     }
 
-    @GetMapping(path = "/sprints")
-    public void getSprints(@PathVariable Long projectId, HttpServletResponse response) {
-        //TODO
-//        Set<Sprint> set = projectService.getSprintSet(projectId);
-//
-//        for(var sprint : set) {
-//
-//        }
-    }
-
-    @PostMapping(path = "/sprints")
-    public void createSprint(@PathVariable Long projectId, @RequestParam String sprintName, HttpServletRequest request) throws IOException {
+    @GetMapping(path = "/backlog")
+    public void getBacklog(@PathVariable Long projectId,
+                           HttpServletRequest request,
+                           HttpServletResponse response)
+            throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
         AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
         ProjectEntity project = projectService.getProject(projectId);
 
-        if(project.getMembers().contains(issuer))
-            throw new IllegalCallerException("The issuer is not qualified for the operation");
-
-        projectService.createSprint(project, sprintName, issuer);
+        if(project.getMembers().contains(issuer)) {
+            response.setContentType(APPLICATION_JSON_VALUE);
+            response.setStatus(HttpServletResponse.SC_OK);
+            new ObjectMapper().writeValue(response.getOutputStream(), projectService.getAllIssues(projectId));
+        }
+        else {
+            response.setContentType(APPLICATION_JSON_VALUE);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            new ObjectMapper().writeValue(response.getOutputStream(), "The request came from user not a member of the project");
+        }
     }
 
-    @PostMapping(path = "/epics")
-    public void createEpic(@PathVariable Long projectId, @RequestParam String epicName, HttpServletRequest request) throws IOException {
+    @PutMapping(path = "/sprints/finish")
+    public void finishActiveSprint(@PathVariable Long projectId,
+                                   HttpServletRequest request)
+            throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
         AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
         ProjectEntity project = projectService.getProject(projectId);
 
-        if(project.getMembers().contains(issuer))
+        if(!project.getMembers().contains(issuer))
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
-        projectService.createEpic(project, epicName, issuer);
+        projectService.finishActiveSprint(projectId);
     }
+
+//    @PostMapping(path = "/epics")
+//    public void createEpic(@PathVariable Long projectId,
+//                           @RequestParam String epicName,
+//                           HttpServletRequest request)
+//            throws IOException {
+//        String issuerUsername = appUserService.getJWTUsername(request);
+//        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
+//        ProjectEntity project = projectService.getProject(projectId);
+//
+//        if(project.getMembers().contains(issuer))
+//            throw new IllegalCallerException("The issuer is not qualified for the operation");
+//
+//        epicService.createEpic(project, epicName, issuer);
+//    }
+
+    @GetMapping(path = "/issues/active")
+    public void getActiveIssues(@PathVariable Long projectId,
+                                HttpServletRequest request,
+                                HttpServletResponse response)
+            throws IOException {
+        String issuerUsername = appUserService.getJWTUsername(request);
+        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
+        ProjectEntity project = projectService.getProject(projectId);
+
+        if(project.getMembers().contains(issuer)) {
+            response.setContentType(APPLICATION_JSON_VALUE);
+            response.setStatus(HttpServletResponse.SC_OK);
+            new ObjectMapper().writeValue(response.getOutputStream(), projectService.getIssuesToDo(projectId));
+        }
+        else {
+            response.setContentType(APPLICATION_JSON_VALUE);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            new ObjectMapper().writeValue(response.getOutputStream(), "The request came from user not a member of the project");
+        }
+    }
+
+//    @PostMapping(path = "/issues/create")
+//    public void createIssue(@PathVariable Long projectId,
+//                            @RequestBody IssueCreateRequest createRequest,
+//                            HttpServletRequest request) throws IOException {
+//        String issuerUsername = appUserService.getJWTUsername(request);
+//
+//        if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
+//            throw new IllegalCallerException("The issuer is not qualified for the operation");
+//
+//
+//        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
+//        ProjectEntity project = projectService.getProject(projectId);
+//        issueService.createIssue(createRequest, issuer, project);
+//    }
 }

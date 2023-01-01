@@ -1,9 +1,11 @@
 package com.agilesekeri.asugar_api.model.entity;
 
+import com.agilesekeri.asugar_api.common.AbstractIssue;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -26,24 +28,31 @@ public class SprintEntity {
     )
     private Long id;
 
-    private String title;
+//    private String label;
 
-    private String description;
+//    private String description;
 
     @ManyToOne
     @JoinColumn(name = "project_id", foreignKey = @ForeignKey(name = "fk_project_id"))
     private ProjectEntity project;
 
-    @ManyToOne
-    @JoinColumn(name = "creator_id", foreignKey = @ForeignKey(name = "fk_creator_id"))
-    private AppUserEntity creator;
-
     @OneToMany(mappedBy = "sprint")
-    private Set<IssueEntity> includedIssues;
+    private Set<AbstractIssue> includedIssues;
 
-    private LocalDateTime createdAt;
-
-    private LocalDateTime plannedTo;
+    private LocalDateTime startedAt;
 
     private LocalDateTime endedAt;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SprintEntity sprint = (SprintEntity) o;
+        return id.equals(sprint.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
