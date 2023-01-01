@@ -19,11 +19,6 @@ import java.util.Set;
 public class IssueService {
     private final IssueRepository issueRepository;
 
-//    private final Clock clock;
-
-//    private final SprintService sprintService;
-//    private final EpicService epicService;
-
     public IssueEntity createIssue(IssueCreateRequest issueCreateRequest, AppUserEntity creator, ProjectEntity project) {
         IssueEntity issueEntity = IssueEntity.builder()
                 .project(project)
@@ -118,7 +113,7 @@ public class IssueService {
 //        issue.setAssigned(user);
 //        issueRepository.save(issue);
 //    }
-
+//
 //    @Transactional
 //    public void updateIssue(Long issueId, IssueGenericUpdateRequest issueGenericUpdateRequest){
 //        AbstractIssue issue = issueRepository.findById(issueId)
