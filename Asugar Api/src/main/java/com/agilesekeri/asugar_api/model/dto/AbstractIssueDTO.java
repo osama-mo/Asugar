@@ -20,10 +20,9 @@ public class AbstractIssueDTO {
     private String condition;
     private String issueType;
     private String creatorUsername;
-    private String assignedUsername;
+    private String assignedTo;
     private String createdAt;
-//    private LocalDateTime plannedTo;
-//    private LocalDateTime endedAt;
+
 
     @Override
     public boolean equals(Object o) {
@@ -40,12 +39,12 @@ public class AbstractIssueDTO {
                 condition.equals(that.condition) &&
                 issueType.equals(that.issueType) &&
                 creatorUsername.equals(that.creatorUsername) &&
-                Objects.equals(assignedUsername, that.assignedUsername) &&
+                Objects.equals(assignedTo, that.assignedTo) &&
                 createdAt.equals(that.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, projectId, epicId, sprint, manHour, condition, issueType, creatorUsername, assignedUsername, createdAt);
+        return Objects.hash(id, title, description, projectId, epicId, sprint, manHour, condition, issueType, creatorUsername, assignedTo, createdAt);
     }
 }
