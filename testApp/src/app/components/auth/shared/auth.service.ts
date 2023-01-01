@@ -160,4 +160,7 @@ export class AuthService {
 
   addMember(){
   }
+  createIssue(){
+    
+  }
 }

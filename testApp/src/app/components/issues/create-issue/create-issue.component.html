@@ -1,0 +1,49 @@
+<div>
+    <div class="sidenav">
+        <button class="sidebutton">B A C K L O G</button>
+        <button class="sidebutton">I S S U E S</button>
+        <button class="sidebutton">S P R I N T S</button>
+        <button class="ActiveSidebutton">M E M B E R S</button>
+    </div>
+
+    <div class="rectangle1">
+
+        <div class="rectangle3">
+            Details
+        </div>
+        <div style="margin-top: 20vh;" class="rectangle4">
+            TITLE
+        </div>
+        <div style="margin-top: 28vh;" class="rectangle4">
+            Description
+        </div>
+        <div style="margin-top: 36vh;" class="rectangle4">
+            Epic Id
+        </div>
+        <div style="margin-top: 44vh;" class="rectangle4">
+            Issue Type
+        </div>
+        <div style="margin-top: 52vh;" class="rectangle4">
+            Man Hour
+        </div>
+        <div style="margin-top: 60vh;" class="rectangle4">
+            Sprint Type
+        </div>
+        <form [formGroup]="addMemberForm">
+            <input  type="text" [formControlName]="'title'" style="margin-top: 20vh;" class="rectangle5" required>
+            <input  type="text" [formControlName]="'des'" style="margin-top: 28vh;" class="rectangle5" required>
+            <input  type="text" [formControlName]="'epicId'" style="margin-top: 36vh;" class="rectangle5" placeholder="*can be empty" required>
+            <input  type="text" [formControlName]="'IssueType'" style="margin-top: 44vh;" class="rectangle5" required>
+            <input  type="text" [formControlName]="'manHour'" style="margin-top: 52vh;" class="rectangle5" required>
+            <select  [formControlName]="'sprint'"  style="margin-top: 60vh;" class="rectangle5">
+                <option value="active">Active</option>
+                <option value="next">Next</option>
+                <option value="null">Backlog</option>
+              </select>
+        </form>
+
+        <input type="submit" value="SUMBIT" (click)="createIssue()">
+    </div>
+
+
+</div>
