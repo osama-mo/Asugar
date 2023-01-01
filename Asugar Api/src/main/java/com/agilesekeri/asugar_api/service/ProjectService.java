@@ -318,7 +318,7 @@ public class ProjectService {
 
 
         if(issue.getAssigned() != null)
-            dto.setAssignedUsername(issue.getAssigned().getUsername());
+            dto.setAssignedTo(issue.getAssigned().getUsername());
 
         if(issue.getEpic() != null)
             dto.setEpicId(issue.getEpic().getId());
