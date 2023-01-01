@@ -1,0 +1,156 @@
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #22597D;
+    border-radius: 10px;
+  }
+
+
+
+
+
+
+
+.sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #8FCEE9;
+    overflow-x: hidden;
+    padding-top: 20px;
+    backdrop-filter: blur(2px);
+    border-style: solid;
+    border-width: 4px;
+    border-color: #22597D;
+    margin-top: 55px;
+  }
+  
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+  
+    backdrop-filter: blur(2px);
+  }
+  
+  .sidenav a:hover {
+    color: #22597D;
+  }
+  
+  .sidebutton {
+    width: 200px;
+    font-family: 'Share';
+    font-style: normal;
+    height: 52px;
+    border-color: #22597D;
+    border-radius: 36px;
+    border-width: 5px;
+    background-color: #8FCEE9;
+    text-decoration: bold;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    -webkit-text-stroke-width: 2px;
+  }
+  
+  .ActiveSidebutton{
+    width: 200px;
+    color: white;
+    font-family: 'Share';
+    height: 52px;
+    border-color: #22597D;
+    border-radius: 36px;
+    border-width: 5px;
+    background-color: #22597D;
+    text-decoration: bold;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 23px;
+    margin-bottom: 20px;
+    -webkit-text-stroke-width: 2px;
+  }
+  @media screen and (max-width: 700px) {
+    .sidenav {
+      width: 100%;
+      height: auto;
+      position: relative;
+      align-items: center;
+    }
+    .sidenav a {float: left;}
+    div.content {margin-left: 0;}
+  }
+  
+  /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+  @media screen and (max-width: 400px) {
+    .sidebar a {
+      text-align: center;
+      float: none;
+    }
+  }
+
+
+.title {
+    display: inline-block;
+    width: 8vw;
+    margin: 4px;
+    background: #22597D;
+    border-radius: 18px;
+    font-family: 'Share';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+}
+
+
+.box-container1 {
+    margin-top: 5vh;
+    width: 85vw;
+    margin-left: 250px;
+}
+
+.rectangle1 {
+    width: inherit;
+    overflow:hidden;
+    overflow-y:scroll;
+    height: 60vh;
+    background: rgba(144, 206, 233, .5);
+    backdrop-filter: blur(2px);
+  }
+ 
+  
+  .issue-box {
+    padding: 7px;
+    border: 1px solid #22597D;
+    background: rgba(144, 206, 233, .5);
+    font-family: 'Share';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+  }
+  .item{
+    text-align: center;
+    display: inline-block;
+
+  }
