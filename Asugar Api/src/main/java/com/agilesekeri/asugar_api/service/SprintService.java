@@ -8,8 +8,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ListIterator;
-
 @Service
 @AllArgsConstructor
 @Transactional
@@ -34,10 +32,11 @@ public class SprintService {
                                 " does not exist"));
     }
 
-    public boolean addIssue(Long sprintId, Long issueId) {
+    public void addIssue(Long sprintId, Long issueId) {
         AbstractIssue issue = issueService.getIssue(issueId);
         SprintEntity sprint = getSprint(sprintId);
-        return sprint.getIncludedIssues().add(issue);
+        issue.setSprint(sprint);
+//        return true;
     }
 
     public boolean removeIssue(Long sprintId, Long issueId) {

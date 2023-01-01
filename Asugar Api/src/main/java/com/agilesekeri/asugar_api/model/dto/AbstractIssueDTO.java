@@ -1,13 +1,9 @@
 package com.agilesekeri.asugar_api.model.dto;
 
-import com.agilesekeri.asugar_api.common.AbstractIssue;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import net.bytebuddy.implementation.bind.annotation.Super;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Setter
@@ -28,7 +24,6 @@ public class AbstractIssueDTO {
     private String createdAt;
 //    private LocalDateTime plannedTo;
 //    private LocalDateTime endedAt;
-
 
     @Override
     public boolean equals(Object o) {

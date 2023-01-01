@@ -1,26 +1,20 @@
 package com.agilesekeri.asugar_api.controller;
 
-import com.agilesekeri.asugar_api.common.AbstractIssue;
 import com.agilesekeri.asugar_api.model.dto.AbstractIssueDTO;
 import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
 import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
 import com.agilesekeri.asugar_api.model.enums.Role;
-import com.agilesekeri.asugar_api.service.AppUserService;
-import com.agilesekeri.asugar_api.service.ProjectService;
-import com.agilesekeri.asugar_api.service.IssueService;
+import com.agilesekeri.asugar_api.model.enums.TaskConditionEnum;
+import com.agilesekeri.asugar_api.service.*;
 import com.agilesekeri.asugar_api.model.request.IssueCreateRequest;
-import com.agilesekeri.asugar_api.model.request.IssueGenericUpdateRequest;
 import com.agilesekeri.asugar_api.model.entity.IssueEntity;
-import com.agilesekeri.asugar_api.service.SprintService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/{projectId}/issues")
@@ -32,11 +26,13 @@ public class IssueController {
     private final IssueService issueService;
     private final ProjectService projectService;
     private final SprintService sprintService;
+    private final EpicService epicService;
 
     @PostMapping(path = "/create")
     public void createIssue(@PathVariable Long projectId,
                             @RequestBody IssueCreateRequest createRequest,
-                            HttpServletRequest request) throws IOException {
+                            HttpServletRequest request)
+            throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
         if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
             throw new IllegalCallerException("The issuer is not qualified for the operation");
@@ -51,7 +47,24 @@ public class IssueController {
                     issue.getId()
             );
 
-        if(createRequest.getEpicId() != null);
+        if(createRequest.getEpicId() != null)
+            epicService.addIssue(
+                    createRequest.getEpicId(),
+                    issue.getId()
+            );
+    }
+
+    @PutMapping("/{issueId}/condition")
+    public void setCondition(@PathVariable Long projectId,
+                             @PathVariable Long issueId,
+                             @RequestParam TaskConditionEnum condition,
+                             HttpServletRequest request)
+            throws IOException {
+        String issuerUsername = appUserService.getJWTUsername(request);
+        if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
+            throw new IllegalCallerException("The issuer is not qualified for the operation");
+
+        issueService.setCondition(issueId, condition);
     }
 
     @DeleteMapping("/delete")
@@ -60,19 +73,35 @@ public class IssueController {
                             HttpServletRequest request)
             throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
-        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
-        ProjectEntity project = projectService.getProject(projectId);
-
-        if(!project.getMembers().contains(issuer))
+        if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
         issueService.deleteIssue(issueId);
     }
 
-    // TODO: Need DTO's for GET requests.
-    @GetMapping("/{issueId}")
-    public AbstractIssue getIssue(@PathVariable Long issueId) {
-        return issueService.getIssue(issueId);
+    @GetMapping("/{issueId}/info")
+    public AbstractIssueDTO getIssue(@PathVariable Long issueId,
+                                     @PathVariable Long projectId,
+                                     HttpServletRequest request)
+            throws IOException {
+        String issuerUsername = appUserService.getJWTUsername(request);
+        if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
+            throw new IllegalCallerException("The issuer is not qualified for the operation");
+
+        return projectService.getIssueInfo(issueId);
+    }
+
+    @PutMapping("/{issueId}/assign")
+    public void assignToMember(@PathVariable Long projectId,
+                               @PathVariable Long issueId,
+                               @RequestParam String username,
+                               HttpServletRequest request)
+            throws IOException {
+        String issuerUsername = appUserService.getJWTUsername(request);
+        if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
+            throw new IllegalCallerException("The issuer is not qualified for the operation");
+
+        issueService.assignToMember(issueId, appUserService.loadUserByUsername(username));
     }
 
     // I may need user to login aswell
@@ -97,7 +126,6 @@ public class IssueController {
 //    }
 
     // TODO: Below I'll be combining all of the set/edit methods which some are written above.
-
 //    @PatchMapping("/update/{issueId}")
 //    public void updateIssue(@PathVariable("issueId") Long issueId, @RequestBody IssueGenericUpdateRequest issueGenericUpdateRequest){
 //        issueService.updateIssue(issueId, issueGenericUpdateRequest);

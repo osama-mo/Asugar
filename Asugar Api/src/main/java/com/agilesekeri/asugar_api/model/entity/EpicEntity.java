@@ -3,6 +3,7 @@ package com.agilesekeri.asugar_api.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -47,7 +48,7 @@ public class EpicEntity {
 
     private LocalDateTime createdAt;
 
-    private LocalDateTime plannedTo;
+    private LocalDate plannedTo;
 
     private LocalDateTime endedAt;
 }

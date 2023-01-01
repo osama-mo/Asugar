@@ -12,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-import static com.agilesekeri.asugar_api.model.enums.TaskConditionEnum.TODO;
 
 //@Getter
 //@Setter

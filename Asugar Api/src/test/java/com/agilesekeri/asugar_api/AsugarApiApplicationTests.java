@@ -226,7 +226,7 @@ class AsugarApiApplicationTests {
                 .issueType(IssueTypeEnum.STORY)
                 .description("This is an issue created to test issue creation")
                 .title("issue create test")
-                .projectId(project.getId())
+//                .projectId(project.getId())
                 .manHour(33)
                 .sprint("active")
                 .build();
