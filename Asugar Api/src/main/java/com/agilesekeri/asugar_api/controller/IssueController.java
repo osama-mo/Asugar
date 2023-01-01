@@ -73,7 +73,7 @@ public class IssueController {
         issueService.setCondition(issueId, condition);
     }
 
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     public void deleteIssue(@PathVariable Long projectId,
                             @RequestParam Long issueId,
                             HttpServletRequest request)
