@@ -15,13 +15,14 @@ import { MemberDetailsComponent } from './components/members/member-details/memb
 import { AddMemberComponent } from './components/members/add-member/add-member.component';
 import { SprintsListComponent } from './components/sprints/sprints-list/sprints-list.component';
 import { ActiveSprintComponent } from './components/sprints/active-sprint/active-sprint.component';
+import { MainIssuesComponent } from './components/issues/main-issues/main-issues.component';
 
 
 
 
 const routes: Routes = [
 
-  {path:'',component:LoginComponent},
+  {path:'',component:MainIssuesComponent},
   {path:'signup',component:SignupComponent},
   {path:'forgot-my-password',component:ForgotMyPasswordComponent},
   {path:'forgot-my-password-confirmation',component:ForgotMyPasswordConfirmationComponent},
@@ -31,7 +32,8 @@ const routes: Routes = [
   {path:'backlog',component:BacklogComponent},
   {path:'memberslist',component:MembersListComponent},
   {path:'member-details',component:MemberDetailsComponent},
-  {path:'add-member',component:AddMemberComponent}
+  {path:'add-member',component:AddMemberComponent},
+  {path:'active-sprint',component:ActiveSprintComponent},
 
 ];
 

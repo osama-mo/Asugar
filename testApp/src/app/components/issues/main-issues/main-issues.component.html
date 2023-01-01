@@ -1,0 +1,39 @@
+<div class="sidenav">
+    <button class="sidebutton">B A C K L O G</button>
+    <button class="ActiveSidebutton">I S S U E S</button>
+    <button (click)="navigateToActiveSprint()" class="sidebutton">S P R I N T </button>
+    <button (click)="navigateToMembers()" class="sidebutton">M E M B E R S</button>
+</div>
+
+
+
+
+<div class="box-container1">
+    <div class="header">
+        <div class="title" style="width: 3vw;margin-right: 1vw;">id</div>
+        <div class="title" style="width: 5vw;margin-right: 1vw;">Title</div>
+        <div class="title" style="width: 15vw;margin-right: 1vw;">Description</div>
+        <div class="title" style="width: 6vw;margin-right: 1vw;">Man Hour</div>
+        <div class="title" style="width: 6vw;margin-right: 1vw;">Condition</div>
+        <div class="title" style="width: 6vw;margin-right: 1vw;">issueType</div>
+        <div class="title" style="width: 10vw;margin-right: 1vw;">Creator</div>
+        <div class="title" style="width: 10vw;margin-right: 1vw;">Assigned to</div>
+        <div class="title" style="width: 10vw;margin-right: 1vw;">Created At</div>
+    </div>
+
+    <div class="rectangle1">
+        <div class="issue-box" *ngFor="let item of issues">
+
+            <div class="item" style="width: 3vw;margin-right: 1vw;">{{item.id}}</div>
+            <div class="item" style="width: 5vw;margin-right: 1vw;">{{item.title}}</div>
+            <div class="item" style="width: 15vw;margin-right: 1vw;">{{item.des}}</div>
+            <div class="item" style="width: 6vw;margin-right: 1vw;">{{item.manHour}}</div>
+            <div class="item" style="width: 6vw;margin-right: 1vw;">{{item.condition}}</div>
+            <div class="item" style="width: 7vw;margin-right: 1vw;">{{item.issueType}}</div>
+            <div class="item" style="width: 10vw;margin-right: 1vw;">{{item.creator}}</div>
+            <div class="item" style="width: 10vw;margin-right: 1vw;">{{item.assigned}}</div>
+            <div class="item" style="width: 10vw">{{item.createdAt}}</div>
+
+        </div>
+    </div>
+</div>

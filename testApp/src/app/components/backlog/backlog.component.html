@@ -1,18 +1,42 @@
-<body>
-    <img src="../../../../assets/imgs/background.png" alt="Background" width="1000" height="300">
+<div class="page">
     <div class="sidenav">
-        <button class="button">BACKLOG</button>
-        <button class="button">ISSUES</button>
-        <button class="button">SPRINTS</button>
-        <button (click)="navigateToMembers()" class="button">MEMBERS</button>
+        <button class="sidebutton">B A C K L O G</button>
+        <button class="sidebutton">I S S U E S</button>
+        <button (click)="navigateToActiveSprint()" class="ActiveSidebutton">S P R I N T </button>
+        <button (click)="navigateToMembers()" class="sidebutton">M E M B E R S</button>
     </div>
-    
-    <div class="button button1">
-        Active Sprint
+    <div class="box-container1">
+        <div class="header">
+            <div class="title">ACTIVE SPRINT</div>
+            <div class="delete-sprint">Delete</div>
+        </div>
+        <div cdkDropList #activeList="cdkDropList" [cdkDropListData]="activeSprint"
+            [cdkDropListConnectedTo]="[nextList,blList]" class="rectangle1" (cdkDropListDropped)="drop($event)">
+            <div class="issue-box" *ngFor="let item of activeSprint" cdkDrag>
+                <div style="float: left; margin-left: 10px;">{{item.issueId}}</div>{{item.issueDescription}}
+            </div>
+        </div>
     </div>
-    <div class="rectangle1">{{projectName}}</div>
-    <div class="rectangle1"></div>
 
+    <div class="box-container2">
+        <div class="title">NEXT SPRINT</div>
+        <div cdkDropList #nextList="cdkDropList" [cdkDropListData]="nextSprint"
+            [cdkDropListConnectedTo]="[activeList,blList]" class="rectangle2" (cdkDropListDropped)="drop($event)">
+            <div class="issue-box" *ngFor="let item of nextSprint" cdkDrag>
+                <div style="float: left; margin-left: 10px;">{{item.issueId}}</div>{{item.issueDescription}}
+            </div>
+        </div>
+    </div>
+    <div class="box-container3">
+        <div style="background-color: #22597D ;" class="title">BACKLOG</div>
+        <div cdkDropList #blList="cdkDropList" [cdkDropListData]="Backlog"
+            [cdkDropListConnectedTo]="[activeList,nextList]" class="rectangle3" (cdkDropListDropped)="drop($event)">
+            <div class="issue-box" *ngFor="let item of Backlog" cdkDrag>
+                <div style="float: left; margin-left: 10px;">{{item.issueId}}</div>{{item.issueDescription}}
+            </div>
 
-    
-</body>
+        </div>
+
+    </div>
+
+</div>

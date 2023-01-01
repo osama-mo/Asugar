@@ -23,6 +23,7 @@ import { AddMemberComponent } from './components/members/add-member/add-member.c
 import { SprintsListComponent } from './components/sprints/sprints-list/sprints-list.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ActiveSprintComponent } from './components/sprints/active-sprint/active-sprint.component';
+import { MainIssuesComponent } from './components/issues/main-issues/main-issues.component';
 
 
 
@@ -49,6 +50,7 @@ export function playerFactory(): any {
     AddMemberComponent,
     SprintsListComponent,
     ActiveSprintComponent,
+    MainIssuesComponent,
   ],
   imports: [
     DragDropModule,
