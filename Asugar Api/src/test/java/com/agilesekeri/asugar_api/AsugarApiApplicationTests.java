@@ -1,30 +1,31 @@
 package com.agilesekeri.asugar_api;
 
+import com.agilesekeri.asugar_api.common.AbstractIssue;
+import com.agilesekeri.asugar_api.model.dto.AbstractIssueDTO;
 import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
+import com.agilesekeri.asugar_api.model.entity.IssueEntity;
+import com.agilesekeri.asugar_api.model.entity.SprintEntity;
+import com.agilesekeri.asugar_api.model.enums.IssueTypeEnum;
+import com.agilesekeri.asugar_api.model.request.IssueCreateRequest;
 import com.agilesekeri.asugar_api.repository.ProjectRepository;
-import com.agilesekeri.asugar_api.service.AppUserService;
+import com.agilesekeri.asugar_api.service.*;
 import com.agilesekeri.asugar_api.email.EmailValidator;
 import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
 import com.agilesekeri.asugar_api.controller.ProjectController;
-import com.agilesekeri.asugar_api.service.ProjectService;
 import com.agilesekeri.asugar_api.controller.RegistrationController;
 import com.agilesekeri.asugar_api.model.request.RegistrationRequest;
-import com.agilesekeri.asugar_api.service.RegistrationService;
-import org.apache.catalina.connector.Response;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,21 +37,20 @@ class AsugarApiApplicationTests {
     private AppUserService appUserService;
 
     @Autowired
-    private EmailValidator emailValidator;
-
-    @Autowired
-    private RegistrationController registrationController;
-
-    @Autowired
     private RegistrationService registrationService;
 
     @Autowired
     private ProjectService projectService;
 
     @Autowired
-    private ProjectController projectController;
+    private SprintService sprintService;
+
     @Autowired
-    private ProjectRepository projectRepository;
+    private IssueService issueService;
+
+
+    @Autowired
+    private EmailValidator emailValidator;
 
     @Test
     @Order(1)
@@ -100,52 +100,146 @@ class AsugarApiApplicationTests {
     @Test
     @Order(6)
     void testUserExists() {
-        assertTrue(appUserService.userExists("email@test.com"));
-        assertFalse(appUserService.userExists("bugalum@buya.bu"));
+        RegistrationRequest request = new RegistrationRequest("user", "exist", "user@exist.test", "pass");
+        registrationService.register(request);
+        assertTrue(appUserService.userExists("user@exist.test"));
+        assertFalse(appUserService.userExists("random@buya.bu"));
     }
+
     @Test
     @Order(7)
     void testCreateProject() {
-        AppUserEntity appUser = appUserService.loadUserByUsername("email@test.com");
-        assertTrue(projectService.getUserProjects(appUser.getId()).isEmpty());
+        RegistrationRequest request = new RegistrationRequest("project", "create", "project@create.test", "pass");
+        RegistrationRequest request2 = new RegistrationRequest("project2", "create", "project2@create.test", "pass");
+        registrationService.register(request);
+        registrationService.register(request2);
+        appUserService.enableAppUser("project@create.test");
+        appUserService.enableAppUser("project2@create.test");
+        ProjectEntity project = projectService.createProject("project test", appUserService.loadUserByUsername("project@create.test"));
+        projectService.addMember(project.getId(), "project2@create.test");
 
-        ProjectEntity project = projectService.createProject("project test 1", appUser);
-        assertNotNull(project.getCreatedAt());
-        assertNull(project.getPlannedTo());
-        assertNull(project.getEndedAt());
-        assertEquals(appUser, project.getAdmin());
-        assertFalse(project.getMembers().isEmpty());
-        assertEquals("project test 1", project.getName());
-        assertNotNull(project.getId());
+        assertThrows(IllegalArgumentException.class,
+                () -> projectService.createProject(
+                        "project test",
+                        appUserService.loadUserByUsername("project@create.test")));
+
+        assertFalse(projectService.getUserProjects(appUserService.loadUserByUsername("project@create.test").getId()).isEmpty());
+        assertFalse(projectService.getUserProjects(appUserService.loadUserByUsername("project2@create.test").getId()).isEmpty());
+        assertTrue(projectService.getUserProjects(-1L).isEmpty());
     }
 
     @Test
     @Order(8)
     void testGetProjectList() {
-        AppUserEntity appUser = appUserService.loadUserByUsername("email@test.com");
-        assertFalse(projectService.getUserProjects(appUser.getId()).isEmpty());
+        RegistrationRequest request = new RegistrationRequest("project", "list", "project@list.test", "pass");
+        RegistrationRequest request2 = new RegistrationRequest("project2", "list", "project2@list.test", "pass");
+        registrationService.register(request);
+        registrationService.register(request2);
+        appUserService.enableAppUser("project@list.test");
+        appUserService.enableAppUser("project2@list.test");
+        ProjectEntity project = projectService.createProject("project test", appUserService.loadUserByUsername("project@list.test"));
+        projectService.addMember(project.getId(), "project2@list.test");
 
-        AppUserEntity appUser2 = appUserService.loadUserByUsername("email2@test.com");
-        LoggerFactory.getLogger(AsugarApiApplicationTests.class).info(Arrays.toString(projectService.getUserProjects(appUser2.getId()).toArray()));
-        assertTrue(projectService.getUserProjects(appUser2.getId()).isEmpty());
-
+        assertFalse(projectService.getUserProjects(appUserService.loadUserByUsername("project@list.test").getId()).isEmpty());
+        assertFalse(projectService.getUserProjects(appUserService.loadUserByUsername("project2@list.test").getId()).isEmpty());
         assertTrue(projectService.getUserProjects(-1L).isEmpty());
+    }
+
+    @Test
+//    @Order(8)
+    void testRemoveProject() {
+        RegistrationRequest request = new RegistrationRequest("project", "remove", "project@remove.test", "pass");
+        RegistrationRequest request2 = new RegistrationRequest("project2", "remove", "project2@remove.test", "pass");
+        registrationService.register(request);
+        registrationService.register(request2);
+        appUserService.enableAppUser("project@remove.test");
+        appUserService.enableAppUser("project2@remove.test");
+        ProjectEntity project = projectService.createProject("project test", appUserService.loadUserByUsername("project@remove.test"));
+        projectService.addMember(project.getId(), "project2@remove.test");
+
+        projectService.deleteProject(project.getId());
+        assertTrue(appUserService.loadUserByUsername("project@remove.test").getProjects().isEmpty());
+        assertTrue(appUserService.loadUserByUsername("project2@remove.test").getProjects().isEmpty());
     }
 
     @Test
     @Order(10)
     void testAddMember() {
-        AppUserEntity appUser = appUserService.loadUserByUsername("email2@test.com");
-        assertTrue(projectService.addMember(1L, appUser));
+        RegistrationRequest request = new RegistrationRequest("member", "add", "member@add.test", "pass");
+        RegistrationRequest request2 = new RegistrationRequest("member2", "add", "member2@add.test", "pass");
+        registrationService.register(request);
+        registrationService.register(request2);
+        appUserService.enableAppUser("member@add.test");
+        appUserService.enableAppUser("member2@add.test");
+        ProjectEntity project = projectService.createProject("project test", appUserService.loadUserByUsername("member@add.test"));
+
+        assertTrue(projectService.addMember(project.getId(), "member2@add.test"));
+        assertTrue(projectService.getUserProjects(
+                appUserService.loadUserByUsername("member2@add.test").getId())
+                .contains(project));
+        assertFalse(projectService.addMember(project.getId(), "member2@add.test"));
+        assertThrows(UsernameNotFoundException.class, () -> projectService.addMember(project.getId(), "random@buya.bu"));
     }
 
     @Test
     @Order(11)
     void testRemoveMember() {
-        AppUserEntity appUser = appUserService.loadUserByUsername("email2@test.com");
-        assertTrue(projectService.removeMember(1L, appUser));
-        assertFalse(projectService.getUserProjects(appUser.getId())
-                .contains(projectRepository.findById(1L).get()));
+        RegistrationRequest request = new RegistrationRequest("member", "remove", "member@remove.test", "pass");
+        RegistrationRequest request2 = new RegistrationRequest("member2", "remove", "member2@remove.test", "pass");
+        registrationService.register(request);
+        registrationService.register(request2);
+        appUserService.enableAppUser("member@remove.test");
+        appUserService.enableAppUser("member2@remove.test");
+        ProjectEntity project = projectService.createProject("project test", appUserService.loadUserByUsername("member@remove.test"));
+        projectService.addMember(project.getId(), "member2@remove.test");
+
+        assertTrue(projectService.removeMember(project.getId(), "member2@remove.test"));
+        assertFalse(projectService.getUserProjects(
+                appUserService.loadUserByUsername("member2@remove.test").getId())
+                .contains(project));
+        assertFalse(projectService.removeMember(project.getId(), "member2@remove.test"));
+        assertThrows(UsernameNotFoundException.class, () -> projectService.removeMember(project.getId(), "random@buya.bu"));
+    }
+
+    @Test
+    void testFinishSprint() {
+        RegistrationRequest request = new RegistrationRequest("sprint", "finish", "sprint@finish.test", "pass");
+        registrationService.register(request);
+        appUserService.enableAppUser("sprint@finish.test");
+        ProjectEntity project = projectService.createProject("sprint finish test", appUserService.loadUserByUsername("sprint@finish.test"));
+        SprintEntity active = projectService.getActiveSprint(project.getId());
+        SprintEntity next = projectService.getNextSprint(project.getId());
+
+        projectService.finishActiveSprint(project.getId());
+        assertEquals(next, projectService.getActiveSprint(project.getId()));
+        assertTrue(sprintService.getSprint(active.getId()).getEndedAt().isBefore(LocalDateTime.now()));
+    }
+
+    @Test
+    void testCreateIssue() {
+        RegistrationRequest request = new RegistrationRequest("issue", "create", "issue@create.test", "pass");
+        registrationService.register(request);
+        appUserService.enableAppUser("issue@create.test");
+        ProjectEntity project = projectService.createProject("issue create test", appUserService.loadUserByUsername("issue@create.test"));
+
+        IssueCreateRequest issueCreateRequest = IssueCreateRequest.builder()
+                .issueType(IssueTypeEnum.STORY)
+                .description("This is an issue created to test issue creation")
+                .title("issue create test")
+                .projectId(project.getId())
+                .manHour(33)
+                .sprint("active")
+                .build();
+
+        AbstractIssue issue = issueService.createIssue(
+                issueCreateRequest,
+                appUserService.loadUserByUsername("issue@create.test"),
+                project);
+
+        AbstractIssueDTO target = projectService.getIssueInfo(issue.getId());
+
+        assertTrue(projectService.getAllIssues(project.getId())
+                .contains(target));
     }
 
     /**
