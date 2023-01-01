@@ -24,7 +24,7 @@ import { RemoveIssueComponent } from './components/issues/remove-issue/remove-is
 
 const routes: Routes = [
 
-  {path:'',component:MainIssuesComponent},
+  {path:'',component:LoginComponent},
   {path:'signup',component:SignupComponent},
   {path:'forgot-my-password',component:ForgotMyPasswordComponent},
   {path:'forgot-my-password-confirmation',component:ForgotMyPasswordConfirmationComponent},
@@ -38,6 +38,7 @@ const routes: Routes = [
   {path:'active-sprint',component:ActiveSprintComponent},
   {path:'create-issue',component:CreateIssueComponent},
   {path:'remove-issue',component:RemoveIssueComponent},
+  {path:'issues',component:MainIssuesComponent},
 
 ];
 

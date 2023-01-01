@@ -122,5 +122,7 @@ export class BacklogComponent implements OnInit {
   navigateToMembers() {
     this.router.navigate(['memberslist'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
-
+  navigateToIssues(){
+    this.router.navigate(['issues'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
 }
