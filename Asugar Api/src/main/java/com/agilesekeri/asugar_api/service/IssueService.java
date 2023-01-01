@@ -1,9 +1,6 @@
 package com.agilesekeri.asugar_api.service;
 
 import com.agilesekeri.asugar_api.common.AbstractIssue;
-import com.agilesekeri.asugar_api.model.dto.AbstractIssueDTO;
-import com.agilesekeri.asugar_api.model.dto.IssueDTO;
-import com.agilesekeri.asugar_api.model.dto.SubtaskDTO;
 import com.agilesekeri.asugar_api.model.entity.*;
 import com.agilesekeri.asugar_api.model.enums.TaskConditionEnum;
 import com.agilesekeri.asugar_api.model.request.IssueCreateRequest;
@@ -11,13 +8,11 @@ import com.agilesekeri.asugar_api.repository.IssueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 @Service
 @RequiredArgsConstructor
@@ -84,6 +79,18 @@ public class IssueService {
             );
 
         issueRepository.deleteById(issueId);
+    }
+
+    public void setCondition(Long issueId, TaskConditionEnum condition) {
+        AbstractIssue issue = getIssue(issueId);
+        issue.setCondition(condition);
+        issueRepository.save(issue);
+    }
+
+    public void assignToMember(Long issueId, AppUserEntity user) {
+        AbstractIssue issue = getIssue(issueId);
+        issue.setAssigned(user);
+        issueRepository.save(issue);
     }
 
 //    @Transactional

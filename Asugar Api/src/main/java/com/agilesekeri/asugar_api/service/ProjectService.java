@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.Callable;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @AllArgsConstructor
@@ -256,6 +254,16 @@ public class ProjectService {
             return null;
     }
 
+    public String getSprintState(Long projectId, Long issueId) {
+        AbstractIssue issue = issueService.getIssue(issueId);
+        if(getActiveSprint(projectId).equals(issue.getSprint()))
+            return "active";
+        else if(getNextSprint(projectId).equals(issue.getSprint()))
+            return "next";
+        else
+            return null;
+    }
+
     public SprintEntity getActiveSprint(Long projectId) {
         ProjectEntity project = getProject(projectId);
 
@@ -316,14 +324,7 @@ public class ProjectService {
             dto.setEpicId(issue.getEpic().getId());
 
         if(issue.getSprint() != null)
-            dto.setSprint(String.valueOf((Callable<String>) () -> {
-                if(issue.getSprint() == active)
-                    return "Active";
-                else if(issue.getSprint() == next)
-                    return "Next";
-                else
-                    return "NULL";
-            }));
+            dto.setSprint(getSprintState(issue.getProject().getId(), issueId));
 
         return dto;
     }

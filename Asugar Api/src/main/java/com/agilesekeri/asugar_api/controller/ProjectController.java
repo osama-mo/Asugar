@@ -2,7 +2,7 @@ package com.agilesekeri.asugar_api.controller;
 
 import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
 import com.agilesekeri.asugar_api.model.enums.Role;
-import com.agilesekeri.asugar_api.model.request.IssueCreateRequest;
+import com.agilesekeri.asugar_api.model.request.EpicCreateRequest;
 import com.agilesekeri.asugar_api.service.*;
 import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -49,7 +48,6 @@ public class ProjectController {
             new ObjectMapper().writeValue(response.getOutputStream(), "The request came from user not a member of the project");
         }
     }
-
 
     @PutMapping(path = "/members")
     public boolean addMember(@PathVariable Long projectId,
@@ -100,7 +98,7 @@ public class ProjectController {
         projectService.setProductOwner(projectId, user);
     }
 
-    @GetMapping(path = "/backlog")
+    @GetMapping(path = "/issues/all")
     public void getBacklog(@PathVariable Long projectId,
                            HttpServletRequest request,
                            HttpServletResponse response)
@@ -135,20 +133,19 @@ public class ProjectController {
         projectService.finishActiveSprint(projectId);
     }
 
-//    @PostMapping(path = "/epics")
-//    public void createEpic(@PathVariable Long projectId,
-//                           @RequestParam String epicName,
-//                           HttpServletRequest request)
-//            throws IOException {
-//        String issuerUsername = appUserService.getJWTUsername(request);
-//        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
-//        ProjectEntity project = projectService.getProject(projectId);
-//
-//        if(project.getMembers().contains(issuer))
-//            throw new IllegalCallerException("The issuer is not qualified for the operation");
-//
-//        epicService.createEpic(project, epicName, issuer);
-//    }
+    @PostMapping(path = "/epics/create")
+    public void createEpic(@PathVariable Long projectId,
+                           @RequestBody EpicCreateRequest createRequest,
+                           HttpServletRequest request)
+            throws IOException {
+        String issuerUsername = appUserService.getJWTUsername(request);
+        if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
+            throw new IllegalCallerException("The issuer is not qualified for the operation");
+
+        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
+        ProjectEntity project = projectService.getProject(projectId);
+        epicService.createEpic(createRequest, issuer, project);
+    }
 
     @GetMapping(path = "/issues/active")
     public void getActiveIssues(@PathVariable Long projectId,
@@ -170,19 +167,4 @@ public class ProjectController {
             new ObjectMapper().writeValue(response.getOutputStream(), "The request came from user not a member of the project");
         }
     }
-
-//    @PostMapping(path = "/issues/create")
-//    public void createIssue(@PathVariable Long projectId,
-//                            @RequestBody IssueCreateRequest createRequest,
-//                            HttpServletRequest request) throws IOException {
-//        String issuerUsername = appUserService.getJWTUsername(request);
-//
-//        if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
-//            throw new IllegalCallerException("The issuer is not qualified for the operation");
-//
-//
-//        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
-//        ProjectEntity project = projectService.getProject(projectId);
-//        issueService.createIssue(createRequest, issuer, project);
-//    }
 }
