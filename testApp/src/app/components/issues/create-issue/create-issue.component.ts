@@ -22,7 +22,6 @@ export class CreateIssueComponent {
     des: new FormControl('', [Validators.required]),
     epicId: new FormControl('', [Validators.required]),
     IssueType: new FormControl('', [Validators.required]),
-    
     manHour: new FormControl('', [Validators.required]),
     assignedTo: new FormControl('',[Validators.required]),
     sprint: new FormControl('', [Validators.required]),
@@ -30,6 +29,14 @@ export class CreateIssueComponent {
   })
   projectId: string | null;
   projectName: string | null;
+  members = [
+    {
+      last_name: "",
+      title: '',
+      first_name: '',
+      email: ''
+    }
+  ]
 
 
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService,private location: Location) {
@@ -47,7 +54,14 @@ export class CreateIssueComponent {
   }
 
   ngOnInit(): void {
-
+    this.authService.getMembersList(Number(this.projectId)).subscribe(
+      data => {
+        console.log(data)
+        this.members = data
+      }
+      , error => {
+        new Error(error)
+      })
   }
 
 
@@ -58,7 +72,7 @@ export class CreateIssueComponent {
     this.createIssueRequset.description = this.createIssueForm.get('des')!.value;
     this.createIssueRequset.epicId = this.createIssueForm.get('epicId')!.value;
     this.createIssueRequset.issueType = this.createIssueForm.get('IssueType')!.value;
-    this.createIssueRequset.manHour = this.createIssueForm.get('manHour')!.value;
+    this.createIssueRequset.manHour = Number(this.createIssueForm.get('manHour')!.value);
     this.createIssueRequset.assignedTo = this.createIssueForm.get('assignedTo')!.value;
     this.createIssueRequset.sprint = this.createIssueForm.get('sprint')!.value;
 

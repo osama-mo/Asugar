@@ -26,13 +26,13 @@
 
             <div class="item" style="width: 3vw;margin-right: 1vw;">{{item.id}}</div>
             <div class="item" style="width: 5vw;margin-right: 1vw;">{{item.title}}</div>
-            <div class="item" style="width: 15vw;margin-right: 1vw;">{{item.des}}</div>
+            <div class="item" style="width: 15vw;margin-right: 1vw;">{{item.description}}</div>
             <div class="item" style="width: 6vw;margin-right: 1vw;">{{item.manHour}}</div>
             <div class="item" style="width: 6vw;margin-right: 1vw;">{{item.condition}}</div>
             <div class="item" style="width: 7vw;margin-right: 1vw;">{{item.issueType}}</div>
-            <div class="item" style="width: 10vw;margin-right: 1vw;">{{item.creator}}</div>
-            <div class="item" style="width: 10vw;margin-right: 1vw;">{{item.assigned}}</div>
-            <div class="item" style="width: 10vw">{{item.createdAt}}</div>
+            <div class="item" style="width: 10vw;margin-right: 1vw;">{{item.creatorUsername}}</div>
+            <div class="item" style="width: 10vw;margin-right: 1vw;">{{item.assignedTo}}</div>
+            <div class="item" style="width: 10vw">{{getShortName(item.createdAt)}}</div>
 
         </div>
     </div>

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/components/auth/shared/auth.service';
@@ -11,13 +12,13 @@ export class MainIssuesComponent {
   issues = [ {
     id: 2,
     title: "sec issue",
-    des: "hey i am the sec issue",
+    description: "hey i am the sec issue",
     manHour: 7,
     condition: "in progress",
     issueType: "STORY",
-    creator: "enes@gmail.com",
-    assigned: "osama.@gmail.com",
-    createdAt: "2022-12-30"
+    creatorUsername: "enes@gmail.com",
+    assignedTo: "osama.@gmail.com",
+    createdAt: ""
   }]
   projectId: string | null = "";
   projectName: String | null = "";
@@ -54,5 +55,18 @@ export class MainIssuesComponent {
   }
   navigateToAddIssue() {
     this.router.navigate(['create-issue'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+
+  getShortName(date: string) { 
+    let shortdate = "";
+    let n = 0;
+    for(let letter of date){
+      shortdate = shortdate + letter
+      n++
+      if(n== 10){
+        break
+      }
+    }
+    return shortdate;
   }
 }

@@ -42,7 +42,7 @@ export class ListProjectComponent implements OnInit {
       new Error(error)
     }
     )
-    // window.location.reload();
+    window.location.reload();
 
   }
 
