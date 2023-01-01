@@ -3,14 +3,11 @@ package com.agilesekeri.asugar_api.service;
 import com.agilesekeri.asugar_api.common.AbstractIssue;
 import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
 import com.agilesekeri.asugar_api.model.entity.SprintEntity;
-import com.agilesekeri.asugar_api.model.enums.TaskConditionEnum;
 import com.agilesekeri.asugar_api.repository.SprintRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.ListIterator;
 
 @Service
@@ -19,10 +16,7 @@ import java.util.ListIterator;
 public class SprintService {
     private final SprintRepository sprintRepository;
 
-    public void initializeProject(ProjectEntity project) {
-        createSprint(project).setStartedAt(LocalDateTime.now());
-        createSprint(project);
-    }
+    private final IssueService issueService;
 
     public SprintEntity createSprint(ProjectEntity project) {
         SprintEntity newSprint = SprintEntity.builder()
@@ -30,5 +24,31 @@ public class SprintService {
                 .build();
 
         return sprintRepository.save(newSprint);
+    }
+
+    public SprintEntity getSprint(Long sprintId) {
+        return sprintRepository.findById(sprintId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Sprint with the id " +
+                                sprintId.toString() +
+                                " does not exist"));
+    }
+
+    public boolean addIssue(Long sprintId, Long issueId) {
+        AbstractIssue issue = issueService.getIssue(issueId);
+        SprintEntity sprint = getSprint(sprintId);
+        return sprint.getIncludedIssues().add(issue);
+    }
+
+    public boolean removeIssue(Long sprintId, Long issueId) {
+        AbstractIssue issue = issueService.getIssue(issueId);
+        SprintEntity sprint = getSprint(sprintId);
+        return sprint.getIncludedIssues().remove(issue);
+    }
+
+    public void deleteSprint(SprintEntity sprint) {
+        sprint.setProject(null);
+        sprint.getIncludedIssues().forEach(issue -> issue.setSprint(null));
+        sprintRepository.delete(sprint);
     }
 }
