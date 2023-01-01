@@ -1,0 +1,21 @@
+<div>
+    <div class="sidenav">
+        <button class="sidebutton">B A C K L O G</button>
+        <button class="sidebutton">I S S U E S</button>
+        <button class="sidebutton">S P R I N T S</button>
+        <button class="ActiveSidebutton">M E M B E R S</button>
+    </div>
+
+    <div class="rectangle1">
+        <div style="margin-top: 9vh;" class="rectangle4">
+           issue Id
+        </div>
+        <form [formGroup]="removeIssueForm">
+            <input  type="text" [formControlName]="'id'" style="margin-top: 9vh;" class="rectangle5" required>
+        </form>
+
+        <input type="submit" value="Delete" (click)="removeIssue()">
+    </div>
+
+
+</div>

@@ -3,6 +3,7 @@ export interface CreateIssueRequestPayload {
     description : String | null,
     epicId: String | null,
     sprint: String | null,
-    manHour: number | null,
+    manHour: String | null,
+    assignedTo: String | null
     issueType: String| null
 }

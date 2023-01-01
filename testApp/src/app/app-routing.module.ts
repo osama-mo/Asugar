@@ -17,13 +17,14 @@ import { SprintsListComponent } from './components/sprints/sprints-list/sprints-
 import { ActiveSprintComponent } from './components/sprints/active-sprint/active-sprint.component';
 import { MainIssuesComponent } from './components/issues/main-issues/main-issues.component';
 import { CreateIssueComponent } from './components/issues/create-issue/create-issue.component';
+import { RemoveIssueComponent } from './components/issues/remove-issue/remove-issue.component';
 
 
 
 
 const routes: Routes = [
 
-  {path:'',component:CreateIssueComponent},
+  {path:'',component:MainIssuesComponent},
   {path:'signup',component:SignupComponent},
   {path:'forgot-my-password',component:ForgotMyPasswordComponent},
   {path:'forgot-my-password-confirmation',component:ForgotMyPasswordConfirmationComponent},
@@ -35,6 +36,8 @@ const routes: Routes = [
   {path:'member-details',component:MemberDetailsComponent},
   {path:'add-member',component:AddMemberComponent},
   {path:'active-sprint',component:ActiveSprintComponent},
+  {path:'create-issue',component:CreateIssueComponent},
+  {path:'remove-issue',component:RemoveIssueComponent},
 
 ];
 

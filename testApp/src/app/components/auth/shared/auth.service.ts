@@ -9,6 +9,8 @@ import { ForgotMyPasswordRequestPayload } from '../forgot-my-password/forgot-my-
 import { ForgotMyPasswordConfirmationRequestPayload } from '../forgot-my-password-confirmation/forgot-my-password-confirmation-request.payload';
 import { ProjectRequsetPayload } from 'app/components/project/list-project/project-request-payload';
 import { Data } from '@angular/router';
+import { IssueResponsePayload } from 'app/components/sprints/active-sprint/issue-respone-payload';
+import { CreateIssueRequestPayload } from 'app/components/issues/create-issue/create-issue-request-payload';
 
 @Injectable({
   providedIn: 'root'
@@ -37,13 +39,13 @@ export class AuthService {
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean> {
     const httpOptions = {
       headers: new HttpHeaders({
-      'username':  loginRequestPayload.username!,
-      'password': loginRequestPayload.password!
+        'username': loginRequestPayload.username!,
+        'password': loginRequestPayload.password!
       })
-  };
+    };
 
     return this.httpClient.post<LoginResponse>('http://localhost:8080/login',
-    null,httpOptions ).pipe(map (data => {
+      null, httpOptions).pipe(map(data => {
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('username', loginRequestPayload.username!);
         localStorage.setItem('refreshToken', data.refreshToken);
@@ -60,11 +62,11 @@ export class AuthService {
   forgetMyPasswordConfirmation(fgmcRequestPayload: ForgotMyPasswordConfirmationRequestPayload): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
-      'Token':  fgmcRequestPayload.token!,
-      'Password': fgmcRequestPayload.password!
+        'Token': fgmcRequestPayload.token!,
+        'Password': fgmcRequestPayload.password!
       })
-  };
-    return this.httpClient.post(`http://localhost:8080/password_reset`, null,httpOptions)
+    };
+    return this.httpClient.post(`http://localhost:8080/password_reset`, null, httpOptions)
   }
 
 
@@ -111,49 +113,49 @@ export class AuthService {
   createProject(projectName: String | null) {
     const httpOptions = {
       headers: new HttpHeaders({
-      'Authorization': localStorage.getItem('accessToken')!
+        'Authorization': localStorage.getItem('accessToken')!
       })
     }
     return this.httpClient.post(`http://localhost:8080/user/project/create?name=${projectName}&username=${localStorage.getItem('username')}`, null, httpOptions)
   }
-  
-  getProjectlist() : Observable<any>{
+
+  getProjectlist(): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
-      'Authorization': localStorage.getItem('accessToken')!
+        'Authorization': localStorage.getItem('accessToken')!
       })
     }
     return this.httpClient.get(`http://localhost:8080/user/project/list`, httpOptions)
   }
 
-  deleteProject(projectId: number){
+  deleteProject(projectId: number) {
     const httpOptions = {
       headers: new HttpHeaders({
-      'Authorization': localStorage.getItem('accessToken')!
+        'Authorization': localStorage.getItem('accessToken')!
       })
     }
     return this.httpClient.delete(`http://localhost:8080/user/project/${projectId}`, httpOptions)
   }
 
-  getMembersList(projectId : Number) : Observable<any>{
+  getMembersList(projectId: Number): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
-      'Authorization': localStorage.getItem('accessToken')!
+        'Authorization': localStorage.getItem('accessToken')!
       })
     }
     return this.httpClient.get(`http://localhost:8080/${projectId}/members`, httpOptions)
   }
-  
-  getMembersDetails(projectId:String,userEmail: String) : Observable<any>{
+
+  getMembersDetails(projectId: String, userEmail: String): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
-      'Authorization': localStorage.getItem('accessToken')!
+        'Authorization': localStorage.getItem('accessToken')!
       })
     }
     return this.httpClient.get(`http://localhost:8080/${projectId}/members/${userEmail}`, httpOptions)
   }
 
-  addMember(projectId:String,userEmail: String){
+  addMember(projectId: String, userEmail: String): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': localStorage.getItem('accessToken')!
@@ -161,7 +163,32 @@ export class AuthService {
     }
     return this.httpClient.post(`http://localhost:8080/${projectId}/members?username=${userEmail}`, httpOptions)
   }
-  createIssue(){
-    
+
+  createIssue(issue: CreateIssueRequestPayload ,projectId : String): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.post(`http://localhost:8080/${projectId}/issues/create`, issue, httpOptions);
+  }
+
+  removeIssue(issueId: string,projectId:string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.delete(`http://localhost:8080/${projectId}/issues/delete?issueId=${issueId}`, httpOptions)
+  }
+
+
+  getIssues(projectId:string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.get(`http://localhost:8080/${projectId}/issues/all`, httpOptions)
   }
 }

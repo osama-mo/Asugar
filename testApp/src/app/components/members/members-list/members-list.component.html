@@ -1,37 +1,35 @@
-
-  <h3 class="projects-title"> Members</h3>
-  <div class="sidenav">
-    <button class="sidebutton">B A C K L O G</button>
-    <button class="sidebutton">I S S U E S</button>
-    <button class="sidebutton">S P R I N T S</button>
-    <button class="ActiveSidebutton">M E M B E R S</button>
+<h3 class="projects-title"> Members</h3>
+<div class="sidenav">
+  <button class="sidebutton">B A C K L O G</button>
+  <button class="sidebutton">I S S U E S</button>
+  <button class="sidebutton">S P R I N T S</button>
+  <button class="ActiveSidebutton">M E M B E R S</button>
 </div>
-  <div class = "project-list-container">
+<div class="project-list-container">
 
-       <div *ngFor="let item of members"  class="rectangle">
-        <div (click)="navigateToMemberDetails(item.email,item.title,item.first_name,item.last_name)" class="circle">{{item.first_name.toUpperCase()[0]}}{{item.last_name.toUpperCase()[0]}}</div>
-        <span></span>
-        <span>
-        <div class="txt_field">
-          <h1 style="font-size:32px">{{item.first_name}}</h1>
-        </div>
-        </span>
-        <input routerLink="" type="submit" value="Title : {{item.title}}">
-        <span></span>              
-       </div>
-
-        <div (click)="navigateToAddmember()"  class="rectangle">
-          <span></span>
-          <span>
-          <div class="txt_field">
-            <h1 style="font-size:32px; margin-bottom: 40px;">Add new member</h1>
-          </div>
-        </span>
-          <div class="txt_field">
-              <h5 style="font-size:128px">+</h5>
-            </div>
-          <span></span>
-          </div>
+  <div *ngFor="let item of members" class="rectangle">
+    <div (click)="navigateToMemberDetails(item.email,item.title,item.first_name,item.last_name)" class="circle">
+      {{item.first_name.toUpperCase()[0]}}{{item.last_name.toUpperCase()[0]}}</div>
+    <span></span>
+    <span>
+      <div class="txt_field">
+        <h1 style="font-size:32px">{{item.first_name}}</h1>
+      </div>
+    </span>
+    <input routerLink="" type="submit" value="Title : {{item.title}}">
+    <span></span>
   </div>
 
-
+  <div (click)="navigateToAddmember()" class="rectangle">
+    <span></span>
+    <span>
+      <div class="txt_field">
+        <h1 style="font-size:32px; margin-bottom: 40px;">Add new member</h1>
+      </div>
+    </span>
+    <div class="txt_field">
+      <h5 style="font-size:128px">+</h5>
+    </div>
+    <span></span>
+  </div>
+</div>

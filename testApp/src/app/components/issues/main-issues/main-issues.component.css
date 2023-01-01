@@ -154,3 +154,27 @@
     display: inline-block;
 
   }
+
+
+  input[type="submit"]{
+    width: 15vw;
+    height: 58px;
+    margin-top: 1vh;
+    margin-left: 9vw;
+    border: 1px solid;
+    background-color: #269531;
+    border-radius: 18px;
+    border-style: solid;
+    border-color: #000000;
+    border-width: 2px;
+    font-size: 32px;
+    font-family:'share';
+    text-align: center;
+    color: #e9f4fb;
+    cursor: pointer;
+    outline: none;
+    color: white;
+    text-shadow: black;
+    text-decoration: none;
+    -webkit-text-stroke-width: 1px;
+  }

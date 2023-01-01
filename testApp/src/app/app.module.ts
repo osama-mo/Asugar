@@ -25,6 +25,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ActiveSprintComponent } from './components/sprints/active-sprint/active-sprint.component';
 import { MainIssuesComponent } from './components/issues/main-issues/main-issues.component';
 import { CreateIssueComponent } from './components/issues/create-issue/create-issue.component';
+import { RemoveIssueComponent } from './components/issues/remove-issue/remove-issue.component';
 
 
 
@@ -53,6 +54,7 @@ export function playerFactory(): any {
     ActiveSprintComponent,
     MainIssuesComponent,
     CreateIssueComponent,
+    RemoveIssueComponent,
   ],
   imports: [
     DragDropModule,
