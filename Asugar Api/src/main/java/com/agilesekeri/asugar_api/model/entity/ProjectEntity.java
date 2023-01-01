@@ -30,6 +30,10 @@ public class ProjectEntity {
     private String name;
 
     @ManyToOne
+    @JoinColumn(name = "creator_id", foreignKey = @ForeignKey(name = "fk_creator_id"))
+    private AppUserEntity creator;
+
+    @ManyToOne
     @JoinColumn(name = "admin_id", foreignKey = @ForeignKey(name = "fk_admin_id"))
     private AppUserEntity admin;
 
@@ -79,6 +83,7 @@ public class ProjectEntity {
         this.endedAt = null;
         this.members = new HashSet<>();
         this.members.add(admin);
+        this.creator = admin;
     }
 
     public boolean addMember(AppUserEntity user) {

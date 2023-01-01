@@ -74,6 +74,6 @@ public class AppUserController {
         if(project.getAdmin() != issuer)
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
-        projectService.deleteProject(project, issuer);
+        projectService.deleteProject(project.getId());
     }
 }

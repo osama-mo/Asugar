@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 import net.bytebuddy.implementation.bind.annotation.Super;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Setter
 @Getter
@@ -27,4 +28,29 @@ public class AbstractIssueDTO {
     private String createdAt;
 //    private LocalDateTime plannedTo;
 //    private LocalDateTime endedAt;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractIssueDTO that = (AbstractIssueDTO) o;
+        return id.equals(that.id) &&
+                title.equals(that.title) &&
+                Objects.equals(description, that.description) &&
+                projectId.equals(that.projectId) &&
+                Objects.equals(epicId, that.epicId) &&
+                Objects.equals(sprint, that.sprint) &&
+                Objects.equals(manHour, that.manHour) &&
+                condition.equals(that.condition) &&
+                issueType.equals(that.issueType) &&
+                creatorUsername.equals(that.creatorUsername) &&
+                Objects.equals(assignedUsername, that.assignedUsername) &&
+                createdAt.equals(that.createdAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description, projectId, epicId, sprint, manHour, condition, issueType, creatorUsername, assignedUsername, createdAt);
+    }
 }

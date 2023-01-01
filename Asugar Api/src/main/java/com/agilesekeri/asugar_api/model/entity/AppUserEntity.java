@@ -69,8 +69,7 @@ public class AppUserEntity implements UserDetails {
     @ManyToMany(mappedBy = "members")
     private Set<ProjectEntity> projects;
 
-    @OneToMany
-    @JoinColumn(name = "created_id", foreignKey = @ForeignKey(name = "fk_created_id"))
+    @OneToMany(mappedBy = "creator")
     private Set<ProjectEntity> projectsCreated;
 
     @Builder.Default
