@@ -161,4 +161,7 @@ export class AuthService {
     }
     return this.httpClient.post(`http://localhost:8080/${projectId}/members?username=${userEmail}`, httpOptions)
   }
+  createIssue(){
+    
+  }
 }
