@@ -33,6 +33,7 @@ public class IssueService {
                 .createdAt(LocalDateTime.now())
                 .issueType(issueCreateRequest.getIssueType())
                 .condition(TaskConditionEnum.TODO)
+                .manHour(issueCreateRequest.getManHour())
                 .build();
 
         return issueRepository.save(issueEntity);

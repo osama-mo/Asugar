@@ -52,6 +52,12 @@ public class IssueController {
                     createRequest.getEpicId(),
                     issue.getId()
             );
+
+        if(createRequest.getAssignedTo() != null)
+            issueService.assignToMember(
+                    issue.getId(),
+                    appUserService.loadUserByUsername(createRequest.getAssignedTo())
+            );
     }
 
     @PutMapping("/{issueId}/condition")
