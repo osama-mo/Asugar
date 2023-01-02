@@ -87,4 +87,21 @@ export class CreateIssueComponent {
         });
 
   }
+  navigateToProjects() {
+    this.router.navigate(['list-project'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToBacklog() {
+    this.router.navigate(['backlog'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToSprint() {
+    this.router.navigate(['active-sprint'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToMembers() {
+    this.router.navigate(['memberslist'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToIssues() {
+    this.router.navigate(['issues'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+
+
 }

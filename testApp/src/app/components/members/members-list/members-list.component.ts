@@ -45,4 +45,19 @@ export class MembersListComponent implements OnInit {
   navigateToMemberDetails(memberemail: string, membertitle: string, memberfn: string, memberln: string) {
     this.router.navigate(['member-details'], { queryParams: { projectId: this.projectId, projectName: this.projectName, email: memberemail, title: membertitle, fn: memberfn, ln: memberln } })
   }
+  navigateToProjects() {
+    this.router.navigate(['list-project'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToBacklog() {
+    this.router.navigate(['backlog'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToSprint() {
+    this.router.navigate(['active-sprint'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToMembers() {
+    this.router.navigate(['memberslist'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToIssues() {
+    this.router.navigate(['issues'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
 }

@@ -1,8 +1,10 @@
 <div class="sidenav">
-    <button class="sidebutton">B A C K L O G</button>
-    <button class="ActiveSidebutton">I S S U E S</button>
-    <button (click)="navigateToActiveSprint()" class="sidebutton">S P R I N T </button>
-    <button (click)="navigateToMembers()" class="sidebutton">M E M B E R S</button>
+    <div class="sideProjectName" >{{projectName}}</div>
+    <button class="sidebutton" (click)="navigateToBacklog()">B A C K L O G</button>
+    <button class="ActiveSidebutton" (click)="navigateToIssues()">I S S U E S</button>
+    <button class="sidebutton" (click)="navigateToSprint()">S P R I N T </button>
+    <button class="sidebutton" (click)="navigateToMembers()">M E M B E R S</button>
+    <div class="sideprojectsButton" (click)="navigateToProjects()"> PROJECTS </div>
 </div>
 
 
@@ -32,7 +34,7 @@
             <div class="item" style="width: 7vw;margin-right: 1vw;">{{item.issueType}}</div>
             <div class="item" style="width: 10vw;margin-right: 1vw;">{{item.creatorUsername}}</div>
             <div class="item" style="width: 10vw;margin-right: 1vw;">{{item.assignedTo}}</div>
-            <div class="item" style="width: 10vw">{{getShortName(item.createdAt)}}</div>
+            <div class="item" style="width: 10vw">{{getShortDate(item.createdAt)}}</div>
 
         </div>
     </div>

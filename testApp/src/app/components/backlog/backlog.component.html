@@ -1,19 +1,22 @@
 <div class="page">
     <div class="sidenav">
-        <button  class="sidebutton">B A C K L O G</button>
-        <button (click)="navigateToIssues()" class="sidebutton">I S S U E S</button>
-        <button (click)="navigateToActiveSprint()" class="ActiveSidebutton">S P R I N T </button>
-        <button (click)="navigateToMembers()" class="sidebutton">M E M B E R S</button>
+        <div class="sideProjectName" >{{projectName}}</div>
+        <button class="ActiveSidebutton" (click)="navigateToBacklog()">B A C K L O G</button>
+        <button class="sidebutton" (click)="navigateToIssues()">I S S U E S</button>
+        <button class="sidebutton" (click)="navigateToSprint()">S P R I N T </button>
+        <button class="sidebutton" (click)="navigateToMembers()">M E M B E R S</button>
+        <div class="sideprojectsButton" (click)="navigateToProjects()"> PROJECTS </div>
     </div>
+
     <div class="box-container1">
         <div class="header">
             <div class="title">ACTIVE SPRINT</div>
-            <div class="delete-sprint">Delete</div>
+            <div class="delete-sprint" (click)="finishSprint()">Finish</div>
         </div>
         <div cdkDropList #activeList="cdkDropList" [cdkDropListData]="activeSprint"
             [cdkDropListConnectedTo]="[nextList,blList]" class="rectangle1" (cdkDropListDropped)="drop($event)">
             <div class="issue-box" *ngFor="let item of activeSprint" cdkDrag>
-                <div style="float: left; margin-left: 10px;">{{item.id}}</div>{{item.des}}
+                <div style="float: left; margin-left: 10px;">{{item.id}}</div>{{item.description}}
             </div>
         </div>
     </div>
@@ -23,7 +26,7 @@
         <div cdkDropList #nextList="cdkDropList" [cdkDropListData]="nextSprint"
             [cdkDropListConnectedTo]="[activeList,blList]" class="rectangle2" (cdkDropListDropped)="drop($event)">
             <div class="issue-box" *ngFor="let item of nextSprint" cdkDrag>
-                <div style="float: left; margin-left: 10px;">{{item.id}}</div>{{item.des}}
+                <div style="float: left; margin-left: 10px;">{{item.id}}</div>{{item.description}}
             </div>
         </div>
     </div>
@@ -32,6 +35,7 @@
         <div cdkDropList #blList="cdkDropList" [cdkDropListData]="Backlog"
             [cdkDropListConnectedTo]="[activeList,nextList]" class="rectangle3" (cdkDropListDropped)="drop($event)">
             <div class="issue-box" *ngFor="let item of Backlog" cdkDrag>
+                <div style="float: left; margin-left: 10px;">{{item.id}}</div>{{item.description}}
             </div>
 
         </div>

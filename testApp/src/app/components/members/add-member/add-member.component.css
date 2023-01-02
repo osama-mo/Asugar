@@ -5,30 +5,39 @@
     width: 12vw;
     position: fixed;
     z-index: 1;
+    text-align: center;
     top: 0;
     left: 0;
     background-color: rgba(143, 206, 233 , .5);
     overflow-x: hidden;
-    padding-top: 20px;
     backdrop-filter: blur(2px);
     border-style: solid;
     border-width: 4px;
     border-color: #22597D;
     margin-top: 55px;
 }
-
-.sidenav a {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-
-    backdrop-filter: blur(2px);
+.sidebutton:hover {
+  background-color: #22597D;
+}
+.sideProjectName{
+  background-color: #269531;
+  height: 5vh;
+  text-align: center;
+  margin-bottom: 3vh;
+  font-size: 30px;
+  color: white;
+  font-family: 'share';
 }
 
-.sidenav a:hover {
-    color: #22597D;
+.sideprojectsButton{
+  background-color: #22597D;
+  height: 5vh;
+  text-align: center;
+  margin-bottom: 3vh;
+  font-size: 30px;
+  color: white;
+  font-family: 'share';
+  margin-top: 47vh;
 }
 
 .main {
@@ -43,15 +52,11 @@
     .sidenav {
         padding-top: 15px;
     }
-
-    .sidenav a {
-        font-size: 18px;
-    }
 }
 
 .sidebutton {
+    font-family: 'share';
     width: 200px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
     height: 52px;
     border-color: #22597D;
     border-radius: 36px;
@@ -61,30 +66,27 @@
     text-align: center;
     cursor: pointer;
     display: inline-block;
-    font-size: 18px;
+    font-size: 25px;
     margin-bottom: 20px;
-    font-weight: bolder;
     text-shadow: black;
-    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-width: 1px;
 }
 
 .ActiveSidebutton {
     width: 200px;
     color: white;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'share';
     height: 52px;
     border-color: #22597D;
     border-radius: 36px;
     border-width: 5px;
     background-color: #22597D;
-    text-decoration: bold;
     text-align: center;
     cursor: pointer;
     display: inline-block;
-    font-size: 18px;
+    font-size: 25px;
     margin-bottom: 20px;
-    font-weight: bolder;
-    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-width: 1px;
 }
 
 
@@ -215,4 +217,15 @@
     border-style: solid;
     border-color: #000000;
     border-width: 2px;
+  }
+  .Erorr{
+    background-color: white;
+    background-size: cover;
+    float: right;
+    font-size: 30px;
+    visibility: hidden;
+    margin-left: -5px;
+    margin-top: -20px;
+    color: red;
+ 
   }

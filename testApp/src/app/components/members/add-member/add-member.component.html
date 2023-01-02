@@ -1,9 +1,11 @@
 <div>
     <div class="sidenav">
-        <button class="sidebutton">B A C K L O G</button>
-        <button class="sidebutton">I S S U E S</button>
-        <button class="sidebutton">S P R I N T S</button>
-        <button class="ActiveSidebutton">M E M B E R S</button>
+        <div class="sideProjectName" >{{projectName}}</div>
+        <button class="sidebutton" (click)="navigateToBacklog()">B A C K L O G</button>
+        <button class="sidebutton" (click)="navigateToIssues()">I S S U E S</button>
+        <button class="sidebutton" (click)="navigateToSprint()">S P R I N T </button>
+        <button class="ActiveSidebutton" (click)="navigateToMembers()">M E M B E R S</button>
+        <div class="sideprojectsButton" (click)="navigateToProjects()"> PROJECTS </div>
     </div>
 
     <div class="rectangle1">
@@ -22,8 +24,11 @@
             <input  type="text" [formControlName]="'email'" style="margin-top: 30vh;" class="rectangle5" required>
         </form>
 
-        <input type="submit" value="Add Member">
+        <input type="submit" value="Add Member" (click)="addMember()">
+        <div class="Erorr" [style.visibility]="gvisibility" >Error Accured, Try again</div>
     </div>
+
+    
 
 
 </div>

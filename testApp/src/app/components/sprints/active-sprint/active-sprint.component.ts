@@ -1,5 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'app/components/auth/shared/auth.service';
 import { IssueResponsePayload } from './issue-respone-payload';
 
 @Component({
@@ -8,39 +10,20 @@ import { IssueResponsePayload } from './issue-respone-payload';
   styleUrls: ['./active-sprint.component.css']
 })
 export class ActiveSprintComponent {
-  todo:IssueResponsePayload[] = [
-    {
-      issueId: "EPIC-2",
-      issueDescription: "Task distribution and planning"
-    },
+  projectId: string | null = "";
+  projectName: string | null = "";
+  todo : IssueResponsePayload[] = [
+   
   ];
-  inProgress :IssueResponsePayload[] = [
-    {
-      issueId: "TASK-1",
-      issueDescription: "Frontend developers test the backend"
-    },
-    {
-      issueId: "STORY-2",
-      issueDescription: "Add project function"
-    },
+  inProgress : IssueResponsePayload[] = [
     
   ]
-  done :IssueResponsePayload[] = [
-    {
-      issueId: "Epic-1",
-      issueDescription: "Core design implementation"
-    },
-    {
-      issueId: "STORY-1",
-      issueDescription: "Decide on a design theme"
-    },
-    {
-      issueId: "TASK-2",
-      issueDescription: "Log in page"
-    },
+  done : IssueResponsePayload[] = [
+    
   ];
-  issuesList = ['root', 'child1', 'child2']
-  drop(event: CdkDragDrop<IssueResponsePayload[]>) {
+  issues : IssueResponsePayload[] = [ 
+    ]
+  drop(event: CdkDragDrop<any>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else { 
@@ -49,20 +32,52 @@ export class ActiveSprintComponent {
         event.previousIndex,
         event.currentIndex);
     }
-    console.log("todo:")
-    this.todo.forEach((item)=> console.log(item.issueId))
-    console.log("in p:")
-    this.inProgress.forEach((item)=> console.log(item.issueId))
-    console.log("done:")
-    this.done.forEach((item)=> console.log(item.issueId))
-    console.log(" ")
-    
   }
-  constructor() { 
+  constructor(private route: ActivatedRoute,private router: Router,private authsurvice: AuthService) { 
     document.body.className = "selector";
   }
 
   ngOnInit(): void {
+    this.projectId = this.route.snapshot.queryParamMap.get('projectId');
+    this.projectName = this.route.snapshot.queryParamMap.get('projectName');
+
+    this.authsurvice.getIssues(this.projectId!).subscribe(
+      data => {
+        console.log(data)
+        this.issues = data
+        for(let issue of this.issues){
+       
+          if(issue.condition == "TODO"){
+            
+            this.todo.push(issue)
+          }
+          else if (issue.condition == "inProgress"){
+            this.inProgress.push(issue)
+          }
+          else if (issue.condition == "DONE"){
+            this.done.push(issue)
+          }
+        }
+      }
+      , error => {
+        new Error(error)
+      })
+      
+  }
+  navigateToProjects() {
+    this.router.navigate(['list-project'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToBacklog() {
+    this.router.navigate(['backlog'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToSprint() {
+    this.router.navigate(['active-sprint'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToMembers() {
+    this.router.navigate(['memberslist'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToIssues() {
+    this.router.navigate(['issues'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
 
 }

@@ -44,20 +44,31 @@ export class MainIssuesComponent {
   }
 
   
-  navigateToActiveSprint() {
-    this.router.navigate(['active-sprint'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
-  }
-  navigateToMembers() {
-    this.router.navigate(['memberslist'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
-  }
+ 
+ 
   navigateToRemoveIssue() {
     this.router.navigate(['remove-issue'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
   navigateToAddIssue() {
     this.router.navigate(['create-issue'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
+  navigateToProjects() {
+    this.router.navigate(['list-project'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToBacklog() {
+    this.router.navigate(['backlog'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToSprint() {
+    this.router.navigate(['active-sprint'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToMembers() {
+    this.router.navigate(['memberslist'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToIssues() {
+    this.router.navigate(['issues'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
 
-  getShortName(date: string) { 
+  getShortDate(date: string) { 
     let shortdate = "";
     let n = 0;
     for(let letter of date){
