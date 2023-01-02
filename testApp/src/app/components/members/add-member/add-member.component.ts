@@ -55,6 +55,7 @@ export class AddMemberComponent implements OnInit {
       this.authService.addMember(this.projectId!,this.addMemberRequest.email!)
         .subscribe(
           data => {
+            console.log(data);
             this.location.back()
         }, error => {
           console.log(error);
