@@ -200,4 +200,13 @@ export class AuthService {
     }
     return this.httpClient.put(`http://localhost:8080/${projectId}/sprints/finish`,null, httpOptions)
   }
+
+  setCondition(projectId:number,issueId:number,condition:string): Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.put(`http://localhost:8080/${projectId}/issues/${issueId}/condition?condition=${condition}`,null, httpOptions)
+  }
 }

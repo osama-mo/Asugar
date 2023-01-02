@@ -12,28 +12,61 @@ import { IssueResponsePayload } from './issue-respone-payload';
 export class ActiveSprintComponent {
   projectId: string | null = "";
   projectName: string | null = "";
-  todo : IssueResponsePayload[] = [
-   
+  todo: IssueResponsePayload[] = [
+
   ];
-  inProgress : IssueResponsePayload[] = [
-    
+  inProgress: IssueResponsePayload[] = [
+
   ]
-  done : IssueResponsePayload[] = [
-    
+  done: IssueResponsePayload[] = [
+
   ];
-  issues : IssueResponsePayload[] = [ 
-    ]
+  issues: IssueResponsePayload[] = [
+  ]
   drop(event: CdkDragDrop<any>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else { 
+    } else {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex);
     }
+    for (let issue of this.inProgress) {
+      if (issue.condition != "IN_PROGRESS") {
+        this.authsurvice.setCondition(Number(this.projectId), issue.id, "IN_PROGRESS").subscribe(
+          data => {
+            console.log(data)
+           },
+            error => {
+              new Error(error)
+        });
+      }
+    }
+    for (let issue of this.done) {
+      if (issue.condition != "DONE") {
+        this.authsurvice.setCondition(Number(this.projectId), issue.id, "DONE").subscribe(
+          data => {
+            console.log(data)
+           },
+            error => {
+              new Error(error)
+        });
+      }
+    }
+    for (let issue of this.todo) {
+      if (issue.condition != "TODO") {
+        this.authsurvice.setCondition(Number(this.projectId), issue.id, "TODO").subscribe(
+          data => {
+            console.log(data)
+           },
+            error => {
+              new Error(error)
+        });
+      }
+    }
   }
-  constructor(private route: ActivatedRoute,private router: Router,private authsurvice: AuthService) { 
+  constructor(private route: ActivatedRoute, private router: Router, private authsurvice: AuthService) {
     document.body.className = "selector";
   }
 
@@ -45,15 +78,15 @@ export class ActiveSprintComponent {
       data => {
         console.log(data)
         this.issues = data
-        for(let issue of this.issues){
-          if(issue.sprint == "active"){
-            if(issue.condition == "TODO"){
+        for (let issue of this.issues) {
+          if (issue.sprint == "active") {
+            if (issue.condition == "TODO") {
               this.todo.push(issue)
             }
-            else if (issue.condition == "inProgress"){
+            else if (issue.condition == "IN_PROGRESS") {
               this.inProgress.push(issue)
             }
-            else if (issue.condition == "DONE"){
+            else if (issue.condition == "DONE") {
               this.done.push(issue)
             }
           }
@@ -62,7 +95,7 @@ export class ActiveSprintComponent {
       , error => {
         new Error(error)
       })
-      
+
   }
   navigateToProjects() {
     this.router.navigate(['list-project'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
