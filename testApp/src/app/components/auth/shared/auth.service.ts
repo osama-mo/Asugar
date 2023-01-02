@@ -161,7 +161,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.put(`http://localhost:8080/${projectId}/members?username=${userEmail}`, httpOptions)
+    return this.httpClient.put(`http://localhost:8080/${projectId}/members?username=${userEmail}`,null, httpOptions)
   }
 
   createIssue(issue: CreateIssueRequestPayload ,projectId : String): Observable<any> {
@@ -198,6 +198,6 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.put(`http://localhost:8080/${projectId}/sprints/finish`, httpOptions)
+    return this.httpClient.put(`http://localhost:8080/${projectId}/sprints/finish`,null, httpOptions)
   }
 }
