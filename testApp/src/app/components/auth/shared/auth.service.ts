@@ -161,7 +161,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.delete(`http://localhost:8080/${projectId}/members?username=${userEmail}`, httpOptions)
+    return this.httpClient.put(`http://localhost:8080/${projectId}/members?username=${userEmail}`, httpOptions)
   }
 
   createIssue(issue: CreateIssueRequestPayload ,projectId : String): Observable<any> {
