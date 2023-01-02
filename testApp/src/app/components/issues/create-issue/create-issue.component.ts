@@ -75,7 +75,7 @@ export class CreateIssueComponent {
     this.createIssueRequset.manHour = Number(this.createIssueForm.get('manHour')!.value);
     this.createIssueRequset.assignedTo = this.createIssueForm.get('assignedTo')!.value;
     this.createIssueRequset.sprint = this.createIssueForm.get('sprint')!.value;
-
+    console.log(this.createIssueForm.get('assignedTo')!.value)
 
     this.authService.createIssue(this.createIssueRequset, this.projectId!)
       .subscribe(
