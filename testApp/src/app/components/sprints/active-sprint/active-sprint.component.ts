@@ -46,16 +46,16 @@ export class ActiveSprintComponent {
         console.log(data)
         this.issues = data
         for(let issue of this.issues){
-       
-          if(issue.condition == "TODO"){
-            
-            this.todo.push(issue)
-          }
-          else if (issue.condition == "inProgress"){
-            this.inProgress.push(issue)
-          }
-          else if (issue.condition == "DONE"){
-            this.done.push(issue)
+          if(issue.sprint == "active"){
+            if(issue.condition == "TODO"){
+              this.todo.push(issue)
+            }
+            else if (issue.condition == "inProgress"){
+              this.inProgress.push(issue)
+            }
+            else if (issue.condition == "DONE"){
+              this.done.push(issue)
+            }
           }
         }
       }
