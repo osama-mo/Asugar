@@ -34,11 +34,11 @@ export class DeleteSubIssueComponent {
   }
 
 
-  removeIssue(){
+  assginIssue(){
     this.efvisibility = 'hidden'
     this.gvisibility = 'hidden'
     this.issueId= this.removeIssueForm.get('id')!.value;
-    this.authService.removeIssue(this.issueId!,this.projectId!)
+    this.authService.assignIssueToEpic(Number(this.projectId!),Number(this.issueId!),null)
     .subscribe(
       data => {
       this.location.back();
