@@ -169,13 +169,24 @@ public class ProjectService {
         Set<AbstractIssueDTO> result = new HashSet<>();
         project.getIssues().forEach(
                 issue -> {
-                    if(issue.getCondition() != TaskConditionEnum.DONE &&
-                            (issue.getSprint() == active ||
-                                    issue.getSprint() == next ||
-                                    issue.getSprint() == null)) {
-                        AbstractIssueDTO dto = issueService.getIssueInfo(issue.getId());
-                        dto.setSprint(getSprintState(projectId, Long.parseLong(dto.getSprint())));
-                        result.add(dto);
+                    if(issue.getCondition() != TaskConditionEnum.DONE) {
+                        if (issue.getSprint() == active) {
+                            AbstractIssueDTO dto = issueService.getIssueInfo(issue.getId());
+                            dto.setSprint("active");
+                            result.add(dto);
+                        }
+
+                        else if(issue.getSprint() == next) {
+                            AbstractIssueDTO dto = issueService.getIssueInfo(issue.getId());
+                            dto.setSprint("next");
+                            result.add(dto);
+                        }
+
+                        else if(issue.getSprint() == null) {
+                            AbstractIssueDTO dto = issueService.getIssueInfo(issue.getId());
+                            dto.setSprint(null);
+                            result.add(dto);
+                        }
                     }
                 }
         );
@@ -190,7 +201,8 @@ public class ProjectService {
         project.getIssues().forEach(
                 issue -> {
                     AbstractIssueDTO dto = issueService.getIssueInfo(issue.getId());
-                    dto.setSprint(getSprintState(projectId, Long.parseLong(dto.getSprint())));
+                    if(dto.getSprint() != null)
+                        dto.setSprint(getSprintState(projectId, Long.parseLong(dto.getSprint())));
                     result.add(dto);
                 }
         );

@@ -72,7 +72,7 @@ public class RegistrationService {
     public void sendVerificationEmail(String token, String email, String firstName)
         throws IllegalStateException{
         try {
-            String link = "http://localhost:8080/registration/confirm?token=";
+            String link = "https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/registration/confirm?token=";
             emailSender.send(
                     email,
                     buildEmail(firstName, link + token));

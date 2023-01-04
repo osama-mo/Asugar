@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/{projectId}/issues/{issueId}")
@@ -94,17 +95,19 @@ public class IssueController {
     @PutMapping("/assign/epic")
     public void assignToEpic(@PathVariable Long projectId,
                              @PathVariable Long issueId,
-                             @RequestParam Long epicId,
+                             @RequestParam String epicId,
                              HttpServletRequest request)
             throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
         if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
-        if(epicId != null)
-            issueService.assignToEpic(issueId, epicService.getEpic(epicId));
-
-        else
-            issueService.assignToEpic(issueId, null);
+        try {
+            issueService.assignToEpic(issueId, epicService.getEpic(Long.parseLong(epicId)));
+        } catch (NumberFormatException e) {
+            if("null".equals(epicId))
+                issueService.assignToEpic(issueId, null);
+            else throw new IllegalArgumentException("Unrecognized epic id");
+        }
     }
 }
