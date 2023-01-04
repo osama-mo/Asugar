@@ -62,7 +62,7 @@ public class IssueController {
         if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
-        return projectService.getIssueInfo(issueId);
+        return issueService.getIssueInfo(issueId);
     }
 
     @PutMapping("/assign/member")
