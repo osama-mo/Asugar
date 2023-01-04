@@ -66,7 +66,9 @@ public class AppUserController {
     }
 
     @DeleteMapping("/project/{projectId}")
-    public void deleteProject(@PathVariable("projectId") Long projectId, HttpServletRequest request) throws IOException {
+    public void deleteProject(@PathVariable("projectId") Long projectId,
+                              HttpServletRequest request)
+            throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
         AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
         ProjectEntity project = projectService.getProject(projectId);

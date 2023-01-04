@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class EpicCreateRequest {
     private final String title;
     private final String description;
-    private final int manHour;
+    private final Integer manHour;
     private final LocalDate due;
     private final String assignedTo;
 }

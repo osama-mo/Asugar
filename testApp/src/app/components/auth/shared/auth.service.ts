@@ -180,7 +180,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.delete(`http://localhost:8080/${projectId}/issues/delete?issueId=${issueId}`, httpOptions)
+    return this.httpClient.delete(`http://localhost:8080/${projectId}/issues/${issueId}/delete`, httpOptions)
   }
 
 
@@ -242,7 +242,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.put(`http://localhost:8080/${projectId}/issues/${issueId}/assign/epic?epicId=${epicId}`, httpOptions)
+    return this.httpClient.put(`http://localhost:8080/${projectId}/issues/${issueId}/assign/epic?epicId=${epicId}`, null, httpOptions)
   }
   getEpics(projectId:number) : Observable<any> {
     const httpOptions = {
@@ -252,7 +252,7 @@ export class AuthService {
     }
     return this.httpClient.get(`http://localhost:8080/${projectId}/epics`, httpOptions)
   }
-  
+
   finishEpic(epicId:number,projectId:number): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
