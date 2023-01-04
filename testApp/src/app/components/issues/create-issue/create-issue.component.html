@@ -46,7 +46,7 @@
               </select>
             <input  type="text" [formControlName]="'manHour'" style="margin-top: 52vh;" class="rectangle5" required>
             <select  [formControlName]="'assignedTo'"  style="margin-top: 60vh;" class="rectangle5">
-                <option [value] = "null" >No one</option>
+                <option></option>
                 <option *ngFor="let item of members" [value] = "item.email" >{{item.first_name}}  {{item.last_name}}</option>
             </select>
             <select  [formControlName]="'sprint'"  style="margin-top: 68vh;" class="rectangle5">
