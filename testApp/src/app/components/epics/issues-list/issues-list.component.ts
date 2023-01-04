@@ -22,6 +22,8 @@ export class IssuesListComponent {
   projectId: string | null = "";
   projectName: String | null = "";
   epicId: string | null = "";
+  state: string | null = "";
+  finished: boolean = false;
   epicName:string | null = "";
 
   constructor(private route: ActivatedRoute, private router: Router, private authsurvice: AuthService) {
@@ -29,6 +31,13 @@ export class IssuesListComponent {
     this.projectName = this.route.snapshot.queryParamMap.get('projectName');
     this.epicId = this.route.snapshot.queryParamMap.get('epicId');
     this.epicName = this.route.snapshot.queryParamMap.get('epicName');
+    this.state = this.route.snapshot.queryParamMap.get('state');
+    if(this.state == "finished"){
+      this.finished = true
+    }
+    else{
+      this.finished = false
+    }
   }
 
   ngOnInit(): void {

@@ -72,7 +72,7 @@ export class CreateSubIssueComponent {
     this.gvisibility = 'hidden'
     this.createIssueRequset.title = this.createIssueForm.get('title')!.value;
     this.createIssueRequset.description = this.createIssueForm.get('des')!.value;
-    this.createIssueRequset.epicId = this.createIssueForm.get('epicId')!.value;
+    this.createIssueRequset.epicId = this.epicId;
     this.createIssueRequset.issueType = this.createIssueForm.get('IssueType')!.value;
     this.createIssueRequset.manHour = Number(this.createIssueForm.get('manHour')!.value);
     this.createIssueRequset.assignedTo = this.createIssueForm.get('assignedTo')!.value;

@@ -39,7 +39,7 @@ export class DeleteEpicComponent {
     this.efvisibility = 'hidden'
     this.gvisibility = 'hidden'
     this.epicId= this.removeIssueForm.get('id')!.value;
-    this.authService.removeIssue(this.projectId!,this.epicId!)
+    this.authService.deleteEpic(Number(this.epicId!),Number(this.projectId!))
     .subscribe(
       data => {
       this.location.back();

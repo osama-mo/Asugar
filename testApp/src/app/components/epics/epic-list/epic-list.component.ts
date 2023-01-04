@@ -49,8 +49,15 @@ export class EpicListComponent {
   navigateToRemoveEpic() {
     this.router.navigate(['delete-epic'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
-  navigateToSubIssues(epicId: number,epicName:string){
-    this.router.navigate(['sub-issues-list'], { queryParams: { epicName:epicName,epicId: epicId, projectId: this.projectId, projectName: this.projectName } })
+  navigateToSubIssues(epicId: number,epicName:string,endedAt:string|null){
+    let state;
+    if(endedAt == null){
+      state = "Not"
+    }
+    else{
+      state = "finished"
+    }
+    this.router.navigate(['sub-issues-list'], { queryParams: { state:state,epicName:epicName,epicId: epicId, projectId: this.projectId, projectName: this.projectName } })
   }
   navigateToAddEpic() {
     this.router.navigate(['create-epic'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })

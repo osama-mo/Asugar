@@ -9,7 +9,8 @@
 </div>
 
 <div class="epic-title">{{epicName}}</div>
-<input class="finishEpic" value="Finish" (click)="finishEpic()">
+<input *ngIf=" finished == true  " class="finishEpic" style="background-color: gray; cursor: none;" value="Finished" (click)="finishEpic()">
+<input *ngIf=" finished == false  " class="finishEpic" value="Finish" (click)="finishEpic()">
 <div class="box-container1">
     <div class="header">
         <div class="title" style="width: 3vw;margin-right: 1vw;">id</div>
