@@ -278,4 +278,13 @@ export class AuthService {
     }
     return this.httpClient.put(`http://localhost:8080/${projectId}/issues/${issueId}/assign/sprint?sprint=${sprint}`,null, httpOptions)
   }
+
+  removeMember(projectId:number,userEmail:string) : Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.delete(`http://localhost:8080/${projectId}/members?username=${userEmail}`, httpOptions)
+  }
 }

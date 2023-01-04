@@ -55,4 +55,15 @@ export class MemberDetailsComponent implements OnInit {
     this.router.navigate(['epics-list'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
 
-}
+  removemember(){
+    this.authsurvice.removeMember(Number(this.projectId!),this.memberdetails.Email!)
+        .subscribe(
+          data => {
+            console.log(data);
+        }, error => {
+          console.log(error);
+        });
+    }
+  }
+
+

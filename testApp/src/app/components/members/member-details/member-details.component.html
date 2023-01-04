@@ -3,8 +3,7 @@
     <button class="sidebutton" (click)="navigateToBacklog()">B A C K L O G</button>
     <button class="sidebutton" (click)="navigateToIssues()">I S S U E S</button>
     <button class="sidebutton" (click)="navigateToSprint()">S P R I N T </button>
-    <button class="sidebutton" (click)="navigateToEpics()">E P I C S </button>
-   
+    <button class="sidebutton" (click)="navigateToEpics()">E P I C S </button>  
     <button class="ActiveSidebutton" (click)="navigateToMembers()">M E M B E R S</button>
     <div class="sideprojectsButton" (click)="navigateToProjects()"> PROJECTS </div>
 </div>
@@ -33,7 +32,7 @@
     <div style="margin-top: 20vh;" class="rectangle5">
         {{memberdetails.Email}}
     </div>
-    <input type="submit" value="Remove Member">
+    <input type="submit" value="Remove Member" (click)="removemember()">
 </div>
 
 

@@ -198,3 +198,14 @@ margin-top: 40vh;
     border-color: #000000;
     border-width: 2px;
   }
+  .Erorr{
+    background-color: white;
+    background-size: cover;
+    float: right;
+    font-size: 30px;
+    visibility: hidden;
+    margin-left: -5px;
+    margin-top: -20px;
+    color: red;
+ 
+  }
