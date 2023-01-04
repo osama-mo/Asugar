@@ -21,6 +21,8 @@ export class CreateEpicComponent {
     title: new FormControl('', Validators.required),
     des: new FormControl('', [Validators.required]),
     manHour: new FormControl('', [Validators.required]),
+    due: new FormControl('', [Validators.required]),
+    assignedTo: new FormControl('', [Validators.required]),
   })
   projectId: string | null;
   projectName: string | null;

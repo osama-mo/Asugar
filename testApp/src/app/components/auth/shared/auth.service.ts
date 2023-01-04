@@ -253,12 +253,20 @@ export class AuthService {
     return this.httpClient.get(`http://localhost:8080/${projectId}/epics`, httpOptions)
   }
   
-  finishEpic(epicId:number,projectId:number){
+  finishEpic(epicId:number,projectId:number): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
     return this.httpClient.put(`http://localhost:8080/${projectId}/epics/${epicId}/finish`,null, httpOptions)
+  }
+  getActiveIssues(projectId:number) : Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.get(`http://localhost:8080/${projectId}/issues/active`, httpOptions)
   }
 }

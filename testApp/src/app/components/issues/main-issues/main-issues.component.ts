@@ -10,14 +10,14 @@ import { AuthService } from 'app/components/auth/shared/auth.service';
 })
 export class MainIssuesComponent {
   issues = [ {
-    id: 2,
-    title: "sec issue",
-    description: "hey i am the sec issue",
-    manHour: 7,
-    condition: "in progress",
-    issueType: "STORY",
-    creatorUsername: "enes@gmail.com",
-    assignedTo: "osama.@gmail.com",
+    id: 0,
+    title: "",
+    description: "",
+    manHour: 0,
+    condition: "",
+    issueType: "",
+    creatorUsername: "",
+    assignedTo: "",
     createdAt: ""
   }]
   projectId: string | null = "";

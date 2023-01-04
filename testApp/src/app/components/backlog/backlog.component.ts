@@ -26,7 +26,7 @@ export class BacklogComponent implements OnInit {
     this.projectId = this.route.snapshot.queryParamMap.get('projectId');
     this.projectName = this.route.snapshot.queryParamMap.get('projectName');
 
-    this.authsurvice.getIssues(this.projectId!).subscribe(
+    this.authsurvice.getActiveIssues(Number(this.projectId!)).subscribe(
       data => {
         console.log(data)
         this.issues = data

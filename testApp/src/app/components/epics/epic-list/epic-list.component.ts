@@ -9,16 +9,16 @@ import { AuthService } from 'app/components/auth/shared/auth.service';
 })
 export class EpicListComponent {
   epics = [ {
-    id: 2,
-    title: "sec issue",
-    description: "hey i am the sec issue",
-    manHour: 7,
-    issueType: "STORY",
-    creatorUsername: "enes@gmail.com",
-    assignedTo: "osama.@gmail.com",
-    createdAt: "2012-01-01",
-    endedAt: "2012-01-01",
-    plannedTo: "2012-01-01"
+    id: 0,
+    title: "",
+    description: "",
+    manHour: 0,
+    issueType: "",
+    creatorUsername: "",
+    assignedTo: "",
+    createdAt: "",
+    endedAt: "",
+    plannedTo: ""
   }]
   projectId: string | null = "";
   projectName: String | null = "";

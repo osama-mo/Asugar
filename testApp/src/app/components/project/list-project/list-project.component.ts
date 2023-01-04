@@ -38,11 +38,12 @@ export class ListProjectComponent implements OnInit {
 
     this.authsurvice.deleteProject(id).subscribe(data => { 
       console.log(data)
+      window.location.reload();
     }, error => {
       new Error(error)
     }
     )
-    window.location.reload();
+   
 
   }
 
