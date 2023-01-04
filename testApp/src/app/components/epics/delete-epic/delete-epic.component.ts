@@ -35,7 +35,7 @@ export class DeleteEpicComponent {
   }
 
 
-  removeIssue(){
+  removeEpic(){
     this.efvisibility = 'hidden'
     this.gvisibility = 'hidden'
     this.epicId= this.removeIssueForm.get('id')!.value;
