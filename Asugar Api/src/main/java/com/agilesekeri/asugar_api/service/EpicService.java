@@ -10,6 +10,7 @@ import com.agilesekeri.asugar_api.model.request.EpicCreateRequest;
 import com.agilesekeri.asugar_api.repository.EpicRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ import java.util.Set;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class EpicService {
     private final EpicRepository epicRepository;
 

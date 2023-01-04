@@ -236,7 +236,7 @@ class AsugarApiApplicationTests {
                 appUserService.loadUserByUsername("issue@create.test"),
                 project);
 
-        AbstractIssueDTO target = projectService.getIssueInfo(issue.getId());
+        AbstractIssueDTO target = issueService.getIssueInfo(issue.getId());
 
         assertTrue(projectService.getAllIssues(project.getId())
                 .contains(target));

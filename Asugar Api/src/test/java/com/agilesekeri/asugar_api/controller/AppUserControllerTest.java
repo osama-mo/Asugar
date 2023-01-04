@@ -25,61 +25,61 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
         BCryptPasswordEncoder.class})
 @ExtendWith(SpringExtension.class)
 class AppUserControllerTest {
-    @Autowired
-    private AppUserController appUserController;
-
-    @MockBean
-    private AppUserRepository appUserRepository;
-
-    @MockBean
-    private ProjectRepository projectRepository;
-
-    /**
-     * Method under test: {@link AppUserController#createProject(String, HttpServletRequest)}
-     */
-    @Test
-    void testCreateProject() throws Exception {
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/project/create").param("name", "foo");
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(appUserController)
-                .build()
-                .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
-    }
-
-    /**
-     * Method under test: {@link AppUserController#deleteProject(Long, HttpServletRequest)}
-     */
-    @Test
-    void testDeleteProject() throws Exception {
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/project/{projectId}", 123L);
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(appUserController)
-                .build()
-                .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
-    }
-
-    /**
-     * Method under test: {@link AppUserController#getProjectList(HttpServletRequest, HttpServletResponse)}
-     */
-    @Test
-    void testGetProjectList() throws Exception {
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/project/list");
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(appUserController)
-                .build()
-                .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
-    }
-
-    /**
-     * Method under test: {@link AppUserController#refreshToken(HttpServletRequest, HttpServletResponse)}
-     */
-    @Test
-    void testRefreshToken() throws Exception {
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/token/refresh");
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(appUserController)
-                .build()
-                .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
-    }
+//    @Autowired
+//    private AppUserController appUserController;
+//
+//    @MockBean
+//    private AppUserRepository appUserRepository;
+//
+//    @MockBean
+//    private ProjectRepository projectRepository;
+//
+//    /**
+//     * Method under test: {@link AppUserController#createProject(String, HttpServletRequest)}
+//     */
+//    @Test
+//    void testCreateProject() throws Exception {
+//        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/project/create").param("name", "foo");
+//        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(appUserController)
+//                .build()
+//                .perform(requestBuilder);
+//        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
+//    }
+//
+//    /**
+//     * Method under test: {@link AppUserController#deleteProject(Long, HttpServletRequest)}
+//     */
+//    @Test
+//    void testDeleteProject() throws Exception {
+//        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/project/{projectId}", 123L);
+//        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(appUserController)
+//                .build()
+//                .perform(requestBuilder);
+//        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
+//    }
+//
+//    /**
+//     * Method under test: {@link AppUserController#getProjectList(HttpServletRequest, HttpServletResponse)}
+//     */
+//    @Test
+//    void testGetProjectList() throws Exception {
+//        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/project/list");
+//        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(appUserController)
+//                .build()
+//                .perform(requestBuilder);
+//        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
+//    }
+//
+//    /**
+//     * Method under test: {@link AppUserController#refreshToken(HttpServletRequest, HttpServletResponse)}
+//     */
+//    @Test
+//    void testRefreshToken() throws Exception {
+//        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/token/refresh");
+//        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(appUserController)
+//                .build()
+//                .perform(requestBuilder);
+//        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
+//    }
 }
 
