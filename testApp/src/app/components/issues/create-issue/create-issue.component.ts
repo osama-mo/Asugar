@@ -62,6 +62,7 @@ export class CreateIssueComponent {
       }
       , error => {
         new Error(error)
+        this.gvisibility = 'visible'
       })
   }
 
@@ -83,8 +84,8 @@ export class CreateIssueComponent {
         data => {
           this.location.back();
         }, error => {
-          console.log(error);
-          this.gvisibility = 'visible'
+          new Error(error);
+          this.gvisibility = 'visible';
         });
 
   }
