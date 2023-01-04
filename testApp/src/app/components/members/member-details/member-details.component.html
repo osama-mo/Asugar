@@ -1,37 +1,39 @@
-<div>
-    <div class="sidenav">
-        <div class="sideProjectName" >{{projectName}}</div>
-        <button class="sidebutton" (click)="navigateToBacklog()">B A C K L O G</button>
-        <button class="sidebutton" (click)="navigateToIssues()">I S S U E S</button>
-        <button class="sidebutton" (click)="navigateToSprint()">S P R I N T </button>
-        <button class="ActiveSidebutton" (click)="navigateToMembers()">M E M B E R S</button>
-        <div class="sideprojectsButton" (click)="navigateToProjects()"> PROJECTS </div>
-    </div>
-
-    <div class="rectangle1">
-        <div class="rectangle2">
-            <div class="circle">
-                <div class="nameSymbol">{{memberdetails.firstName!.toUpperCase()[0]}}{{memberdetails.LastName!.toUpperCase()[0]}}</div>
-            </div>
-            <div class="userName"> {{memberdetails.firstName!.toUpperCase()}} {{memberdetails.LastName!.toUpperCase()}} </div>
-        </div>
-        <div class="rectangle3">
-            ABOUT
-        </div>
-        <div style="margin-top: 20vh;" class="rectangle4">
-            TITLE
-        </div>
-        <div style="margin-top: 30vh;" class="rectangle4">
-            Email
-        </div>
-        <div style="margin-top: 20vh;" class = "rectangle5">
-            {{memberdetails.title}}
-        </div>
-        <div style="margin-top: 30vh;" class = "rectangle5">
-            {{memberdetails.Email}}
-        </div>
-        
-    </div>
-  
-  
+<div class="sidenav">
+    <div class="sideProjectName">{{projectName}}</div>
+    <button class="sidebutton" (click)="navigateToBacklog()">B A C K L O G</button>
+    <button class="sidebutton" (click)="navigateToIssues()">I S S U E S</button>
+    <button class="sidebutton" (click)="navigateToSprint()">S P R I N T </button>
+    <button class="sidebutton" (click)="navigateToEpics()">E P I C S </button>
+   
+    <button class="ActiveSidebutton" (click)="navigateToMembers()">M E M B E R S</button>
+    <div class="sideprojectsButton" (click)="navigateToProjects()"> PROJECTS </div>
 </div>
+
+<div class="rectangle1">
+    <div class="rectangle2">
+        <div class="circle">
+            <div class="nameSymbol">
+                {{memberdetails.firstName!.toUpperCase()[0]}}{{memberdetails.LastName!.toUpperCase()[0]}}</div>
+        </div>
+        <div class="userName"> {{memberdetails.firstName!.toUpperCase()}} {{memberdetails.LastName!.toUpperCase()}}
+        </div>
+    </div>
+    <div class="rectangle3">
+        ABOUT
+    </div>
+    <div style="margin-top: 10vh;" class="rectangle4">
+        TITLE
+    </div>
+    <div style="margin-top: 20vh;" class="rectangle4">
+        Email
+    </div>
+    <div style="margin-top: 10vh;" class="rectangle5">
+        {{memberdetails.title}}
+    </div>
+    <div style="margin-top: 20vh;" class="rectangle5">
+        {{memberdetails.Email}}
+    </div>
+    <input type="submit" value="Remove Member">
+</div>
+
+

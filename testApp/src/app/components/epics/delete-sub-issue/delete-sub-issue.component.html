@@ -1,0 +1,25 @@
+<div>
+    <div class="sidenav">
+        <div class="sideProjectName" >{{projectName}}</div>
+        <button class="sidebutton" (click)="navigateToBacklog()">B A C K L O G</button>
+        <button class="sidebutton" (click)="navigateToIssues()">I S S U E S</button>
+        <button class="sidebutton" (click)="navigateToSprint()">S P R I N T </button>
+        <button class="ActiveSidebutton" (click)="navigateToEpics()">E P I C S </button>
+        <button class="sidebutton" (click)="navigateToMembers()">M E M B E R S</button>
+        <div class="sideprojectsButton" (click)="navigateToProjects()"> PROJECTS </div>
+    </div>
+    
+
+    <div class="rectangle1">
+        <div style="margin-top: 9vh;" class="rectangle4">
+           issue Id
+        </div>
+        <form [formGroup]="removeIssueForm">
+            <input  type="text" [formControlName]="'id'" style="margin-top: 9vh;" class="rectangle5" required>
+        </form>
+
+        <input type="submit" value="Delete" (click)="removeIssue()">
+    </div>
+
+
+</div>

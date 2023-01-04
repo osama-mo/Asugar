@@ -11,6 +11,7 @@ import { ProjectRequsetPayload } from 'app/components/project/list-project/proje
 import { Data } from '@angular/router';
 import { IssueResponsePayload } from 'app/components/sprints/active-sprint/issue-respone-payload';
 import { CreateIssueRequestPayload } from 'app/components/issues/create-issue/create-issue-request-payload';
+import { CreateEpicRequestPayload } from 'app/components/epics/create-epic/create-epic-reques-payload';
 
 @Injectable({
   providedIn: 'root'
@@ -208,5 +209,56 @@ export class AuthService {
       })
     }
     return this.httpClient.put(`http://localhost:8080/${projectId}/issues/${issueId}/condition?condition=${condition}`,null, httpOptions)
+  }
+
+  createEpic(projectId:number,createEpicRequset:CreateEpicRequestPayload) : Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.post(`http://localhost:8080/${projectId}/epics/create`, createEpicRequset, httpOptions);
+  }
+  deleteEpic(projectId:number,epicId:number) : Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.delete(`http://localhost:8080/${projectId}/epics/${epicId}/delete`, httpOptions)
+  }
+  getEpicIssues(projectId:number,epicId:number) : Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.get(`http://localhost:8080/${projectId}/epics/${epicId}/issues`, httpOptions)
+  }
+
+  assignIssueToEpic(projectId:number,issueId:number,epicId:number) : Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.get(`http://localhost:8080/${projectId}/issues/${issueId}/assign/epic?epicId=${epicId}`, httpOptions)
+  }
+  getEpics(projectId:number) : Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.get(`http://localhost:8080/${projectId}/epics`, httpOptions)
+  }
+  
+  finishEpic(epicId:number,projectId:number){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.put(`http://localhost:8080/${projectId}/epics/${epicId}/finish`,null, httpOptions)
   }
 }

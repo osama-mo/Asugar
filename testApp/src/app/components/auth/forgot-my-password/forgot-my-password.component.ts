@@ -30,6 +30,7 @@ export class ForgotMyPasswordComponent implements OnInit {
   fgmRequestPayload: ForgotMyPasswordRequestPayload;
 
   ngOnInit(): void {
+    document.body.className = "selector";
   }
   forgotpassword() {
 

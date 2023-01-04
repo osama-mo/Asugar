@@ -1,0 +1,33 @@
+<div>
+    <div class="sidenav">
+        <div class="sideProjectName" >{{projectName}}</div>
+        <button class="sidebutton" (click)="navigateToBacklog()">B A C K L O G</button>
+        <button class="ActiveSidebutton" (click)="navigateToIssues()">I S S U E S</button>
+        <button class="sidebutton" (click)="navigateToSprint()">S P R I N T </button>
+        <button class="sidebutton" (click)="navigateToEpics()">E P I C S </button>
+        <button class="sidebutton" (click)="navigateToMembers()">M E M B E R S</button>
+        <div class="sideprojectsButton" (click)="navigateToProjects()"> PROJECTS </div>
+    </div>
+
+    <div class="rectangle1">
+
+        <div class="rectangle3">
+            Details
+        </div>
+        <div style="margin-top: 20vh;" class="rectangle4">
+            Issue Id
+        </div> 
+        <div style="margin-top: 30vh;" class="rectangle4">
+            Epic Id
+        </div>
+
+        <form [formGroup]="assignToEpicForm">
+            <input  type="text" [formControlName]="'issueId'" style="margin-top: 20vh;" class="rectangle5" required>
+            <input  type="text" [formControlName]="'epicId'" style="margin-top: 30vh;" class="rectangle5"  required>
+        </form>
+
+        <input type="submit" value="SUMBIT" (click)="assign()">
+    </div>
+
+
+</div>

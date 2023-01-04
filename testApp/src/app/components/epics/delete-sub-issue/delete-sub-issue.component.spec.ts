@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SprintsListComponent } from './sprints-list.component';
+import { DeleteSubIssueComponent } from './delete-sub-issue.component';
 
-describe('SprintsListComponent', () => {
-  let component: SprintsListComponent;
-  let fixture: ComponentFixture<SprintsListComponent>;
+describe('DeleteSubIssueComponent', () => {
+  let component: DeleteSubIssueComponent;
+  let fixture: ComponentFixture<DeleteSubIssueComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SprintsListComponent ]
+      declarations: [ DeleteSubIssueComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SprintsListComponent);
+    fixture = TestBed.createComponent(DeleteSubIssueComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

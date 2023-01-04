@@ -22,6 +22,7 @@ export class BacklogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    document.body.className = "selector";
     this.projectId = this.route.snapshot.queryParamMap.get('projectId');
     this.projectName = this.route.snapshot.queryParamMap.get('projectName');
 
@@ -98,5 +99,8 @@ export class BacklogComponent implements OnInit {
   }
   navigateToIssues() {
     this.router.navigate(['issues'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToEpics() {
+    this.router.navigate(['epics-list'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
 }

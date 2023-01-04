@@ -1,0 +1,59 @@
+<div>
+    <div class="sidenav">
+        <div class="sideProjectName" >{{projectName}}</div>
+        <button class="sidebutton" (click)="navigateToBacklog()">B A C K L O G</button>
+        <button class="sidebutton" (click)="navigateToIssues()">I S S U E S</button>
+        <button class="sidebutton" (click)="navigateToSprint()">S P R I N T </button>
+        <button class="ActiveSidebutton" (click)="navigateToEpics()">E P I C S </button>
+        <button class="sidebutton" (click)="navigateToMembers()">M E M B E R S</button>
+        <div class="sideprojectsButton" (click)="navigateToProjects()"> PROJECTS </div>
+    </div>
+
+    <div class="rectangle1">
+
+        <div class="rectangle3">
+            Details
+        </div>
+        <div style="margin-top: 20vh;" class="rectangle4">
+            TITLE
+        </div>
+        <div style="margin-top: 28vh;" class="rectangle4">
+            Description
+        </div>
+        <div style="margin-top: 36vh;" class="rectangle4">
+            Issue Type
+        </div>
+        <div style="margin-top: 44vh;" class="rectangle4">
+            Man Hour
+        </div>
+        <div style="margin-top: 52vh;" class="rectangle4">
+            Assigned to
+        </div>
+        <div style="margin-top: 60vh;" class="rectangle4">
+            Sprint
+        </div>
+        <form [formGroup]="createIssueForm">
+            <input  type="text" [formControlName]="'title'" style="margin-top: 20vh;" class="rectangle5" required>
+            <input  type="text" [formControlName]="'des'" style="margin-top: 28vh;" class="rectangle5" required>
+
+            <select  [formControlName]="'IssueType'"  style="margin-top: 36vh;" class="rectangle5">
+                <option value="STORY">Story</option>
+                <option value="TASK">task</option>
+              </select>
+            <input  type="text" [formControlName]="'manHour'" style="margin-top: 44vh;" class="rectangle5" required>
+            <select  [formControlName]="'assignedTo'"  style="margin-top: 52vh;" class="rectangle5">
+                <option ></option>
+                <option *ngFor="let item of members" [value] = "item.email" >{{item.first_name}}  {{item.last_name}}</option>
+            </select>
+            <select  [formControlName]="'sprint'"  style="margin-top: 60vh;" class="rectangle5">
+                <option value="active">Active</option>
+                <option value="next">Next</option>
+                <option value="null">None</option>
+            </select>
+        </form>
+
+        <input type="submit" value="SUMBIT" (click)="createIssue()">
+    </div>
+
+
+</div>

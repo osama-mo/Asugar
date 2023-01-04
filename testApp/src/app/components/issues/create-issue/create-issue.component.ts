@@ -54,6 +54,7 @@ export class CreateIssueComponent {
   }
 
   ngOnInit(): void {
+    document.body.className = "selector";
     this.authService.getMembersList(Number(this.projectId)).subscribe(
       data => {
         console.log(data)
@@ -102,6 +103,8 @@ export class CreateIssueComponent {
   navigateToIssues() {
     this.router.navigate(['issues'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
-
+  navigateToEpics() {
+    this.router.navigate(['epics-list'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
 
 }

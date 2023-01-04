@@ -31,7 +31,7 @@ export class RemoveIssueComponent {
    }
 
   ngOnInit(): void {
-    
+    document.body.className = "selector";
   }
 
 
@@ -49,7 +49,7 @@ export class RemoveIssueComponent {
     });
     
    }
-   navigateToProjects() {
+  navigateToProjects() {
     this.router.navigate(['list-project'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
   navigateToBacklog() {
@@ -63,5 +63,8 @@ export class RemoveIssueComponent {
   }
   navigateToIssues() {
     this.router.navigate(['issues'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToEpics() {
+    this.router.navigate(['epics-list'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
 }

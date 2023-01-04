@@ -112,5 +112,8 @@ export class ActiveSprintComponent {
   navigateToIssues() {
     this.router.navigate(['issues'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
+  navigateToEpics() {
+    this.router.navigate(['epics-list'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
 
 }

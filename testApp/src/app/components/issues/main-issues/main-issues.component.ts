@@ -55,6 +55,9 @@ export class MainIssuesComponent {
   navigateToProjects() {
     this.router.navigate(['list-project'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
+  navigateToAssign() {
+    this.router.navigate(['assign-to-epic'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
   navigateToBacklog() {
     this.router.navigate(['backlog'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
@@ -67,7 +70,9 @@ export class MainIssuesComponent {
   navigateToIssues() {
     this.router.navigate(['issues'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
-
+  navigateToEpics() {
+    this.router.navigate(['epics-list'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
   getShortDate(date: string) { 
     let shortdate = "";
     let n = 0;

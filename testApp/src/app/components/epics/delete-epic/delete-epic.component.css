@@ -1,0 +1,212 @@
+@import url(https://fonts.googleapis.com/css?family=Share);
+
+.sidenav {
+  height: 100%;
+  width: 12vw;
+  position: fixed;
+  z-index: 1;
+  text-align: center;
+  top: 0;
+  left: 0;
+  background-color: rgba(143, 206, 233 , .5);
+  overflow-x: hidden;
+  backdrop-filter: blur(2px);
+  border-style: solid;
+  border-width: 4px;
+  border-color: #22597D;
+  margin-top: 55px;
+}
+.sidebutton:hover {
+background-color: #22597D;
+}
+.sideProjectName{
+background-color: #269531;
+height: 5vh;
+text-align: center;
+margin-bottom: 3vh;
+font-size: 30px;
+color: white;
+font-family: 'share';
+}
+
+.sideprojectsButton{
+background-color: #22597D;
+cursor: pointer;
+height: 5vh;
+text-align: center;
+margin-bottom: 3vh;
+font-size: 30px;
+color: white;
+font-family: 'share';
+margin-top: 40vh;
+}
+
+.main {
+  margin-left: 160px;
+  /* Same as the width of the sidenav */
+  font-size: 28px;
+  /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {
+      padding-top: 15px;
+  }
+}
+
+.sidebutton {
+  font-family: 'share';
+  width: 200px;
+  height: 52px;
+  border-color: #22597D;
+  border-radius: 36px;
+  border-width: 5px;
+  background-color: #8FCEE9;
+  text-decoration: bold;
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 25px;
+  margin-bottom: 20px;
+  text-shadow: black;
+  -webkit-text-stroke-width: 1px;
+}
+
+.ActiveSidebutton {
+  width: 200px;
+  color: white;
+  font-family: 'share';
+  height: 52px;
+  border-color: #22597D;
+  border-radius: 36px;
+  border-width: 5px;
+  background-color: #22597D;
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 25px;
+  margin-bottom: 20px;
+  -webkit-text-stroke-width: 1px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidenav {
+    width: 100%;
+    height: auto;
+    position: relative;
+    align-items: center;
+  }
+  .sidenav a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+
+
+
+.rectangle1 {
+    font-family:'share';
+    font-weight: bold;
+    margin-top: 20vh;
+    margin-left: calc(50% + 6vw);
+    transform: translateX(-50%);
+    width: 60vw;
+    border-radius: 20px;
+    height: 30vh;
+    background-color: rgba(143, 206, 233 , .2);
+    backdrop-filter: blur(20px);
+    border: solid;
+    border-color: #22597D;
+    border-width: 4px;
+}
+  .rectangle3{
+    width: 20vw;
+    padding-top: 5px;
+    background-color:#22597D;
+    height: 7vh;
+    float: right;
+    color: white;
+    font-size: 32px;
+    text-align: center;
+    border-radius: 18px;
+    margin-top: 4vw;
+    margin-right: 6vw;
+  }
+  .rectangle4{
+    padding-top: 5px;
+    width: 20vw;
+    background-color:#22597D;
+    height: 6vh;
+    float: left;
+    position: fixed;
+    margin-top: 20vh;
+    margin-left: 4vw;
+    color: white;
+    font-size: 32px;
+    text-align: center;
+    border-radius: 18px;
+  }
+  .rectangle5{
+    padding-top: 5px;
+    width: 20vw;
+    margin-left: 33vw;
+    height: 6vh;
+    float: right;
+    color: black;
+    position: fixed;
+    font-size: 25px;
+    text-align: center;
+    border-radius: 18px;
+  }
+
+
+  input[type="submit"]{
+    width: 10vw;
+    height: 58px;
+    margin-top: 20vh;
+    margin-left: 9vw;
+    border: 1px solid;
+    background-color: #269531;
+    border-radius: 18px;
+    border-style: solid;
+    border-color: #000000;
+    border-width: 2px;
+    font-size: 32px;
+    font-family:'share';
+    text-align: center;
+    color: #e9f4fb;
+    cursor: pointer;
+    outline: none;
+    color: white;
+    text-shadow: black;
+    text-decoration: none;
+    -webkit-text-stroke-width: 1px;
+  }
+  input[type="submit"]:hover{
+    border-color: #22597D;
+    border-width: 5px;
+    transition: .5s;
+    border-radius: 18px;
+    border-style: solid;
+    border-color: #000000;
+    border-width: 2px;
+  }
+
+  .Erorr{
+    background-color: white;
+    background-size: cover;
+    float: right;
+    font-size: 30px;
+    visibility: hidden;
+    margin-left: -5px;
+    margin-top: -20px;
+    color: red;
+ 
+  }

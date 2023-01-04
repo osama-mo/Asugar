@@ -45,6 +45,7 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    document.body.className = "selector";
   }
 
   

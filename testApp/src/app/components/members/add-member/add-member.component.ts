@@ -26,6 +26,7 @@ export class AddMemberComponent implements OnInit {
 
   
   constructor(private location:Location ,private route: ActivatedRoute, private router: Router, private authService: AuthService) {
+    document.body.className = "selector";
     this.addMemberRequest = {
       email : "",
       title : ""
@@ -78,5 +79,8 @@ export class AddMemberComponent implements OnInit {
   }
   navigateToIssues() {
     this.router.navigate(['issues'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
+  }
+  navigateToEpics() {
+    this.router.navigate(['epics-list'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
 }

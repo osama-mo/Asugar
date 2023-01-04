@@ -24,6 +24,7 @@ export class CreateProjectComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router,) { }
 
   ngOnInit(): void {
+    document.body.className = "selector";
   }
 
   createProject(){

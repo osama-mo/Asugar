@@ -34,6 +34,7 @@ export class ForgotMyPasswordConfirmationComponent implements OnInit {
   fgmcRequestPayload: ForgotMyPasswordConfirmationRequestPayload;
 
   ngOnInit(): void {
+    document.body.className = "selector";
   }
 
   forgotMyPasswordConfirmation() {
