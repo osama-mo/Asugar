@@ -58,28 +58,47 @@ export class BacklogComponent implements OnInit {
         event.currentIndex);
       for (let issue of this.Backlog) {
         if (issue.sprint != null) {
-          // setSprint
+          this.authsurvice.setSprint(Number(this.projectId!), Number(issue.id!), null).subscribe(
+            data => {
+              console.log(data)
+            }
+            , error => {
+              new Error(error)
+            })
         }
       }
       for (let issue of this.activeSprint) {
         if (issue.sprint != "active") {
-          // setSprint
+          this.authsurvice.setSprint(Number(this.projectId!), Number(issue.id!), "active").subscribe(
+            data => {
+              console.log(data)
+            }
+            , error => {
+              new Error(error)
+            })
         }
       }
       for (let issue of this.nextSprint) {
         if (issue.sprint != "next") {
-          // setSprint
+          this.authsurvice.setSprint(Number(this.projectId!), Number(issue.id!), "next").subscribe(
+            data => {
+              console.log(data)
+            }
+            , error => {
+              new Error(error)
+            })
         }
       }
     }
   }
 
-  finishSprint(){
+
+  finishSprint() {
     this.authsurvice.finishSprint(this.projectId!).subscribe(
       data => {
         console.log(data)
         window.location.reload()
-        
+
       }
       , error => {
         new Error(error)

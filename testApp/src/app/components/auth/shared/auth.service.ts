@@ -269,4 +269,13 @@ export class AuthService {
     }
     return this.httpClient.get(`http://localhost:8080/${projectId}/issues/active`, httpOptions)
   }
+
+  setSprint(projectId:number,issueId:number,sprint:string|null): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('accessToken')!
+      })
+    }
+    return this.httpClient.put(`http://localhost:8080/${projectId}/issues/${issueId}/assign/sprint?sprint=${sprint}`,null, httpOptions)
+  }
 }
