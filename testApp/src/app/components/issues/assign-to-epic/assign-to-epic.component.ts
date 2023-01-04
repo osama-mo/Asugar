@@ -40,8 +40,8 @@ export class AssignToEpicComponent {
   assign() {
     this.efvisibility = 'hidden'
     this.gvisibility = 'hidden'
-    this.epicId = this.assignToEpicForm.get('issueId')!.value;
-    this.issueId = this.assignToEpicForm.get('epicId')!.value;
+    this.epicId = this.assignToEpicForm.get('epicId')!.value;
+    this.issueId = this.assignToEpicForm.get('issueId')!.value;
     this.authService.assignIssueToEpic(Number(this.projectId!),Number(this.issueId!),Number(this.epicId))
       .subscribe(
         data => {

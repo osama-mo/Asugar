@@ -236,13 +236,13 @@ export class AuthService {
     return this.httpClient.get(`http://localhost:8080/${projectId}/epics/${epicId}/issues`, httpOptions)
   }
 
-  assignIssueToEpic(projectId:number,issueId:number,epicId:number) : Observable<any> {
+  assignIssueToEpic(projectId:number,issueId:number,epicId:number|null) : Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.get(`http://localhost:8080/${projectId}/issues/${issueId}/assign/epic?epicId=${epicId}`, httpOptions)
+    return this.httpClient.put(`http://localhost:8080/${projectId}/issues/${issueId}/assign/epic?epicId=${epicId}`, httpOptions)
   }
   getEpics(projectId:number) : Observable<any> {
     const httpOptions = {

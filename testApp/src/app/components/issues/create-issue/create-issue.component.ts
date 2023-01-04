@@ -23,9 +23,9 @@ export class CreateIssueComponent {
     epicId: new FormControl('', [Validators.required]),
     IssueType: new FormControl('', [Validators.required]),
     manHour: new FormControl('', [Validators.required]),
-    assignedTo: new FormControl('',[Validators.required]),
+    assignedTo: new FormControl('', [Validators.required]),
     sprint: new FormControl('', [Validators.required]),
-    
+
   })
   projectId: string | null;
   projectName: string | null;
@@ -39,7 +39,7 @@ export class CreateIssueComponent {
   ]
 
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService,private location: Location) {
+  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private location: Location) {
     this.createIssueRequset = {
       title: "",
       description: "",
@@ -76,7 +76,7 @@ export class CreateIssueComponent {
     this.createIssueRequset.manHour = Number(this.createIssueForm.get('manHour')!.value);
     this.createIssueRequset.assignedTo = this.createIssueForm.get('assignedTo')!.value;
     this.createIssueRequset.sprint = this.createIssueForm.get('sprint')!.value;
-    console.log(this.createIssueForm.get('assignedTo')!.value)
+    if (this.createIssueRequset.manHour == 0) { this.createIssueRequset.manHour = null }
 
     this.authService.createIssue(this.createIssueRequset, this.projectId!)
       .subscribe(

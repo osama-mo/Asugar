@@ -74,10 +74,10 @@ export class EpicListComponent {
     this.router.navigate(['epics-list'], { queryParams: { projectId: this.projectId, projectName: this.projectName } })
   }
 
-  getShortDate(date: string) { 
+  getShortDate(date: string|null) { 
     let shortdate = "";
     let n = 0;
-    for(let letter of date){
+    for(let letter of date!){
       shortdate = shortdate + letter
       n++
       if(n== 10){
