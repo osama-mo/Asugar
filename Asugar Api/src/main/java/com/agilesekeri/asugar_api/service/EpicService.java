@@ -1,15 +1,21 @@
 package com.agilesekeri.asugar_api.service;
 
 import com.agilesekeri.asugar_api.common.AbstractIssue;
-import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
-import com.agilesekeri.asugar_api.model.entity.EpicEntity;
-import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
+import com.agilesekeri.asugar_api.model.dto.AbstractIssueDTO;
+import com.agilesekeri.asugar_api.model.dto.EpicDTO;
+import com.agilesekeri.asugar_api.model.dto.IssueDTO;
+import com.agilesekeri.asugar_api.model.dto.SubtaskDTO;
+import com.agilesekeri.asugar_api.model.entity.*;
 import com.agilesekeri.asugar_api.model.request.EpicCreateRequest;
 import com.agilesekeri.asugar_api.repository.EpicRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -59,5 +65,31 @@ public class EpicService {
     public void deleteEpic(EpicEntity epic) {
         epic.getIncludedIssues().forEach(issue -> issue.setEpic(null));
         epicRepository.delete(epic);
+    }
+
+    public void setPlannedTo(Long epicId, LocalDate date) {
+        EpicEntity epic = getEpic(epicId);
+        epic.setPlannedTo(date);
+        epicRepository.save(epic);
+    }
+
+    public void finishEpic(Long epicId) {
+        EpicEntity epic = getEpic(epicId);
+        epic.setEndedAt(LocalDateTime.now());
+        epicRepository.save(epic);
+    }
+
+    public EpicDTO getEpicInfo(EpicEntity epic) {
+        return EpicDTO.builder()
+                .id(epic.getId())
+                .projectId(epic.getProject().getId())
+                .manHour(epic.getManHour())
+                .description(epic.getDescription())
+                .creatorUsername(epic.getCreator().getUsername())
+                .createdAt(epic.getCreatedAt().toString())
+                .endedAt(epic.getEndedAt().toLocalDate().toString())
+                .plannedTo(epic.getPlannedTo().toString())
+                .title(epic.getTitle())
+                .build();
     }
 }

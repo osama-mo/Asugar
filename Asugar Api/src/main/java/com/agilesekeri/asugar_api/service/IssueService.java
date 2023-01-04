@@ -1,6 +1,9 @@
 package com.agilesekeri.asugar_api.service;
 
 import com.agilesekeri.asugar_api.common.AbstractIssue;
+import com.agilesekeri.asugar_api.model.dto.AbstractIssueDTO;
+import com.agilesekeri.asugar_api.model.dto.IssueDTO;
+import com.agilesekeri.asugar_api.model.dto.SubtaskDTO;
 import com.agilesekeri.asugar_api.model.entity.*;
 import com.agilesekeri.asugar_api.model.enums.TaskConditionEnum;
 import com.agilesekeri.asugar_api.model.request.IssueCreateRequest;
@@ -87,6 +90,53 @@ public class IssueService {
         AbstractIssue issue = getIssue(issueId);
         issue.setAssigned(user);
         issueRepository.save(issue);
+    }
+
+    public void assignToSprint(Long issueId, SprintEntity sprint) {
+        AbstractIssue issue = getIssue(issueId);
+        issue.setSprint(sprint);
+        issueRepository.save(issue);
+    }
+
+    public void assignToEpic(Long issueId, EpicEntity epic) {
+        AbstractIssue issue = getIssue(issueId);
+        issue.setEpic(epic);
+        issueRepository.save(issue);
+    }
+
+    public AbstractIssueDTO getIssueInfo(Long issueId) {
+        AbstractIssue issue = getIssue(issueId);
+        AbstractIssueDTO dto = null;
+
+        if(IssueEntity.class.equals(issue.getClass()))
+            dto = IssueDTO.builder().subtasks(getSubTaskInfo(issue)).build();
+        else if(SubtaskEntity.class.equals(issue.getClass()))
+            dto = SubtaskDTO.builder().parentIssue(getParentIssueInfo(issue)).build();
+        else
+            throw new IllegalStateException("Unknown issue type");
+
+        assert dto != null;
+        dto.setId(issue.getId());
+        dto.setProjectId(issue.getProject().getId());
+        dto.setIssueType(issue.getIssueType().name());
+        dto.setCondition(issue.getCondition().name());
+        dto.setManHour(issue.getManHour());
+        dto.setDescription(issue.getDescription());
+        dto.setCreatorUsername(issue.getCreator().getUsername());
+        dto.setCreatedAt(issue.getCreatedAt().toString());
+        dto.setTitle(issue.getTitle());
+
+
+        if(issue.getAssigned() != null)
+            dto.setAssignedTo(issue.getAssigned().getUsername());
+
+        if(issue.getEpic() != null)
+            dto.setEpicId(issue.getEpic().getId());
+
+        if(issue.getSprint() != null)
+            dto.setSprint(issue.getSprint().getId().toString());
+
+        return dto;
     }
 
 //    @Transactional

@@ -11,10 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class EpicCreateRequest {
     private final String title;
-
     private final String description;
-
     private final int manHour;
-
     private final LocalDate due;
 }

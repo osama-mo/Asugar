@@ -46,6 +46,8 @@ public class EpicEntity {
     @OneToMany(mappedBy = "epic")
     private Set<IssueEntity> includedIssues;
 
+    private int manHour;
+
     private LocalDateTime createdAt;
 
     private LocalDate plannedTo;
