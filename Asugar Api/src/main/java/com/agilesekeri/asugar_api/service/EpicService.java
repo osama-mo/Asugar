@@ -9,6 +9,7 @@ import com.agilesekeri.asugar_api.model.entity.*;
 import com.agilesekeri.asugar_api.model.request.EpicCreateRequest;
 import com.agilesekeri.asugar_api.repository.EpicRepository;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +53,7 @@ public class EpicService {
                 .createdAt(LocalDateTime.now())
                 .project(project)
                 .plannedTo(request.getDue())
+                .manHour(request.getManHour())
                 .build();
 
         return epicRepository.save(epic);
@@ -82,16 +84,25 @@ public class EpicService {
     }
 
     public EpicDTO getEpicInfo(EpicEntity epic) {
-        return EpicDTO.builder()
+        EpicDTO.EpicDTOBuilder<?, ?> builder = EpicDTO.builder()
                 .id(epic.getId())
-                .projectId(epic.getProject().getId())
-                .manHour(epic.getManHour())
-                .description(epic.getDescription())
-                .creatorUsername(epic.getCreator().getUsername())
                 .createdAt(epic.getCreatedAt().toString())
-                .endedAt(epic.getEndedAt().toLocalDate().toString())
-                .plannedTo(epic.getPlannedTo().toString())
+                .projectId(epic.getProject().getId())
                 .title(epic.getTitle())
-                .build();
+                .creatorUsername(epic.getCreator().getUsername());
+
+        if(epic.getManHour() != null)
+            builder.manHour(epic.getManHour());
+
+        if(epic.getDescription() != null)
+            builder.description(epic.getDescription());
+
+        if(epic.getEndedAt() != null)
+            builder.endedAt(epic.getEndedAt().toLocalDate().toString());
+
+        if(epic.getPlannedTo() != null)
+            builder.plannedTo(epic.getPlannedTo().toString());
+
+        return builder.build();
     }
 }

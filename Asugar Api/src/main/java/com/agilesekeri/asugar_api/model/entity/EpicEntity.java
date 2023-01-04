@@ -1,6 +1,7 @@
 package com.agilesekeri.asugar_api.model.entity;
 
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -46,7 +47,7 @@ public class EpicEntity {
     @OneToMany(mappedBy = "epic")
     private Set<IssueEntity> includedIssues;
 
-    private int manHour;
+    private Integer manHour;
 
     private LocalDateTime createdAt;
 

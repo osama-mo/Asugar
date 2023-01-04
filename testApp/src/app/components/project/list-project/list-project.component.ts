@@ -16,10 +16,10 @@ export class ListProjectComponent implements OnInit {
       id: 123
     }
   ]
- 
+
 
   constructor(private router: Router, private authsurvice: AuthService) {
-    
+
 
     authsurvice.getProjectlist().subscribe(data => {
       console.log(data)
@@ -36,15 +36,13 @@ export class ListProjectComponent implements OnInit {
 
   deleteProject(id: number) {
 
-    this.authsurvice.deleteProject(id).subscribe(data => { 
+    this.authsurvice.deleteProject(id).subscribe(data => {
       console.log(data)
       window.location.reload();
     }, error => {
       new Error(error)
     }
     )
-   
-
   }
 
   navigateToCreateProject() {

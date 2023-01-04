@@ -101,6 +101,10 @@ public class IssueController {
         if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
-        issueService.assignToEpic(issueId, epicService.getEpic(epicId));
+        if(epicId != null)
+            issueService.assignToEpic(issueId, epicService.getEpic(epicId));
+
+        else
+            issueService.assignToEpic(issueId, null);
     }
 }

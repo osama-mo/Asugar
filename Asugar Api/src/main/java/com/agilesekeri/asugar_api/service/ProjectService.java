@@ -8,11 +8,17 @@ import com.agilesekeri.asugar_api.model.dto.SubtaskDTO;
 import com.agilesekeri.asugar_api.model.entity.*;
 import com.agilesekeri.asugar_api.model.enums.Role;
 import com.agilesekeri.asugar_api.model.enums.TaskConditionEnum;
+import com.agilesekeri.asugar_api.model.request.EpicCreateRequest;
+import com.agilesekeri.asugar_api.model.request.IssueCreateRequest;
 import com.agilesekeri.asugar_api.repository.ProjectRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -203,11 +209,11 @@ public class ProjectService {
             return null;
     }
 
-    public String getSprintState(Long projectId, Long issueId) {
-        AbstractIssue issue = issueService.getIssue(issueId);
-        if(getActiveSprint(projectId).equals(issue.getSprint()))
+    public String getSprintState(Long projectId, Long sprintId) {
+        SprintEntity sprint = sprintService.getSprint(sprintId);
+        if(getActiveSprint(projectId).equals(sprint))
             return "active";
-        else if(getNextSprint(projectId).equals(issue.getSprint()))
+        else if(getNextSprint(projectId).equals(sprint))
             return "next";
         else
             return null;
@@ -244,5 +250,54 @@ public class ProjectService {
         );
 
         return result;
+    }
+
+    public IssueEntity createIssue(Long projectId, String creatorUsername, IssueCreateRequest createRequest) {
+        AppUserEntity issuer = appUserService.loadUserByUsername(creatorUsername);
+        ProjectEntity project = getProject(projectId);
+        IssueEntity issue = issueService.createIssue(createRequest, issuer, project);
+
+        try {
+            if (createRequest.getSprint() != null)
+                sprintService.addIssue(
+                        getSprint(projectId, createRequest.getSprint()).getId(),
+                        issue.getId()
+                );
+
+            if (createRequest.getEpicId() != null)
+                epicService.addIssue(
+                        createRequest.getEpicId(),
+                        issue.getId()
+                );
+
+            if (createRequest.getAssignedTo() != null && !createRequest.getAssignedTo().isEmpty())
+                issueService.assignToMember(
+                        issue.getId(),
+                        appUserService.loadUserByUsername(createRequest.getAssignedTo())
+                );
+        } catch (Exception e) {
+            issueService.deleteIssue(issue.getId());
+            throw new IllegalArgumentException(e.getMessage());
+        }
+
+        projectRepository.flush();
+        return issue;
+    }
+
+    public EpicEntity createEpic(Long projectId, String creatorUsername, EpicCreateRequest createRequest) {
+        AppUserEntity issuer = appUserService.loadUserByUsername(creatorUsername);
+        ProjectEntity project = getProject(projectId);
+        EpicEntity epic = epicService.createEpic(createRequest, issuer, project);
+
+        try {
+            if (createRequest.getAssignedTo() != null && !createRequest.getAssignedTo().isEmpty())
+                epic.setAssignedTo(issuer);
+        } catch (Exception e) {
+            epicService.deleteEpic(epic);
+            throw new IllegalArgumentException(e.getMessage());
+        }
+
+        projectRepository.flush();
+        return epic;
     }
 }

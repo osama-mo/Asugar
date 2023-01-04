@@ -1,6 +1,7 @@
 package com.agilesekeri.asugar_api.controller;
 
 import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
+import com.agilesekeri.asugar_api.model.entity.EpicEntity;
 import com.agilesekeri.asugar_api.model.entity.IssueEntity;
 import com.agilesekeri.asugar_api.model.enums.Role;
 import com.agilesekeri.asugar_api.model.request.EpicCreateRequest;
@@ -148,30 +149,10 @@ public class ProjectController {
                             HttpServletRequest request)
             throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
-        if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
+        if (!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
-        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
-        ProjectEntity project = projectService.getProject(projectId);
-        IssueEntity issue = issueService.createIssue(createRequest, issuer, project);
-
-        if(createRequest.getSprint() != null)
-            sprintService.addIssue(
-                    projectService.getSprint(projectId, createRequest.getSprint()).getId(),
-                    issue.getId()
-            );
-
-        if(createRequest.getEpicId() != null)
-            epicService.addIssue(
-                    createRequest.getEpicId(),
-                    issue.getId()
-            );
-
-        if(createRequest.getAssignedTo() != null)
-            issueService.assignToMember(
-                    issue.getId(),
-                    appUserService.loadUserByUsername(createRequest.getAssignedTo())
-            );
+        projectService.createIssue(projectId, issuerUsername, createRequest);
     }
 
     @PostMapping(path = "/epics/create")
@@ -183,9 +164,7 @@ public class ProjectController {
         if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
-        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
-        ProjectEntity project = projectService.getProject(projectId);
-        epicService.createEpic(createRequest, issuer, project);
+        projectService.createEpic(projectId, issuerUsername, createRequest);
     }
 
     @GetMapping(path = "/epics")
