@@ -11,14 +11,14 @@ import { AuthService } from 'app/components/auth/shared/auth.service';
 export class MainIssuesComponent {
   issues = [ {
     id: 1,
-    title: "first issiue",
-    description: "first issuie asbkabkkdjasnldlkaslkdlaks",
+    title: "",
+    description: "",
     manHour: 0,
-    condition: "TODO",
-    issueType: "STORY",
-    creatorUsername: "m.erkmen2019@gtu.edu.tr",
-    assignedTo: "m.erkmen2019@gtu.edu.tr",
-    createdAt: "23.06.2023"
+    condition: "",
+    issueType: "",
+    creatorUsername: "",
+    assignedTo: "",
+    createdAt: ""
   }]
   projectId: string | null = "";
   projectName: String | null = "";

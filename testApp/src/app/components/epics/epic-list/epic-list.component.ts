@@ -10,15 +10,15 @@ import { AuthService } from 'app/components/auth/shared/auth.service';
 export class EpicListComponent {
   epics = [ {
     id: 0,
-    title: "first",
-    description: "first",
+    title: "",
+    description: "",
     manHour: 0,
-    issueType: "TODO",
-    creatorUsername: "m.erkmen2019@gmail.calsşl",
-    assignedTo: "m.erkmen2019@gmail.calsşl",
-    createdAt: "22.22.2222",
-    endedAt: "22.22.2222",
-    plannedTo: "22.22.2222"
+    issueType: "",
+    creatorUsername: "",
+    assignedTo: "",
+    createdAt: "",
+    endedAt: "",
+    plannedTo: ""
   }]
   projectId: string | null = "";
   projectName: String | null = "";
