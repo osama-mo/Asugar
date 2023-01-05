@@ -1,13 +1,13 @@
 <div>
     <div class="sidenav">
         <div class="sideProjectName" >{{projectName}}</div>
-        <button class="sidebutton" (click)="navigateToBacklog()">B A C K L O G</button>
-        <button class="ActiveSidebutton" (click)="navigateToIssues()">I S S U E S</button>
-        <button class="sidebutton" (click)="navigateToSprint()">S P R I N T </button>
-        <button class="sidebutton" (click)="navigateToEpics()">E P I C S </button>
-        <button class="sidebutton" (click)="navigateToMembers()">M E M B E R S</button>
+        <button class="sidebutton" (click)="navigateToBacklog()">BACKLOG</button>
+        <button class="ActiveSidebutton" (click)="navigateToIssues()">ISSUES</button>
+        <button class="sidebutton" (click)="navigateToSprint()">SPRINT </button>
+        <button class="sidebutton" (click)="navigateToEpics()">EPICS </button>
+        <button class="sidebutton" (click)="navigateToMembers()">MEMBERS</button>
         <div class="sideprojectsButton" (click)="navigateToProjects()"> PROJECTS </div>
-    </div>
+      </div>
 
     <div class="rectangle1">
 
@@ -26,7 +26,7 @@
             <input  type="text" [formControlName]="'epicId'" style="margin-top: 30vh;" class="rectangle5"  required>
         </form>
 
-        <input type="submit" value="SUMBIT" (click)="assign()">
+        <input type="submit" value="SUBMIT" (click)="assign()">
     </div>
 
 

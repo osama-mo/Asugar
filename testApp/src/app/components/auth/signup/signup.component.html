@@ -1,37 +1,37 @@
 
   <body>
     <div class="center">
-      <p style="font-size: 48px" >SIGN UP</p>
+      <p style="font-size: 32px" >SIGN UP</p>
 
 
       <form [formGroup]="signupForm" (ngsubmit)="signup() " class="login-form" >
 
         <!--    Name and surname   -->
         <div class="txt_field">
-          <h1 style="font-size:32px" > first Name</h1>
+          <h1 style="font-size:24px" > First Name</h1>
           <input type="text" [formControlName]="'firstName'" class="form-control" required >
         </div>
         <div class="txt_field">
-          <h1 style="font-size:32px" > last Name</h1>
+          <h1 style="font-size:24px" > Last Name</h1>
           <input type="text" [formControlName]="'lastName'" class="form-control" required >
         </div>
 
         <!--    Email   -->
         <div class="txt_field">
-          <h1 style="font-size:32px" >Email</h1>
+          <h1 style="font-size:24px" >Email</h1>
           <input  type="text" [formControlName]="'email'" class="form-control" required>
         </div>
         
 
         <!--    password   -->
         <div class = "txt_field">
-          <h1 style = "font-size:32px" >Password</h1>
+          <h1 style = "font-size:24px" >Password</h1>
           <input type="password"  [formControlName]="'password'" required>
         </div>
 
         <!--    password Confirm   -->
         <div class = "txt_field">
-          <h1 style = "font-size:32px" >Confirm Password</h1>
+          <h1 style = "font-size:24px" >Confirm Password</h1>
           <input type="password"  [formControlName]="'passwordConfirm'"   required>
         </div>
 

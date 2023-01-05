@@ -1,11 +1,11 @@
 <div>
     <div class="sidenav">
         <div class="sideProjectName" >{{projectName}}</div>
-        <button class="sidebutton" (click)="navigateToBacklog()">B A C K L O G</button>
-        <button class="sidebutton" (click)="navigateToIssues()">I S S U E S</button>
-        <button class="sidebutton" (click)="navigateToSprint()">S P R I N T </button>
-        <button class="ActiveSidebutton" (click)="navigateToEpics()">E P I C S </button>
-        <button class="sidebutton" (click)="navigateToMembers()">M E M B E R S</button>
+        <button class="sidebutton" (click)="navigateToBacklog()">BACKLOG</button>
+        <button class="sidebutton" (click)="navigateToIssues()">ISSUES</button>
+        <button class="sidebutton" (click)="navigateToSprint()">SPRINT </button>
+        <button class="ActiveSidebutton" (click)="navigateToEpics()">EPICS </button>
+        <button class="sidebutton" (click)="navigateToMembers()">MEMBERS</button>
         <div class="sideprojectsButton" (click)="navigateToProjects()"> PROJECTS </div>
     </div>
 
@@ -38,7 +38,7 @@
 
             <select  [formControlName]="'IssueType'"  style="margin-top: 36vh;" class="rectangle5">
                 <option value="STORY">Story</option>
-                <option value="TASK">task</option>
+                <option value="TASK">Task</option>
               </select>
             <input  type="text" [formControlName]="'manHour'" style="margin-top: 44vh;" class="rectangle5" required>
             <select  [formControlName]="'assignedTo'"  style="margin-top: 52vh;" class="rectangle5">
@@ -51,8 +51,9 @@
                 <option value="null">None</option>
             </select>
         </form>
-
-        <input type="submit" value="SUMBIT" (click)="createIssue()">
+        <div style="margin-left: 68vh;">
+            <input type="submit" value="SUBMIT" (click)="createIssue()">
+        </div>
         <div class="Erorr" [style.visibility]="gvisibility" >Error Accured, Try again</div>
     </div>
 

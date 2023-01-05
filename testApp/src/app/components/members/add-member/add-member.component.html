@@ -1,12 +1,11 @@
 <div>
     <div class="sidenav">
         <div class="sideProjectName" >{{projectName}}</div>
-        <button class="sidebutton" (click)="navigateToBacklog()">B A C K L O G</button>
-        <button class="sidebutton" (click)="navigateToIssues()">I S S U E S</button>
-
-        <button class="sidebutton" (click)="navigateToSprint()">S P R I N T </button>
-        <button class="sidebutton" (click)="navigateToEpics()">E P I C S </button>
-        <button class="ActiveSidebutton" (click)="navigateToMembers()">M E M B E R S</button>
+        <button class="sidebutton" (click)="navigateToBacklog()">BACKLOG</button>
+        <button class="sidebutton" (click)="navigateToIssues()">ISSUES</button>
+        <button class="sidebutton" (click)="navigateToSprint()">SPRINT </button>
+        <button class="sidebutton" (click)="navigateToEpics()">EPICS </button>
+        <button class="ActiveSidebutton" (click)="navigateToMembers()">MEMBERS</button>
         <div class="sideprojectsButton" (click)="navigateToProjects()"> PROJECTS </div>
     </div>
 
@@ -25,8 +24,9 @@
             <!-- <input  type="text" [formControlName]="'title'" style="margin-top: 20vh;" class="rectangle5" required> -->
             <input  type="text" [formControlName]="'email'" style="margin-top: 20vh;" class="rectangle5" required>
         </form>
-
-        <input type="submit" value="Add Member" (click)="addMember()">
+        <div style="margin-left: 57vh;">
+            <input type="submit" value="Add Member" (click)="addMember()">
+        </div>
         <div class="Erorr" [style.visibility]="gvisibility" >Error Accured, Try again</div>
     </div>
 

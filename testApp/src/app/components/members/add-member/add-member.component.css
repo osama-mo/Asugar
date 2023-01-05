@@ -34,7 +34,7 @@
   height: 5vh;
   text-align: center;
   margin-bottom: 3vh;
-  font-size: 30px;
+  font-size: 25px;
   color: white;
   font-family: 'share';
   margin-top: 40vh;
@@ -56,8 +56,8 @@
 
 .sidebutton {
     font-family: 'share';
-    width: 200px;
-    height: 52px;
+    width: 172px;
+    height: 40px;
     border-color: #22597D;
     border-radius: 36px;
     border-width: 5px;
@@ -66,17 +66,17 @@
     text-align: center;
     cursor: pointer;
     display: inline-block;
-    font-size: 25px;
+    font-size: 18px;
     margin-bottom: 20px;
     text-shadow: black;
     -webkit-text-stroke-width: 1px;
 }
 
 .ActiveSidebutton {
-    width: 200px;
+    width: 172px;
     color: white;
     font-family: 'share';
-    height: 52px;
+    height: 40px;
     border-color: #22597D;
     border-radius: 36px;
     border-width: 5px;
@@ -84,7 +84,7 @@
     text-align: center;
     cursor: pointer;
     display: inline-block;
-    font-size: 25px;
+    font-size: 18px;
     margin-bottom: 20px;
     -webkit-text-stroke-width: 1px;
 }
@@ -98,7 +98,7 @@
     transform: translateX(-50%);
     width: 60vw;
     border-radius: 20px;
-    height: 60vh;
+    height: 45vh;
     background-color: rgba(143, 206, 233 , .2);
     backdrop-filter: blur(20px);
     border: solid;
@@ -188,9 +188,9 @@
 
 
   input[type="submit"]{
-    width: 10vw;
+    width: 15vw;
     height: 58px;
-    margin-top: 50vh;
+    margin-top: 20vh;
     margin-left: 9vw;
     border: 1px solid;
     background-color: #269531;

@@ -1,41 +1,40 @@
 <div class="sidenav">
     <div class="sideProjectName" >{{projectName}}</div>
-    <button class="sidebutton" (click)="navigateToBacklog()">B A C K L O G</button>
-    <button class="ActiveSidebutton" (click)="navigateToIssues()">I S S U E S</button>
-    <button class="sidebutton" (click)="navigateToSprint()">S P R I N T </button>
-    <button class="sidebutton" (click)="navigateToEpics()">E P I C S </button>
-    <button class="sidebutton" (click)="navigateToMembers()">M E M B E R S</button>
+    <button class="sidebutton" (click)="navigateToBacklog()">BACKLOG</button>
+    <button class="ActiveSidebutton" (click)="navigateToIssues()">ISSUES</button>
+    <button class="sidebutton" (click)="navigateToSprint()">SPRINT </button>
+    <button class="sidebutton" (click)="navigateToEpics()">EPICS </button>
+    <button class="sidebutton" (click)="navigateToMembers()">MEMBERS</button>
     <div class="sideprojectsButton" (click)="navigateToProjects()"> PROJECTS </div>
-    
-</div>
+  </div>
 
 
 
 <div class="box-container1">
     <div class="header">
-        <div class="title" style="width: 3vw;margin-right: 1vw;">id</div>
-        <div class="title" style="width: 5vw;margin-right: 1vw;">Title</div>
-        <div class="title" style="width: 15vw;margin-right: 1vw;">Description</div>
-        <div class="title" style="width: 6vw;margin-right: 1vw;">Man Hour</div>
-        <div class="title" style="width: 6vw;margin-right: 1vw;">Condition</div>
-        <div class="title" style="width: 6vw;margin-right: 1vw;">issueType</div>
-        <div class="title" style="width: 10vw;margin-right: 1vw;">Creator</div>
-        <div class="title" style="width: 10vw;margin-right: 1vw;">Assigned to</div>
-        <div class="title" style="width: 10vw;margin-right: 1vw;">Created At</div>
+        <div class="title" style="width: 3vw;margin-right: 2vw;">Id</div>
+        <div class="title" style="width: 5vw;margin-right: 2vw;">Title</div>
+        <div class="title" style="width: 7vvw;margin-right: 2vw;">Description</div>
+        <div class="title" style="width: 6vw;margin-right: 2vw;">Man Hour</div>
+        <div class="title" style="width: 6vw;margin-right: 2vw;">Condition</div>
+        <div class="title" style="width: 10w;margin-right: 2vw;">issueType</div>
+        <div class="title" style="width: 10vw;margin-right: 2vw;">Creator</div>
+        <div class="title" style="width: 6vvw;margin-right: 2vw;">Assigned to</div>
+        <div class="title" style="width: 6vvw;margin-right: 2vw;">Created At</div>
     </div>
 
     <div class="rectangle1">
         <div class="issue-box" *ngFor="let item of issues">
 
-            <div class="item" style="width: 3vw;margin-right: 1vw;">{{item.id}}</div>
-            <div class="item" style="width: 5vw;margin-right: 1vw;">{{item.title}}</div>
-            <div class="item" style="width: 15vw;margin-right: 1vw;">{{item.description}}</div>
-            <div class="item" style="width: 6vw;margin-right: 1vw;">{{item.manHour}}</div>
-            <div class="item" style="width: 6vw;margin-right: 1vw;">{{item.condition}}</div>
-            <div class="item" style="width: 7vw;margin-right: 1vw;">{{item.issueType}}</div>
-            <div class="item" style="width: 10vw;margin-right: 1vw;">{{item.creatorUsername}}</div>
-            <div class="item" style="width: 10vw;margin-right: 1vw;">{{item.assignedTo}}</div>
-            <div class="item" style="width: 10vw">{{getShortDate(item.createdAt)}}</div>
+            <div class="item" style="width: 4vw;margin-right: 1vw;">{{item.id}}</div>
+            <div class="item" style="width: 6vw;margin-right: 1vw;">{{item.title}}</div>
+            <div class="item" style="width: 7vvw;margin-right: 1vw;">{{item.description}}</div>
+            <div class="item" style="width: 7vw;margin-right: 1vw;">{{item.manHour}}</div>
+            <div class="item" style="width: 7vw;margin-right: 1vw;">{{item.condition}}</div>
+            <div class="item" style="width: 11w;margin-right: 1vw;">{{item.issueType}}</div>
+            <div class="item" style="width: 11vw;margin-right: 1vw;">{{item.creatorUsername}}</div>
+            <div class="item" style="width: 7vvw;margin-right: 1vw;">{{item.assignedTo}}</div>
+            <div class="item" style="width: 7vvw">{{getShortDate(item.createdAt)}}</div>
 
         </div>
     </div>
