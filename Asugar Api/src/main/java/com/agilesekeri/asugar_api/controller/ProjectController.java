@@ -80,7 +80,6 @@ public class ProjectController {
         if(project.getAdmin() != issuer)
             throw new IllegalCallerException("The issuer is not qualified for the operation");
 
-//        AppUserEntity user = appUserService.loadUserByUsername(username);
         return projectService.removeMember(projectId, username);
     }
 

@@ -25,7 +25,7 @@ public class RegistrationController {
     public void register(@RequestBody RegistrationRequest request, HttpServletResponse response) {
         var result = registrationService.register(request);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setStatus(result.getSecond().value());
+        response.setStatus(result.getSecond());
         try {
             new ObjectMapper().writeValue(response.getOutputStream(), result.getFirst());
         } catch (Exception e) {

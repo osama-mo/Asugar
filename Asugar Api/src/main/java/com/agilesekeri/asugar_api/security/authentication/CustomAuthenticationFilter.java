@@ -34,10 +34,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         this.authenticationManager = authenticationManager;
 
         SecureRandom rand = new SecureRandom();
-//        rand.nextBytes(accessSecret);
-        for(int i = 0; i < 128; ++i)
-            accessSecret[i] = (byte) i;
-
+        rand.nextBytes(accessSecret);
         rand.nextBytes(refreshSecret);
     }
 
@@ -64,14 +61,14 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         Algorithm accessAlgorithm = Algorithm.HMAC256(accessSecret);
         String accessToken = JWT.create()
                 .withSubject(user.getUsername())
-//                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(accessAlgorithm);
 
         Algorithm refreshAlgorithm = Algorithm.HMAC256(refreshSecret);
         String refreshToken = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 6000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(refreshAlgorithm);
 
@@ -79,6 +76,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         tokens.put("accessToken", accessToken);
         tokens.put("refreshToken", refreshToken);
         response.setContentType(APPLICATION_JSON_VALUE);
+        response.setStatus(HttpServletResponse.SC_ACCEPTED);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }
 }

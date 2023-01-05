@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.naming.NameAlreadyBoundException;
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -24,46 +26,43 @@ public class RegistrationService {
     private final EmailSender emailSender;
 
 
-    public Pair<String, HttpStatus> register(RegistrationRequest request) {
-        boolean isValidEmail = emailValidator.
-                test(request.getEmail());
-        Pair<String, HttpStatus> message;
-
-        if (!isValidEmail) {
-            throw new IllegalStateException("email not valid");
-        }
-
-        AppUserEntity newUser = AppUserEntity.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .email(request.getEmail())
-                .password(request.getPassword()).build();
+    public Pair<String, Integer> register(RegistrationRequest request) {
+        Pair<String, Integer> message;
 
         try {
+            if (!emailValidator.test(request.getEmail()))
+                throw new IllegalStateException("email not valid");
+
+            AppUserEntity newUser = AppUserEntity.builder()
+                    .firstName(request.getFirstName())
+                    .lastName(request.getLastName())
+                    .email(request.getEmail())
+                    .password(request.getPassword()).build();
+
             appUserService.signUpUser(newUser);
-            message = Pair.of("A confirmation email is sent", HttpStatus.ACCEPTED);
-        } catch (IllegalStateException c) {
-            newUser = appUserService.loadUserByUsername(newUser.getEmail());
-            if(!newUser.getEnabled())
-                message = Pair.of("The given email is already registered but not confirmed, a new confirmation email is sent.", HttpStatus.ACCEPTED);
+            String token = UUID.randomUUID().toString();
+            RegistrationTokenEntity confirmationToken = new RegistrationTokenEntity(
+                    token,
+                    LocalDateTime.now(),
+                    LocalDateTime.now().plusMinutes(60),
+                    newUser
+            );
+
+            registrationTokenService.saveConfirmationToken(confirmationToken);
+
+            try {
+                sendVerificationEmail(token, request.getEmail(), request.getFirstName());
+                message = Pair.of("A confirmation email is sent", HttpServletResponse.SC_ACCEPTED);
+            } catch (Exception e) {
+                message = Pair.of("email server not available", HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+            }
+        } catch (NameAlreadyBoundException e) {
+            if(!appUserService.loadUserByUsername(request.getEmail()).getEnabled())
+                message = Pair.of("The given email is already registered but not confirmed, a new confirmation email is sent.", HttpServletResponse.SC_ACCEPTED);
             else
-                message = Pair.of("The given email is already registered.", HttpStatus.ALREADY_REPORTED);
-        }
-
-        String token = UUID.randomUUID().toString();
-        RegistrationTokenEntity confirmationToken = new RegistrationTokenEntity(
-                token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
-                newUser
-        );
-
-        registrationTokenService.saveConfirmationToken(confirmationToken);
-
-        try {
-            sendVerificationEmail(token, request.getEmail(), request.getFirstName());
-        } catch (Exception e) {
-            message = Pair.of("email server not available", HttpStatus.SERVICE_UNAVAILABLE);
+                message = Pair.of("The given email is already registered.", HttpServletResponse.SC_BAD_REQUEST);
+        } catch (IllegalStateException e) {
+            message = Pair.of(e.getMessage(), HttpServletResponse.SC_BAD_REQUEST);
         }
 
         return message;

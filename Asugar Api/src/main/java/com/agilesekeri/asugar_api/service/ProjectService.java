@@ -134,9 +134,10 @@ public class ProjectService {
     public boolean removeMember(Long projectId, String username) {
         AppUserEntity user = appUserService.loadUserByUsername(username);
         ProjectEntity project = getProject(projectId);
-//        boolean result = project.removeMember(user);
-//        projectRepository.save(project);
-//        return result;
+
+        if(project.getAdmin().equals(user))
+            throw new IllegalArgumentException("The admin cannot be removed");
+
         return project.removeMember(user);
     }
 

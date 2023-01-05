@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.naming.NameAlreadyBoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -48,9 +49,9 @@ public class AppUserService implements UserDetailsService {
                                 String.format(USER_NOT_FOUND_MSG, email)));
     }
 
-    public void signUpUser(AppUserEntity appUser) {
+    public void signUpUser(AppUserEntity appUser) throws NameAlreadyBoundException {
         if (userExists(appUser.getEmail()))
-            throw new IllegalStateException("email already taken");
+            throw new NameAlreadyBoundException("The given email is already registered");
 
         String encodedPassword = bCryptPasswordEncoder
                 .encode(appUser.getPassword());
