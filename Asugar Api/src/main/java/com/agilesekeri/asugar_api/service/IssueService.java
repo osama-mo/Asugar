@@ -69,7 +69,7 @@ public class IssueService {
     public AbstractIssue getIssue(Long issueId) {
         return issueRepository.findById(issueId)
                 .orElseThrow(() ->
-                        new IllegalStateException("No issue with id " + issueId + " was found to retrieve info"));
+                        new IllegalArgumentException("No issue with id " + issueId + " was found to retrieve info"));
     }
 
     public void deleteIssue(Long issueId) {
@@ -109,7 +109,7 @@ public class IssueService {
 
     public AbstractIssueDTO getIssueInfo(Long issueId) {
         AbstractIssue issue = getIssue(issueId);
-        AbstractIssueDTO dto = null;
+        AbstractIssueDTO dto;
 
         if(IssueEntity.class.equals(issue.getClass()))
             dto = IssueDTO.builder().subtasks(getSubTaskInfo(issue)).build();
@@ -118,7 +118,6 @@ public class IssueService {
         else
             throw new IllegalStateException("Unknown issue type");
 
-        assert dto != null;
         dto.setId(issue.getId());
         dto.setProjectId(issue.getProject().getId());
         dto.setIssueType(issue.getIssueType().name());
@@ -128,7 +127,6 @@ public class IssueService {
         dto.setCreatorUsername(issue.getCreator().getUsername());
         dto.setCreatedAt(issue.getCreatedAt().toString());
         dto.setTitle(issue.getTitle());
-
 
         if(issue.getAssigned() != null)
             dto.setAssignedTo(issue.getAssigned().getUsername());

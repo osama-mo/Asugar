@@ -122,16 +122,13 @@ public class ProjectService {
         projectRepository.deleteById(project.getId());
     }
 
-    public boolean addMember(Long projectId, String username) {
+    public Boolean addMember(Long projectId, String username) {
         AppUserEntity user = appUserService.loadUserByUsername(username);
         ProjectEntity project = getProject(projectId);
-//        boolean result = project.addMember(user);
-//        projectRepository.save(project);
-//        return result;
         return project.addMember(user);
     }
 
-    public boolean removeMember(Long projectId, String username) {
+    public Boolean removeMember(Long projectId, String username) {
         AppUserEntity user = appUserService.loadUserByUsername(username);
         ProjectEntity project = getProject(projectId);
 
@@ -151,10 +148,11 @@ public class ProjectService {
         SprintEntity active = getActiveSprint(projectId);
         SprintEntity next = getNextSprint(projectId);
 
-        for(AbstractIssue issue : active.getIncludedIssues()) {
-            if(issue.getCondition() != TaskConditionEnum.DONE)
-                issue.setSprint(null);
-        }
+        active.getIncludedIssues().forEach(
+                issue -> {
+                    if(issue.getCondition() != TaskConditionEnum.DONE)
+                        issue.setSprint(null);
+                });
 
         active.setEndedAt(LocalDateTime.now());
         next.setStartedAt(LocalDateTime.now());
@@ -212,14 +210,14 @@ public class ProjectService {
     }
 
     public SprintEntity getSprint(Long projectId, String condition) {
-        if(condition == null)
+        if(Objects.equals(condition, "null"))
             return null;
         else if(condition.equals("active"))
             return getActiveSprint(projectId);
         else if(condition.equals("next"))
             return getNextSprint(projectId);
         else
-            return null;
+            throw new IllegalArgumentException("Invalid sprint condition: " + condition);
     }
 
     public String getSprintState(Long projectId, Long sprintId) {

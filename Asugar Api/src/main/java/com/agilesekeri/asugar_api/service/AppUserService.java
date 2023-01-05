@@ -5,6 +5,7 @@ import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -87,9 +88,9 @@ public class AppUserService implements UserDetailsService {
 
     public void genRefreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String refresh_token = request.getHeader(AUTHORIZATION);
-        Map<String, String> responseMap = new HashMap<>();
         if(refresh_token != null) {
             try {
+                Map<String, String> responseMap = new HashMap<>();
                 Algorithm refreshAlgorithm = Algorithm.HMAC256(refreshSecret);
                 JWTVerifier verifier = JWT.require(refreshAlgorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
@@ -105,16 +106,19 @@ public class AppUserService implements UserDetailsService {
 
                 responseMap.put("accessToken", access_token);
                 responseMap.put("refreshToken", refresh_token);
-            }catch (Exception exception) {
-                response.setHeader("error", exception.getMessage());
-                response.setStatus(FORBIDDEN.value());
-                responseMap.put("error_message", exception.getMessage());
+
+                response.setStatus(HttpServletResponse.SC_ACCEPTED);
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                new ObjectMapper().writeValue(response.getOutputStream(), responseMap);
+            }catch (JWTVerificationException exception) {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                new ObjectMapper().writeValue(response.getOutputStream(), "Token is not valid");
             }
         } else {
-            throw new RuntimeException("Token is missing");
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), "Token is missing");
         }
-
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(), responseMap);
     }
 }

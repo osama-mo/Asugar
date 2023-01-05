@@ -18,8 +18,10 @@ public class RegistrationTokenService {
         registrationTokenRepository.save(token);
     }
 
-    public Optional<RegistrationTokenEntity> getToken(String token) {
-        return registrationTokenRepository.findByToken(token);
+    public RegistrationTokenEntity getToken(String token) {
+        return registrationTokenRepository.findByToken(token)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Token not found"));
     }
 
     public int setConfirmedAt(String token) {

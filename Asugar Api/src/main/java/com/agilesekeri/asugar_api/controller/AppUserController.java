@@ -30,7 +30,6 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 @AllArgsConstructor
 @RequestMapping(path = "user")
 public class AppUserController {
-
     private final AppUserService appUserService;
 
     private final ProjectService projectService;
@@ -50,7 +49,9 @@ public class AppUserController {
     }
 
     @GetMapping("/project/list")
-    public void getProjectList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void getProjectList(HttpServletRequest request,
+                               HttpServletResponse response)
+            throws IOException {
         List<Map<String, String>> result = new ArrayList<>();
         String username = appUserService.getJWTUsername(request);
 

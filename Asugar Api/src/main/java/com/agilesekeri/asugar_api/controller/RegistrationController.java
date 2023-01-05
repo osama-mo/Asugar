@@ -22,28 +22,30 @@ public class RegistrationController {
     private final RegistrationService registrationService;
 
     @PostMapping
-    public void register(@RequestBody RegistrationRequest request, HttpServletResponse response) {
+    public void register(@RequestBody RegistrationRequest request,
+                         HttpServletResponse response)
+            throws IOException {
         var result = registrationService.register(request);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(result.getSecond());
-        try {
-            new ObjectMapper().writeValue(response.getOutputStream(), result.getFirst());
-        } catch (Exception e) {
-            response.setStatus(HttpStatus.BAD_GATEWAY.value());
-            throw new RuntimeException(e);
-        }
+        new ObjectMapper().writeValue(response.getOutputStream(), result.getFirst());
     }
 
     @GetMapping(path = "confirm")
-    public void confirm(@RequestParam("token") String token, HttpServletResponse response) {
+    public void confirm(@RequestParam("token") String token,
+                        HttpServletResponse response)
+            throws IOException {
         var result = registrationService.confirmToken(token);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setStatus(result.getSecond().value());
-        try {
-            new ObjectMapper().writeValue(response.getOutputStream(), result.getFirst());
-        } catch (Exception e) {
-            response.setStatus(HttpStatus.BAD_GATEWAY.value());
-            throw new RuntimeException(e);
-        }
+        response.setStatus(result.getSecond());
+        response.setHeader("Location", "https://asugar-aa257.web.app");
+        new ObjectMapper().writeValue(response.getOutputStream(), result.getFirst());
     }
+
+//    @GetMapping(path = "redirect")
+//    public void redirect(HttpServletResponse response) throws IOException {
+//        response.setStatus(HttpServletResponse.SC_FOUND);
+//        response.setHeader("Location", "https://asugar-aa257.web.app");
+//        new ObjectMapper().writeValue(response.getOutputStream(), null);
+//    }
 }
