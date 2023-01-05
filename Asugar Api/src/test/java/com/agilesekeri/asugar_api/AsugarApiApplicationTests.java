@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -65,7 +66,7 @@ class AsugarApiApplicationTests {
         assertEquals("A confirmation email is sent" , registrationService.register(request).getFirst());
 
         RegistrationRequest request2 = new RegistrationRequest("Enes", "Onur", "@test.com", "pass");
-        assertThrows(IllegalStateException.class , () -> registrationService.register(request2));
+        assertEquals("email not valid" , registrationService.register(request2).getFirst());
 
         RegistrationRequest request3 = new RegistrationRequest("Enes", "Onur", "email@test.com", "pass");
         assertEquals("The given email is already registered but not confirmed, a new confirmation email is sent." , registrationService.register(request3).getFirst());

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,38 +35,56 @@ public class EpicController {
     @DeleteMapping(path = "/delete")
     public void deleteEpic(@PathVariable Long projectId,
                            @PathVariable Long epicId,
-                           HttpServletRequest request)
+                           HttpServletRequest request,
+                           HttpServletResponse response)
             throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
-        if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
-            throw new IllegalCallerException("The issuer is not qualified for the operation");
-
-        epicService.deleteEpic(epicService.getEpic(epicId));
+        if(projectService.checkAccess(projectId, issuerUsername, Role.MEMBER)) {
+            epicService.deleteEpic(epicService.getEpic(epicId));
+            response.setStatus(HttpServletResponse.SC_ACCEPTED);
+        }
+        else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), "The issuer is not a member of the project team");
+        }
     }
 
     @PutMapping(path = "/planned")
     public void SetPlannedTo(@PathVariable Long projectId,
                              @PathVariable Long epicId,
                              @RequestParam LocalDate date,
-                             HttpServletRequest request)
+                             HttpServletRequest request,
+                             HttpServletResponse response)
             throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
-        if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
-            throw new IllegalCallerException("The issuer is not qualified for the operation");
-
-        epicService.setPlannedTo(epicId, date);
+        if(projectService.checkAccess(projectId, issuerUsername, Role.MEMBER)) {
+            epicService.setPlannedTo(epicId, date);
+            response.setStatus(HttpServletResponse.SC_ACCEPTED);
+        }
+        else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), "The issuer is not a member of the project team");
+        }
     }
 
     @PutMapping(path = "/finish")
     public void finishEpic(@PathVariable Long projectId,
                            @PathVariable Long epicId,
-                           HttpServletRequest request)
+                           HttpServletRequest request,
+                           HttpServletResponse response)
             throws IOException {
         String issuerUsername = appUserService.getJWTUsername(request);
-        if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
-            throw new IllegalCallerException("The issuer is not qualified for the operation");
-
-        epicService.finishEpic(epicId);
+        if(projectService.checkAccess(projectId, issuerUsername, Role.MEMBER)) {
+            epicService.finishEpic(epicId);
+            response.setStatus(HttpServletResponse.SC_ACCEPTED);
+        }
+        else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), "The issuer is not a member of the project team");
+        }
     }
 
     @GetMapping(path = "/issues")
@@ -87,7 +106,7 @@ public class EpicController {
             response.setContentType(APPLICATION_JSON_VALUE);
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             new ObjectMapper().writeValue(
-                    response.getOutputStream(), "The request came from user not a member of the project");
+                    response.getOutputStream(), "The issuer is not a member of the project team");
         }
     }
 }

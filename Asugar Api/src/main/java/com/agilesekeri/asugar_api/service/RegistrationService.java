@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.management.ServiceNotFoundException;
 import javax.naming.NameAlreadyBoundException;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
@@ -50,12 +51,8 @@ public class RegistrationService {
 
             registrationTokenService.saveConfirmationToken(confirmationToken);
 
-            try {
-                sendVerificationEmail(token, request.getEmail(), request.getFirstName());
-                message = Pair.of("A confirmation email is sent", HttpServletResponse.SC_ACCEPTED);
-            } catch (Exception e) {
-                message = Pair.of("email server not available", HttpServletResponse.SC_SERVICE_UNAVAILABLE);
-            }
+            sendVerificationEmail(token, request.getEmail(), request.getFirstName());
+            message = Pair.of("A confirmation email is sent", HttpServletResponse.SC_ACCEPTED);
         } catch (NameAlreadyBoundException e) {
             if(!appUserService.loadUserByUsername(request.getEmail()).getEnabled())
                 message = Pair.of("The given email is already registered but not confirmed, a new confirmation email is sent.", HttpServletResponse.SC_ACCEPTED);
@@ -63,62 +60,72 @@ public class RegistrationService {
                 message = Pair.of("The given email is already registered.", HttpServletResponse.SC_BAD_REQUEST);
         } catch (IllegalStateException e) {
             message = Pair.of(e.getMessage(), HttpServletResponse.SC_BAD_REQUEST);
+        } catch (ServiceNotFoundException e) {
+            message = Pair.of(e.getMessage(), HttpServletResponse.SC_SERVICE_UNAVAILABLE);
         }
 
         return message;
     }
 
     public void sendVerificationEmail(String token, String email, String firstName)
-        throws IllegalStateException{
+        throws ServiceNotFoundException{
         try {
-            String link = "https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/registration/confirm?token=";
+            String link = "https://asugarappservice-asugarapi.azuremicroservices.io/registration/confirm?token=";
             emailSender.send(
                     email,
                     buildEmail(firstName, link + token));
         } catch (Exception e) {
-            throw new IllegalStateException("email server not available");
+            throw new ServiceNotFoundException("email server not available");
         }
     }
 
     @Transactional
-    public Pair<String, HttpStatus> confirmToken(String token) {
-        RegistrationTokenEntity registrationToken = registrationTokenService
-                .getToken(token).orElse(null);
+    public Pair<String, Integer> confirmToken(String token) {
+        Pair<String, Integer> message;
+        try {
+            RegistrationTokenEntity registrationToken =
+                    registrationTokenService.getToken(token);
 
-        if(registrationToken == null)
-            return Pair.of("Token not found", HttpStatus.NOT_FOUND);
+            if(registrationToken == null)
+                message = Pair.of("Token not found", HttpServletResponse.SC_BAD_REQUEST);
 
-        if (registrationToken.getConfirmedAt() != null) {
-            return Pair.of("email already confirmed", HttpStatus.ALREADY_REPORTED);
+            else if (registrationToken.getConfirmedAt() != null)
+                message = Pair.of("email already confirmed", HttpServletResponse.SC_BAD_REQUEST);
+
+            else if (registrationToken.getExpiresAt().isBefore(LocalDateTime.now())) {
+                String newToken = UUID.randomUUID().toString();
+                RegistrationTokenEntity newRegistrationToken = new RegistrationTokenEntity(
+                        newToken,
+                        LocalDateTime.now(),
+                        LocalDateTime.now().plusMinutes(15),
+                        registrationToken.getAppUser()
+                );
+
+                registrationTokenService.saveConfirmationToken(newRegistrationToken);
+
+                sendVerificationEmail (
+                        newToken,
+                        registrationToken.getAppUser().getEmail(),
+                        registrationToken.getAppUser().getFirstName()
+                );
+
+                message = Pair.of("token expired, a new one is sent.", HttpServletResponse.SC_FOUND);
+            }
+
+            else {
+                registrationTokenService.setConfirmedAt(token);
+                appUserService.enableAppUser(
+                        registrationToken.getAppUser().getEmail());
+
+                message = Pair.of("confirmed", HttpServletResponse.SC_FOUND);
+            }
+        } catch (IllegalArgumentException e) {
+            message = Pair.of(e.getMessage(), HttpServletResponse.SC_BAD_REQUEST);
+        } catch (ServiceNotFoundException e) {
+            message = Pair.of(e.getMessage(), HttpServletResponse.SC_SERVICE_UNAVAILABLE);
         }
 
-        LocalDateTime expiredAt = registrationToken.getExpiresAt();
-
-        if (expiredAt.isBefore(LocalDateTime.now())) {
-            String newToken = UUID.randomUUID().toString();
-            RegistrationTokenEntity newRegistrationToken = new RegistrationTokenEntity(
-                    newToken,
-                    LocalDateTime.now(),
-                    LocalDateTime.now().plusMinutes(15),
-                    registrationToken.getAppUser()
-            );
-
-            registrationTokenService.saveConfirmationToken(newRegistrationToken);
-
-            sendVerificationEmail (
-                    newToken,
-                    registrationToken.getAppUser().getEmail(),
-                    registrationToken.getAppUser().getFirstName()
-            );
-
-            return Pair.of("token expired, a new one is sent.", HttpStatus.ACCEPTED);
-        }
-
-        registrationTokenService.setConfirmedAt(token);
-        appUserService.enableAppUser(
-                registrationToken.getAppUser().getEmail());
-
-        return Pair.of("confirmed", HttpStatus.ACCEPTED);
+        return message;
     }
 
     private String buildEmail(String name, String link) {
