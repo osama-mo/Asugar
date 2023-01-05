@@ -13,30 +13,28 @@
 <input *ngIf=" finished == false  " class="finishEpic" value="Finish" (click)="finishEpic()">
 <div class="box-container1">
     <div class="header">
-        <div class="title" style="width: 3vw;margin-right: 1vw;">id</div>
+        <div class="title" style="width: 3vw;margin-right: 1vw;">Id</div>
         <div class="title" style="width: 5vw;margin-right: 1vw;">Title</div>
-        <div class="title" style="width: 15vw;margin-right: 1vw;">Description</div>
-        <div class="title" style="width: 6vw;margin-right: 1vw;">Man Hour</div>
-        <div class="title" style="width: 6vw;margin-right: 1vw;">Condition</div>
-        <div class="title" style="width: 6vw;margin-right: 1vw;">issueType</div>
-        <div class="title" style="width: 10vw;margin-right: 1vw;">Creator</div>
-        <div class="title" style="width: 10vw;margin-right: 1vw;">Assigned to</div>
-        <div class="title" style="width: 10vw;margin-right: 1vw;">Created At</div>
+        <div class="title" style="width: 7vw;margin-right: 1vw;">Description</div>
+        <div class="title" style="width: 6vw;margin-right: 2vw;">Man Hour</div>
+        <div class="title" style="width: 6vw;margin-right: 4vw;">Condition</div>
+        <div class="title" style="width: 8vw;margin-right: 3vw;">Issue Type</div>
+        <div class="title" style="width: 8vw;margin-right: 3vw;">Creator</div>
+        <div class="title" style="width: 6vw;margin-right: 3vw;">Assigned to</div>
+        <div class="title" style="width: 6vw;margin-right: 3vw;">Created At</div>
     </div>
 
     <div class="rectangle1">
-        <div class="issue-box" *ngFor="let item of issues">
-
+        <div class="issue-box" *ngFor="let item of issues" >
             <div class="item" style="width: 3vw;margin-right: 1vw;">{{item.id}}</div>
             <div class="item" style="width: 5vw;margin-right: 1vw;">{{item.title}}</div>
-            <div class="item" style="width: 15vw;margin-right: 1vw;">{{item.description}}</div>
-            <div class="item" style="width: 6vw;margin-right: 1vw;">{{item.manHour}}</div>
-            <div class="item" style="width: 6vw;margin-right: 1vw;">{{item.condition}}</div>
-            <div class="item" style="width: 7vw;margin-right: 1vw;">{{item.issueType}}</div>
-            <div class="item" style="width: 10vw;margin-right: 1vw;">{{item.creatorUsername}}</div>
-            <div class="item" style="width: 10vw;margin-right: 1vw;">{{item.assignedTo}}</div>
-            <div class="item" style="width: 10vw">{{getShortDate(item.createdAt)}}</div>
-
+            <div class="item" style="width: 7vw;margin-right: 1vw;">{{item.description}}</div>
+            <div class="item" style="width: 7vw;margin-right: 1vw;">{{item.manHour}}</div>
+            <div class="item" style="width: 7vw;margin-right: 2vw;">{{item.condition}}</div>
+            <div class="item" style="width: 11vw;margin-right: 0vw;">{{item.issueType}}</div>
+            <div class="item" style="width: 11vw;margin-right: 1vw;">{{item.creatorUsername}}</div>
+            <div class="item" style="width: 7vw;margin-right: 3vw;">{{item.assignedTo}}</div>
+            <div class="item" style="width: 7vw">{{getShortDate(item.createdAt)}}</div>
         </div>
     </div>
     <input type="submit" value="Delete Issue" style="margin-right: 25vw;" (click)="navigateToRemoveIssue()">

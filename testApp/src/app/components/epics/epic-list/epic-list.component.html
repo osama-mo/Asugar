@@ -13,27 +13,27 @@
 
 <div class="box-container1">
     <div class="header">
-        <div class="title" style="width: 3vw;margin-right: 2vw;">Id</div>
-        <div class="title" style="width: 5vw;margin-right: 2vw;">Title</div>
-        <div class="title" style="width: 7vw;margin-right: 2vw;">Description</div>
-        <div class="title" style="width: 6vw;margin-right: 2vw;">Man Hour</div>
-        <div class="title" style="width: 6vw;margin-right: 2vw;">Creator</div>
-        <div class="title" style="width: 10vw;margin-right: 2vw;">Assigned to</div>
-        <div class="title" style="width: 10vw;margin-right: 2vw;">Created At</div>
-        <div class="title" style="width: 6vw;margin-right: 2vw;">Due</div>
-        <div class="title" style="width: 6vw;margin-right: 2vw;">Ended at</div>
+        <div class="title" style="width: 3vw;margin-right: 1vw;">Id</div>
+        <div class="title" style="width: 5vw;margin-right: 1vw;">Title</div>
+        <div class="title" style="width: 7vw;margin-right: 1vw;">Description</div>
+        <div class="title" style="width: 6vw;margin-right: 4vw;">Man Hour</div>
+        <div class="title" style="width: 6vw;margin-right: 6vw;">Creator</div>
+        <div class="title" style="width: 8vw;margin-right: 3vw;">Assigned to</div>
+        <div class="title" style="width: 8vw;margin-right: 3vw;">Created At</div>
+        <div class="title" style="width: 6vw;margin-right: 3vw;">Due</div>
+        <div class="title" style="width: 6vw;margin-right: 3vw;">Ended at</div>
     </div>
 
     <div class="rectangle1">
         <div class="issue-box" *ngFor="let item of epics" (click) = "navigateToSubIssues(item.id,item.title,item.endedAt)" >
-            <div class="item" style="width: 4vw;margin-right: 1vw;">{{item.id}}</div>
-            <div class="item" style="width: 6vw;margin-right: 1vw;">{{item.title}}</div>
+            <div class="item" style="width: 3vw;margin-right: 1vw;">{{item.id}}</div>
+            <div class="item" style="width: 5vw;margin-right: 1vw;">{{item.title}}</div>
             <div class="item" style="width: 7vw;margin-right: 1vw;">{{item.description}}</div>
-            <div class="item" style="width: 7vw;margin-right: 1vw;">{{item.manHour}}</div>
-            <div class="item" style="width: 7vw;margin-right: 1vw;">{{item.creatorUsername}}</div>
-            <div class="item" style="width: 11vw;margin-right: 2vw;">{{item.assignedTo}}</div>
-            <div class="item" style="width: 11vw">{{getShortDate(item.createdAt)}}</div>
-            <div class="item" style="width: 7vw;margin-right: 1vw;">{{getShortDate(item.plannedTo)}}</div>
+            <div class="item" style="width: 7vw;margin-right: 2vw;">{{item.manHour}}</div>
+            <div class="item" style="width: 7vw;margin-right: 6vw;">{{item.creatorUsername}}</div>
+            <div class="item" style="width: 11vw;margin-right: 0vw;">{{item.assignedTo}}</div>
+            <div class="item" style="width: 11vw;margin-right: 1vw;">{{getShortDate(item.createdAt)}}</div>
+            <div class="item" style="width: 7vw;margin-right: 2vw;">{{getShortDate(item.plannedTo)}}</div>
             <div class="item" style="width: 7vw">{{getShortDate(item.endedAt)}}</div>
         </div>
     </div>

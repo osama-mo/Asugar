@@ -10,15 +10,15 @@ import { AuthService } from 'app/components/auth/shared/auth.service';
 })
 export class MainIssuesComponent {
   issues = [ {
-    id: 0,
-    title: "",
-    description: "",
+    id: 1,
+    title: "first issiue",
+    description: "first issuie asbkabkkdjasnldlkaslkdlaks",
     manHour: 0,
-    condition: "",
-    issueType: "",
-    creatorUsername: "",
-    assignedTo: "",
-    createdAt: ""
+    condition: "TODO",
+    issueType: "STORY",
+    creatorUsername: "m.erkmen2019@gtu.edu.tr",
+    assignedTo: "m.erkmen2019@gtu.edu.tr",
+    createdAt: "23.06.2023"
   }]
   projectId: string | null = "";
   projectName: String | null = "";
