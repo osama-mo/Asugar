@@ -1,6 +1,7 @@
 package com.agilesekeri.asugar_api.controller;
 
 import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
+import com.agilesekeri.asugar_api.model.enums.Role;
 import com.agilesekeri.asugar_api.service.AppUserService;
 import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
 import com.agilesekeri.asugar_api.service.ProjectService;
@@ -40,11 +41,21 @@ public class AppUserController {
     }
 
     @PostMapping("/project/create")
-    public void createProject(@RequestParam String name, HttpServletRequest request) throws IOException {
-        String username = appUserService.getJWTUsername(request);
-        if(username != null) {
-            AppUserEntity admin = appUserService.loadUserByUsername(username);
-            projectService.createProject(name, admin);
+    public void createProject(@RequestParam String name,
+                              HttpServletRequest request,
+                              HttpServletResponse response)
+            throws IOException {
+        try {
+            String issuerUsername = appUserService.getJWTUsername(request);
+            projectService.createProject(name, issuerUsername);
+
+            response.setStatus(HttpServletResponse.SC_ACCEPTED);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+        } catch (IllegalArgumentException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), e.getMessage());
         }
     }
 
@@ -68,15 +79,26 @@ public class AppUserController {
 
     @DeleteMapping("/project/{projectId}")
     public void deleteProject(@PathVariable("projectId") Long projectId,
-                              HttpServletRequest request)
+                              HttpServletRequest request,
+                              HttpServletResponse response)
             throws IOException {
-        String issuerUsername = appUserService.getJWTUsername(request);
-        AppUserEntity issuer = appUserService.loadUserByUsername(issuerUsername);
-        ProjectEntity project = projectService.getProject(projectId);
+        try {
+            String issuerUsername = appUserService.getJWTUsername(request);
+            if(!projectService.checkAccess(projectId, issuerUsername, Role.ADMIN))
+                throw new IllegalCallerException("The issuer is not the admin of the project");
 
-        if(project.getAdmin() != issuer)
-            throw new IllegalCallerException("The issuer is not qualified for the operation");
+            response.setStatus(HttpServletResponse.SC_ACCEPTED);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            projectService.deleteProject(projectId);
 
-        projectService.deleteProject(project.getId());
+        } catch (IllegalCallerException e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), e.getMessage());
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), e.getMessage());
+        }
     }
 }

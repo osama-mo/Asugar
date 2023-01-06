@@ -116,13 +116,11 @@ class AsugarApiApplicationTests {
         registrationService.register(request2);
         appUserService.enableAppUser("project@create.test");
         appUserService.enableAppUser("project2@create.test");
-        ProjectEntity project = projectService.createProject("project test", appUserService.loadUserByUsername("project@create.test"));
+        ProjectEntity project = projectService.createProject("project test", "project@create.test");
         projectService.addMember(project.getId(), "project2@create.test");
 
         assertThrows(IllegalArgumentException.class,
-                () -> projectService.createProject(
-                        "project test",
-                        appUserService.loadUserByUsername("project@create.test")));
+                () -> projectService.createProject("project test", "project@create.test"));
 
         assertFalse(projectService.getUserProjects(appUserService.loadUserByUsername("project@create.test").getId()).isEmpty());
         assertFalse(projectService.getUserProjects(appUserService.loadUserByUsername("project2@create.test").getId()).isEmpty());
@@ -138,7 +136,7 @@ class AsugarApiApplicationTests {
         registrationService.register(request2);
         appUserService.enableAppUser("project@list.test");
         appUserService.enableAppUser("project2@list.test");
-        ProjectEntity project = projectService.createProject("project test", appUserService.loadUserByUsername("project@list.test"));
+        ProjectEntity project = projectService.createProject("project test", "project@list.test");
         projectService.addMember(project.getId(), "project2@list.test");
 
         assertFalse(projectService.getUserProjects(appUserService.loadUserByUsername("project@list.test").getId()).isEmpty());
@@ -155,7 +153,7 @@ class AsugarApiApplicationTests {
         registrationService.register(request2);
         appUserService.enableAppUser("project@remove.test");
         appUserService.enableAppUser("project2@remove.test");
-        ProjectEntity project = projectService.createProject("project test", appUserService.loadUserByUsername("project@remove.test"));
+        ProjectEntity project = projectService.createProject("project test", "project@remove.test");
         projectService.addMember(project.getId(), "project2@remove.test");
 
         projectService.deleteProject(project.getId());
@@ -172,7 +170,7 @@ class AsugarApiApplicationTests {
         registrationService.register(request2);
         appUserService.enableAppUser("member@add.test");
         appUserService.enableAppUser("member2@add.test");
-        ProjectEntity project = projectService.createProject("project test", appUserService.loadUserByUsername("member@add.test"));
+        ProjectEntity project = projectService.createProject("project test", "member@add.test");
 
         assertTrue(projectService.addMember(project.getId(), "member2@add.test"));
         assertTrue(projectService.getUserProjects(
@@ -191,7 +189,7 @@ class AsugarApiApplicationTests {
         registrationService.register(request2);
         appUserService.enableAppUser("member@remove.test");
         appUserService.enableAppUser("member2@remove.test");
-        ProjectEntity project = projectService.createProject("project test", appUserService.loadUserByUsername("member@remove.test"));
+        ProjectEntity project = projectService.createProject("project test", "member@remove.test");
         projectService.addMember(project.getId(), "member2@remove.test");
 
         assertTrue(projectService.removeMember(project.getId(), "member2@remove.test"));
@@ -207,7 +205,7 @@ class AsugarApiApplicationTests {
         RegistrationRequest request = new RegistrationRequest("sprint", "finish", "sprint@finish.test", "pass");
         registrationService.register(request);
         appUserService.enableAppUser("sprint@finish.test");
-        ProjectEntity project = projectService.createProject("sprint finish test", appUserService.loadUserByUsername("sprint@finish.test"));
+        ProjectEntity project = projectService.createProject("sprint finish test", "sprint@finish.test");
         SprintEntity active = projectService.getActiveSprint(project.getId());
         SprintEntity next = projectService.getNextSprint(project.getId());
 
@@ -221,7 +219,7 @@ class AsugarApiApplicationTests {
         RegistrationRequest request = new RegistrationRequest("issue", "create", "issue@create.test", "pass");
         registrationService.register(request);
         appUserService.enableAppUser("issue@create.test");
-        ProjectEntity project = projectService.createProject("issue create test", appUserService.loadUserByUsername("issue@create.test"));
+        ProjectEntity project = projectService.createProject("issue create test", "issue@create.test");
 
         IssueCreateRequest issueCreateRequest = IssueCreateRequest.builder()
                 .issueType(IssueTypeEnum.STORY)

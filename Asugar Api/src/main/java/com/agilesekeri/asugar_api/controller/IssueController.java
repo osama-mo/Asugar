@@ -43,7 +43,7 @@ public class IssueController {
             throws IOException {
         try {
             String issuerUsername = appUserService.getJWTUsername(request);
-            if(projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
+            if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
                 throw new IllegalCallerException("The issuer is not a member of the project team");
 
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
@@ -69,7 +69,7 @@ public class IssueController {
             throws IOException {
         try {
             String issuerUsername = appUserService.getJWTUsername(request);
-            if(projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
+            if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
                 throw new IllegalCallerException("The issuer is not a member of the project team");
 
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
@@ -95,7 +95,7 @@ public class IssueController {
             throws IOException {
         try {
             String issuerUsername = appUserService.getJWTUsername(request);
-            if(projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
+            if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
                 throw new IllegalCallerException("The issuer is not a member of the project team");
 
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
@@ -122,7 +122,7 @@ public class IssueController {
             throws IOException {
         try {
             String issuerUsername = appUserService.getJWTUsername(request);
-            if(projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
+            if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
                 throw new IllegalCallerException("The issuer is not a member of the project team");
 
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
@@ -149,7 +149,7 @@ public class IssueController {
             throws IOException {
         try {
             String issuerUsername = appUserService.getJWTUsername(request);
-            if(projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
+            if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
                 throw new IllegalCallerException("The issuer is not a member of the project team");
 
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
@@ -176,7 +176,7 @@ public class IssueController {
             throws IOException {
         try {
             String issuerUsername = appUserService.getJWTUsername(request);
-            if(projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
+            if(!projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
                 throw new IllegalCallerException("The issuer is not a member of the project team");
 
             response.setStatus(HttpServletResponse.SC_ACCEPTED);

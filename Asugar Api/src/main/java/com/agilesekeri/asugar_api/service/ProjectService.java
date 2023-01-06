@@ -56,13 +56,14 @@ public class ProjectService {
         }
     }
 
-    public ProjectEntity createProject(String projectName, AppUserEntity admin) {
-        getUserProjects(admin.getId()).forEach((projectEntity) -> {
+    public ProjectEntity createProject(String projectName, String username) {
+        AppUserEntity user = appUserService.loadUserByUsername(username);
+        getUserProjects(user.getId()).forEach((projectEntity) -> {
             if(projectEntity.getName().equals(projectName))
                 throw new IllegalArgumentException("The same user can not create two projects with the same name");
         });
 
-        ProjectEntity project = new ProjectEntity(projectName, admin);
+        ProjectEntity project = new ProjectEntity(projectName, user);
         projectRepository.save(project);
         sprintService.createSprint(project).setStartedAt(LocalDateTime.now());
         sprintService.createSprint(project);

@@ -55,7 +55,7 @@ public class ProjectController {
             throws IOException {
         try {
             String issuerUsername = appUserService.getJWTUsername(request);
-            if(projectService.checkAccess(projectId, issuerUsername, Role.ADMIN))
+            if(!projectService.checkAccess(projectId, issuerUsername, Role.ADMIN))
                 throw new IllegalCallerException("The issuer is not the admin of the project");
 
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
@@ -85,7 +85,7 @@ public class ProjectController {
             throws IOException {
         try {
             String issuerUsername = appUserService.getJWTUsername(request);
-            if(projectService.checkAccess(projectId, issuerUsername, Role.ADMIN))
+            if(!projectService.checkAccess(projectId, issuerUsername, Role.ADMIN))
                 throw new IllegalCallerException("The issuer is not the admin of the project");
 
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
