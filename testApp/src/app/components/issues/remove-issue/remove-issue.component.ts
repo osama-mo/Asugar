@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common'
 import { AuthService } from 'app/components/auth/shared/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-remove-issue',
@@ -25,7 +26,7 @@ export class RemoveIssueComponent {
   projectName: string | null;
 
   
-  constructor(private route: ActivatedRoute, private router: Router, private authService : AuthService ,private location: Location) {
+  constructor(private route: ActivatedRoute, private router: Router, private authService : AuthService ,private location: Location,private toastr: ToastrService) {
     this.projectId = this.route.snapshot.queryParamMap.get('projectId');
     this.projectName = this.route.snapshot.queryParamMap.get('projectName');
    }
@@ -43,9 +44,11 @@ export class RemoveIssueComponent {
     .subscribe(
       data => {
       this.location.back();
+      
     }, error => {
       console.log(error);
       this.gvisibility = 'visible'
+      this.toastr.error(error.error, "Error");
     });
     
    }

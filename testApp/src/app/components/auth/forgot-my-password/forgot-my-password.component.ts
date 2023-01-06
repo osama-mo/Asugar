@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
 import { AuthService } from '../shared/auth.service';
 import { ForgotMyPasswordRequestPayload } from './forgot-my-password-request-payload';
@@ -22,7 +23,7 @@ export class ForgotMyPasswordComponent implements OnInit {
 
   })
 
-  constructor(private authService: AuthService, private router: Router,) {
+  constructor(private authService: AuthService, private router: Router,private toastr: ToastrService) {
     this.fgmRequestPayload = {
       email: '',
     };
@@ -36,17 +37,14 @@ export class ForgotMyPasswordComponent implements OnInit {
 
     this.efvisibility = 'hidden'
 
-    if (this.fgmForm.get('email')!.value?.length == 0) {
-      console.error("empty field!");
-      this.efvisibility = 'visible'
-    }
-    else {
+   
       this.fgmRequestPayload.email = this.fgmForm.get('email')!.value;
       this.authService.forgetMyPassword(this.fgmRequestPayload).subscribe(data => {
       }, error => {
 
         this.isError = true;
         throwError(error);
+        this.toastr.error("Some thing went wrong","Erorr")
       });
 
       if (this.isError != true) {
@@ -54,5 +52,5 @@ export class ForgotMyPasswordComponent implements OnInit {
       }
     }
 
-  }
+  
 }

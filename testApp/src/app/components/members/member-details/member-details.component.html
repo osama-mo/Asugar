@@ -32,7 +32,7 @@
     <div style="margin-top: 35vh;" class="rectangle5">
         {{memberdetails.Email}}
     </div>
-    <div style="margin-left: 60vh;">
+    <div *ngIf="memberdetails.title != 'ADMIN'" style="margin-left: 60vh;">
         <input type="submit" value="Remove Member" (click)="removemember()">
     </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
 import { AuthService } from '../shared/auth.service';
 import { ForgotMyPasswordConfirmationRequestPayload } from './forgot-my-password-confirmation-request.payload';
@@ -25,7 +26,7 @@ export class ForgotMyPasswordConfirmationComponent implements OnInit {
 
   })
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router,private toastr: ToastrService) {
     this.fgmcRequestPayload = {
       token: '',
       password: '',
@@ -62,6 +63,8 @@ export class ForgotMyPasswordConfirmationComponent implements OnInit {
 
       this.isError = true;
       throwError(error);
+      console.log(error);
+      this.toastr.error("Some thing went wrong","Erorr")
     });
     if (this.isError != true) {
       this.router.navigate(['']);

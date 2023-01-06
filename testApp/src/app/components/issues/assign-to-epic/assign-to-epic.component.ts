@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {Location} from '@angular/common'
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/components/auth/shared/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-assign-to-epic',
@@ -10,8 +11,6 @@ import { AuthService } from 'app/components/auth/shared/auth.service';
   styleUrls: ['./assign-to-epic.component.css']
 })
 export class AssignToEpicComponent {
-  efvisibility = 'hidden'
-  gvisibility = 'hidden'
 
 
 
@@ -25,7 +24,7 @@ export class AssignToEpicComponent {
   projectName: string | null;
 
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService,private location: Location) {
+  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService,private location: Location, private toastr: ToastrService) {
     this.epicId = "";
     this.issueId = "";
     this.projectId = this.route.snapshot.queryParamMap.get('projectId');
@@ -38,8 +37,6 @@ export class AssignToEpicComponent {
 
 
   assign() {
-    this.efvisibility = 'hidden'
-    this.gvisibility = 'hidden'
     this.epicId = this.assignToEpicForm.get('epicId')!.value;
     this.issueId = this.assignToEpicForm.get('issueId')!.value;
     this.authService.assignIssueToEpic(Number(this.projectId!),Number(this.issueId!),Number(this.epicId))
@@ -48,7 +45,7 @@ export class AssignToEpicComponent {
           this.location.back();
         }, error => {
           console.log(error);
-          this.gvisibility = 'visible'
+          this.toastr.error(error.error, "Error");
         });
 
   }

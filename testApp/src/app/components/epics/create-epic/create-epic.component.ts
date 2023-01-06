@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {Location} from '@angular/common'
 import { AuthService } from 'app/components/auth/shared/auth.service';
 import { CreateEpicRequestPayload } from './create-epic-reques-payload';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-epic',
@@ -36,7 +37,7 @@ export class CreateEpicComponent {
   ]
 
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService,private location: Location) {
+  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService,private location: Location,private toastr: ToastrService) {
     
     this.createEpicRequset = {
       title: "",
@@ -68,13 +69,14 @@ export class CreateEpicComponent {
     this.createEpicRequset.title = this.createEpicForm.get('title')!.value;
     this.createEpicRequset.description = this.createEpicForm.get('des')!.value;
     this.createEpicRequset.manHour = Number(this.createEpicForm.get('manHour')!.value);
-    
+    this.createEpicRequset.due = this.createEpicForm.get('due')!.value
     this.authService.createEpic( Number(this.projectId!),this.createEpicRequset,)
       .subscribe(
         data => {
           this.location.back();
         }, error => {
           console.log(error);
+          this.toastr.error(error.error,"Error");
           this.gvisibility = 'visible'
         });
 

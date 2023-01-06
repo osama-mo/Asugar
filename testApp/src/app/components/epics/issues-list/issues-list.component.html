@@ -9,7 +9,7 @@
 </div>
 
 <div class="epic-title">{{epicName}}</div>
-<input *ngIf=" finished == true  " class="finishEpic" style="background-color: gray; cursor: none;" value="Finished">
+<input *ngIf=" finished == true  " class="finishEpic" style="background-color: gray; cursor: default;width: 8vw;" value="Finished">
 <input *ngIf=" finished == false  " class="finishEpic" value="Finish" (click)="finishEpic()">
 <div class="box-container1">
     <div class="header">
@@ -37,6 +37,9 @@
             <div class="item" style="width: 7vw">{{getShortDate(item.createdAt)}}</div>
         </div>
     </div>
-    <input type="submit" value="Delete Issue" style="margin-right: 25vw;" (click)="navigateToRemoveIssue()">
-    <input type="submit" value="Add new Issue" (click)="navigateToAddIssue()">
+    <input *ngIf=" finished == false  " type="submit" value="Remove Issue" style="margin-right: 25vw;" (click)="navigateToRemoveIssue()">
+    <input *ngIf=" finished == false  " type="submit" value="Add new Issue" (click)="navigateToAddIssue()">
+
+    <input *ngIf=" finished == true  " type="submit" style="background-color: gray; cursor: default;" value="Remove Issue" style="margin-right: 25vw;" >
+    <input *ngIf=" finished == true  " type="submit" style="background-color: gray; cursor: default;"  value="Add new Issue" >
 </div>

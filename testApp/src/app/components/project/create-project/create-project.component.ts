@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'app/components/auth/shared/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-project',
@@ -21,7 +22,7 @@ export class CreateProjectComponent implements OnInit {
 
   projectName:string| null = "";
   
-  constructor(private authService: AuthService, private router: Router,) { }
+  constructor(private authService: AuthService, private router: Router,private toastr: ToastrService) { }
 
   ngOnInit(): void {
     document.body.className = "selector";
@@ -41,7 +42,7 @@ export class CreateProjectComponent implements OnInit {
       console.log(error);
       this.isError = true;
       this.gvisibility = 'visible'
-      
+      this.toastr.error(error.error, "Error");
     });
     }
   

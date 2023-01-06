@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/components/auth/shared/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-epic-list',
@@ -23,7 +24,7 @@ export class EpicListComponent {
   projectId: string | null = "";
   projectName: String | null = "";
 
-  constructor(private route: ActivatedRoute, private router: Router, private authsurvice: AuthService) {
+  constructor(private route: ActivatedRoute, private router: Router, private authsurvice: AuthService,private toastr: ToastrService) {
     this.projectId = this.route.snapshot.queryParamMap.get('projectId');
     this.projectName = this.route.snapshot.queryParamMap.get('projectName');
   }
@@ -40,6 +41,7 @@ export class EpicListComponent {
       }
       , error => {
         new Error(error)
+        this.toastr.error(error.error,"Error");
       })
   }
 

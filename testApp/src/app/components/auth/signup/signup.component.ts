@@ -77,12 +77,13 @@ export class SignupComponent implements OnInit {
       this.authService.signup(this.signupRequestPayload)
         .subscribe(
           data => {
+            console.log(data);
           this.router.navigate([''],
             { queryParams: { registered: 'true' } });
         }, error => {
           console.log(error);
           this.gvisibility = 'visible'
-          this.toastr.error('Registration Failed! Please try again');
+          this.toastr.error(error.error,"Error");
         });
     }
 

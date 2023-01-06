@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/components/auth/shared/auth.service';
 import {Location} from '@angular/common'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-delete-sub-issue',
@@ -24,7 +25,7 @@ export class DeleteSubIssueComponent {
   projectName: string | null;
 
   
-  constructor(private route: ActivatedRoute, private router: Router, private authService : AuthService ,private location: Location) {
+  constructor(private route: ActivatedRoute, private router: Router, private authService : AuthService ,private location: Location,private toastr: ToastrService) {
     this.projectId = this.route.snapshot.queryParamMap.get('projectId');
     this.projectName = this.route.snapshot.queryParamMap.get('projectName');
    }
@@ -44,6 +45,7 @@ export class DeleteSubIssueComponent {
       this.location.back();
     }, error => {
       console.log(error);
+      this.toastr.error(error.error,"Error");
       this.gvisibility = 'visible'
     });
     

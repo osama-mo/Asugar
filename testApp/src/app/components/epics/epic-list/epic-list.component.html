@@ -33,8 +33,8 @@
             <div class="item" style="width: 7vw;margin-right: 6vw;">{{item.creatorUsername}}</div>
             <div class="item" style="width: 11vw;margin-right: 0vw;">{{item.assignedTo}}</div>
             <div class="item" style="width: 11vw;margin-right: 1vw;">{{getShortDate(item.createdAt)}}</div>
-            <div class="item" style="width: 7vw;margin-right: 2vw;">{{getShortDate(item.plannedTo)}}</div>
-            <div class="item" style="width: 7vw">{{getShortDate(item.endedAt)}}</div>
+            <div class="item" style="width: 7vw;margin-right: 2vw;">{{item.plannedTo}}</div>
+            <div class="item" style="width: 7vw">{{item.endedAt}}</div>
         </div>
     </div>
     <input type="submit" value="Delete Epic" style="margin-right: 20vw;" (click)="navigateToRemoveEpic()">

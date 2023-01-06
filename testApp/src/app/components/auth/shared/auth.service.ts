@@ -28,13 +28,15 @@ export class AuthService {
     username: this.getUserName()
   }
 
+  url='https://asugarappservice-asugarapi.azuremicroservices.io/'
+
   constructor(private httpClient: HttpClient,
 
   ) {
   }
 
   signup(signupRequestPayload: SignupRequestPayload): Observable<any> {
-    return this.httpClient.post('https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/registration', signupRequestPayload, { responseType: 'text' });
+    return this.httpClient.post(this.url+'registration', signupRequestPayload, { responseType: 'text' });
   }
 
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean> {
@@ -45,7 +47,7 @@ export class AuthService {
       })
     };
 
-    return this.httpClient.post<LoginResponse>('https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/login',
+    return this.httpClient.post<LoginResponse>(this.url+'login',
       null, httpOptions).pipe(map(data => {
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('username', loginRequestPayload.username!);
@@ -57,7 +59,7 @@ export class AuthService {
   }
 
   forgetMyPassword(fgmRequestPayload: ForgotMyPasswordRequestPayload): Observable<any> {
-    return this.httpClient.get(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/password_reset?email=${fgmRequestPayload.email}`)
+    return this.httpClient.get(this.url+`password_reset?email=${fgmRequestPayload.email}`)
   }
 
   forgetMyPasswordConfirmation(fgmcRequestPayload: ForgotMyPasswordConfirmationRequestPayload): Observable<any> {
@@ -67,7 +69,7 @@ export class AuthService {
         'Password': fgmcRequestPayload.password!
       })
     };
-    return this.httpClient.post(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/password_reset`, null, httpOptions)
+    return this.httpClient.post(this.url+`password_reset`, null, httpOptions)
   }
 
 
@@ -77,7 +79,7 @@ export class AuthService {
   }
 
   refreshToken() {
-    return this.httpClient.post<LoginResponse>('https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/token/refresh',
+    return this.httpClient.post<LoginResponse>(this.url+'token/refresh',
       this.refreshTokenPayload)
       .pipe(tap(response => {
         localStorage.removeItem('accessToken');
@@ -87,7 +89,7 @@ export class AuthService {
   }
 
   testAuth() {
-    return this.httpClient.get<string>('https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/user/get');
+    return this.httpClient.get<string>(this.url+'user/get');
   }
 
 
@@ -117,7 +119,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.post(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/project/create?name=${projectName}&username=${localStorage.getItem('username')}`, null, httpOptions)
+    return this.httpClient.post(this.url+`user/project/create?name=${projectName}&username=${localStorage.getItem('username')}`, null, httpOptions)
   }
 
   getProjectlist(): Observable<any> {
@@ -126,7 +128,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.get(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/user/project/list`, httpOptions)
+    return this.httpClient.get(this.url+`user/project/list`, httpOptions)
   }
 
   deleteProject(projectId: number) {
@@ -135,7 +137,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.delete(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/user/project/${projectId}`, httpOptions)
+    return this.httpClient.delete(this.url+`user/project/${projectId}`, httpOptions)
   }
 
   getMembersList(projectId: Number): Observable<any> {
@@ -144,7 +146,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.get(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/members`, httpOptions)
+    return this.httpClient.get(this.url+`${projectId}/members`, httpOptions)
   }
 
   getMembersDetails(projectId: String, userEmail: String): Observable<any> {
@@ -153,7 +155,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.get(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/members/${userEmail}`, httpOptions)
+    return this.httpClient.get(this.url+`${projectId}/members/${userEmail}`, httpOptions)
   }
 
   addMember(projectId: String, userEmail: String): Observable<any> {
@@ -162,7 +164,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.put(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/members?username=${userEmail}`,null, httpOptions)
+    return this.httpClient.put(this.url+`${projectId}/members?username=${userEmail}`,null, httpOptions)
   }
 
   createIssue(issue: CreateIssueRequestPayload ,projectId : String): Observable<any> {
@@ -171,7 +173,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.post(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/issues/create`, issue, httpOptions);
+    return this.httpClient.post(this.url+`${projectId}/issues/create`, issue, httpOptions);
   }
 
   removeIssue(issueId: string,projectId:string): Observable<any> {
@@ -180,7 +182,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.delete(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/issues/${issueId}/delete`, httpOptions)
+    return this.httpClient.delete(this.url+`${projectId}/issues/${issueId}/delete`, httpOptions)
   }
 
 
@@ -190,7 +192,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.get(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/issues/all`, httpOptions)
+    return this.httpClient.get(this.url+`${projectId}/issues/all`, httpOptions)
   }
 
   finishSprint(projectId:string): Observable<any> {
@@ -199,7 +201,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.put(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/sprints/finish`,null, httpOptions)
+    return this.httpClient.put(this.url+`${projectId}/sprints/finish`,null, httpOptions)
   }
 
   setCondition(projectId:number,issueId:number,condition:string): Observable<any>{
@@ -208,7 +210,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.put(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/issues/${issueId}/condition?condition=${condition}`,null, httpOptions)
+    return this.httpClient.put(this.url+`${projectId}/issues/${issueId}/condition?condition=${condition}`,null, httpOptions)
   }
 
   createEpic(projectId:number,createEpicRequset:CreateEpicRequestPayload) : Observable<any>{
@@ -217,7 +219,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.post(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/epics/create`, createEpicRequset, httpOptions);
+    return this.httpClient.post(this.url+`${projectId}/epics/create`, createEpicRequset, httpOptions);
   }
   deleteEpic(projectId:number,epicId:number) : Observable<any>{
     const httpOptions = {
@@ -225,7 +227,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.delete(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/epics/${epicId}/delete`, httpOptions)
+    return this.httpClient.delete(this.url+`${projectId}/epics/${epicId}/delete`, httpOptions)
   }
   getEpicIssues(projectId:number,epicId:number) : Observable<any>{
     const httpOptions = {
@@ -233,7 +235,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.get(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/epics/${epicId}/issues`, httpOptions)
+    return this.httpClient.get(this.url+`${projectId}/epics/${epicId}/issues`, httpOptions)
   }
 
   assignIssueToEpic(projectId:number,issueId:number,epicId:number|null) : Observable<any> {
@@ -242,7 +244,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.put(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/issues/${issueId}/assign/epic?epicId=${epicId}`, null, httpOptions)
+    return this.httpClient.put(this.url+`${projectId}/issues/${issueId}/assign/epic?epicId=${epicId}`, null, httpOptions)
   }
   getEpics(projectId:number) : Observable<any> {
     const httpOptions = {
@@ -250,7 +252,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.get(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/epics`, httpOptions)
+    return this.httpClient.get(this.url+`${projectId}/epics`, httpOptions)
   }
 
   finishEpic(epicId:number,projectId:number): Observable<any> {
@@ -259,7 +261,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.put(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/epics/${epicId}/finish`,null, httpOptions)
+    return this.httpClient.put(this.url+`${projectId}/epics/${epicId}/finish`,null, httpOptions)
   }
   getActiveIssues(projectId:number) : Observable<any>{
     const httpOptions = {
@@ -267,7 +269,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.get(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/issues/active`, httpOptions)
+    return this.httpClient.get(this.url+`${projectId}/issues/active`, httpOptions)
   }
 
   setSprint(projectId:number,issueId:number,sprint:string|null): Observable<any> {
@@ -276,7 +278,7 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.put(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/issues/${issueId}/assign/sprint?sprint=${sprint}`,null, httpOptions)
+    return this.httpClient.put(this.url+`${projectId}/issues/${issueId}/assign/sprint?sprint=${sprint}`,null, httpOptions)
   }
 
   removeMember(projectId:number,userEmail:string) : Observable<any>{
@@ -285,6 +287,6 @@ export class AuthService {
         'Authorization': localStorage.getItem('accessToken')!
       })
     }
-    return this.httpClient.delete(`https://primary:k9CixX1T7VPZ6TuHsPSSgk3Yv5PNWx8YLH4vKmZTNeU2hXMrzd8sNj5dgJwjNnaX@asugarappservice.test.azuremicroservices.io/asugarapi/default/${projectId}/members?username=${userEmail}`, httpOptions)
+    return this.httpClient.delete(this.url+`${projectId}/members?username=${userEmail}`, httpOptions)
   }
 }

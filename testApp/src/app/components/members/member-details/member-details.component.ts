@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/components/auth/shared/auth.service';
+import { ToastrService } from 'ngx-toastr';
 import { MemberDetailsResponse } from './member-details-response';
 
 @Component({
@@ -16,7 +17,7 @@ export class MemberDetailsComponent implements OnInit {
   memberdetails: MemberDetailsResponse;
 
 
-  constructor(private route: ActivatedRoute, private router: Router, private authsurvice: AuthService) {
+  constructor(private route: ActivatedRoute, private router: Router, private authsurvice: AuthService,private toastr: ToastrService) {
     document.body.className = "selector";
     this.memberdetails = {
       firstName: "",
@@ -62,6 +63,7 @@ export class MemberDetailsComponent implements OnInit {
             console.log(data);
         }, error => {
           console.log(error);
+          this.toastr.error(error.error, "Error");
         });
     }
   }

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/components/auth/shared/auth.service';
 import{ Location} from '@angular/common'
 import { AddMemberRequestPayload } from './add-member-request-payload';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-member',
@@ -25,7 +26,7 @@ export class AddMemberComponent implements OnInit {
   })
 
   
-  constructor(private location:Location ,private route: ActivatedRoute, private router: Router, private authService: AuthService) {
+  constructor(private location:Location ,private route: ActivatedRoute, private router: Router, private authService: AuthService,private toastr: ToastrService) {
     document.body.className = "selector";
     this.addMemberRequest = {
       email : "",
@@ -60,7 +61,7 @@ export class AddMemberComponent implements OnInit {
             this.location.back()
         }, error => {
           console.log(error);
-          this.gvisibility = 'visible'
+          this.toastr.error(error.error, "Error");
         });
     }
   }

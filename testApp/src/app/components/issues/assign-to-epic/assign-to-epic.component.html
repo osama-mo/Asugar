@@ -3,11 +3,11 @@
         <div class="sideProjectName" >{{projectName}}</div>
         <button class="sidebutton" (click)="navigateToBacklog()">BACKLOG</button>
         <button class="ActiveSidebutton" (click)="navigateToIssues()">ISSUES</button>
-        <button class="sidebutton" (click)="navigateToSprint()">SPRINT </button>
-        <button class="sidebutton" (click)="navigateToEpics()">EPICS </button>
+        <button class="sidebutton" (click)="navigateToSprint()">SPRINT</button>
+        <button class="sidebutton" (click)="navigateToEpics()">EPICS</button>
         <button class="sidebutton" (click)="navigateToMembers()">MEMBERS</button>
         <div class="sideprojectsButton" (click)="navigateToProjects()"> PROJECTS </div>
-      </div>
+    </div>
 
     <div class="rectangle1">
 
@@ -25,7 +25,6 @@
             <input  type="text" [formControlName]="'issueId'" style="margin-top: 20vh;" class="rectangle5" required>
             <input  type="text" [formControlName]="'epicId'" style="margin-top: 30vh;" class="rectangle5"  required>
         </form>
-
         <input type="submit" value="SUBMIT" (click)="assign()">
     </div>
 

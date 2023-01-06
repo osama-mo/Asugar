@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/components/auth/shared/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-members-list',
@@ -19,7 +20,7 @@ export class MembersListComponent implements OnInit {
       email: ''
     }
   ]
-  constructor(private route: ActivatedRoute, private router: Router, private authsurvice: AuthService) {
+  constructor(private route: ActivatedRoute, private router: Router, private authsurvice: AuthService,private toastr: ToastrService) {
 
   }
 
@@ -35,6 +36,7 @@ export class MembersListComponent implements OnInit {
       }
       , error => {
         new Error(error)
+        this.toastr.error(error.error, "Error");
       })
   }
 

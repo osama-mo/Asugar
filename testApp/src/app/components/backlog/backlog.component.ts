@@ -1,6 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../auth/shared/auth.service';
 import { IssueResponsePayload } from '../sprints/active-sprint/issue-respone-payload';
 
@@ -18,7 +19,7 @@ export class BacklogComponent implements OnInit {
   Backlog: IssueResponsePayload[] = [];
   issues: IssueResponsePayload[] = [];
 
-  constructor(private route: ActivatedRoute, private router: Router, private authsurvice: AuthService) {
+  constructor(private route: ActivatedRoute, private router: Router, private authsurvice: AuthService,private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -46,6 +47,7 @@ export class BacklogComponent implements OnInit {
       }
       , error => {
         new Error(error)
+        this.toastr.error("something went wrong","Error");
       })
   }
   drop(event: CdkDragDrop<any[]>) {
@@ -64,6 +66,7 @@ export class BacklogComponent implements OnInit {
             }
             , error => {
               new Error(error)
+              this.toastr.error("something went wrong","Error");
             })
         }
       }
@@ -75,6 +78,7 @@ export class BacklogComponent implements OnInit {
             }
             , error => {
               new Error(error)
+              this.toastr.error("something went wrong","Error");
             })
         }
       }
@@ -86,6 +90,7 @@ export class BacklogComponent implements OnInit {
             }
             , error => {
               new Error(error)
+              this.toastr.error("something went wrong","Error");
             })
         }
       }
@@ -102,6 +107,7 @@ export class BacklogComponent implements OnInit {
       }
       , error => {
         new Error(error)
+        this.toastr.error(error.error,"Error");
       })
   }
   navigateToProjects() {

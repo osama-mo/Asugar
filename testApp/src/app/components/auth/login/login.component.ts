@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnimationOptions } from 'ngx-lottie';
 import { ToastrService } from 'ngx-toastr';
@@ -13,6 +14,8 @@ import { LoginRequestPayload } from './login-request.payload';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  isloggedin :boolean = false
+  @ViewChild('element') element: any;
 
     // assign error messages to be hidden 
     efvisibility = 'hidden'
@@ -43,6 +46,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     document.body.className = "selector";
+    this.isloggedin = this.authService.isLoggedIn()
+    if(this.isloggedin == true){
+      this.router.navigate(['list-project'])
+    }
   }
 
   login() {
@@ -67,7 +74,7 @@ export class LoginComponent implements OnInit {
       }, error => {
         this.gvisibility = 'visible'
         this.isError = true;
-        throwError(error);
+        this.toastr.error("something went wrong","Erorr")
       });
     }
   }

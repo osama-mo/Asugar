@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from 'app/components/auth/shared/auth.service';
+import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
 
 @Component({
@@ -18,7 +19,7 @@ export class ListProjectComponent implements OnInit {
   ]
 
 
-  constructor(private router: Router, private authsurvice: AuthService) {
+  constructor(private router: Router, private authsurvice: AuthService,private toastr: ToastrService) {
 
 
     authsurvice.getProjectlist().subscribe(data => {
@@ -41,6 +42,7 @@ export class ListProjectComponent implements OnInit {
       window.location.reload();
     }, error => {
       new Error(error)
+      this.toastr.error(error.error, "Error");
     }
     )
   }

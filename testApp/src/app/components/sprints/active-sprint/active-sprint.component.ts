@@ -2,6 +2,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/components/auth/shared/auth.service';
+import { ToastrService } from 'ngx-toastr';
 import { IssueResponsePayload } from './issue-respone-payload';
 
 @Component({
@@ -66,7 +67,7 @@ export class ActiveSprintComponent {
       }
     }
   }
-  constructor(private route: ActivatedRoute, private router: Router, private authsurvice: AuthService) {
+  constructor(private route: ActivatedRoute, private router: Router, private authsurvice: AuthService,private toastr: ToastrService) {
     document.body.className = "selector";
   }
 
@@ -94,6 +95,7 @@ export class ActiveSprintComponent {
       }
       , error => {
         new Error(error)
+        this.toastr.error(error.error, "Error");
       })
 
   }

@@ -4,6 +4,7 @@ import {Location} from '@angular/common'
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/components/auth/shared/auth.service';
 import { CreateIssueRequestPayload } from './create-issue-request-payload';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-sub-issue',
@@ -39,7 +40,7 @@ export class CreateSubIssueComponent {
   ]
 
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService,private location: Location) {
+  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService,private location: Location,private toastr: ToastrService) {
     this.createIssueRequset = {
       title: "",
       description: "",
@@ -62,7 +63,7 @@ export class CreateSubIssueComponent {
         this.members = data
       }
       , error => {
-        new Error(error)
+        this.toastr.error(error.error,"Error");
       })
   }
 
@@ -85,6 +86,7 @@ export class CreateSubIssueComponent {
           this.location.back();
         }, error => {
           console.log(error);
+          this.toastr.error(error.error,"Error");
           this.gvisibility = 'visible'
         });
 
