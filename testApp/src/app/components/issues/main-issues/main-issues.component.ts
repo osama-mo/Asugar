@@ -10,7 +10,7 @@ import { AuthService } from 'app/components/auth/shared/auth.service';
 })
 export class MainIssuesComponent {
   issues = [ {
-    id: 0,
+    id: 1,
     title: "",
     description: "",
     manHour: 0,
