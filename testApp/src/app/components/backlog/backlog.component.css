@@ -62,7 +62,8 @@ background-color: #269531;
 height: 5vh;
 text-align: center;
 margin-bottom: 3vh;
-font-size: 30px;
+font-size: 25px;
+padding-top: 0.5vh;
 color: white;
 font-family: 'share';
 }
@@ -95,8 +96,8 @@ margin-top: 40vh;
 
 .sidebutton {
   font-family: 'share';
-  width: 172px;
-  height: 40px;
+  width: 11vw;
+  height: 6vh;
   border-color: #22597D;
   border-radius: 36px;
   border-width: 5px;
@@ -106,16 +107,16 @@ margin-top: 40vh;
   cursor: pointer;
   display: inline-block;
   font-size: 18px;
-  margin-bottom: 20px;
+  margin-bottom: 1vh;
   text-shadow: black;
   -webkit-text-stroke-width: 1px;
 }
 
 .ActiveSidebutton {
-  width: 172px;
+  width: 11vw;
+  height: 6vh;
   color: white;
   font-family: 'share';
-  height: 40px;
   border-color: #22597D;
   border-radius: 36px;
   border-width: 5px;
@@ -124,7 +125,7 @@ margin-top: 40vh;
   cursor: pointer;
   display: inline-block;
   font-size: 18px;
-  margin-bottom: 20px;
+  margin-bottom: 1vh;
   -webkit-text-stroke-width: 1px;
 }
 
@@ -148,38 +149,11 @@ margin-top: 40vh;
 }
 
 
-
-.button {
-  width: 200px;
-  height: 40px;
-  border-color: #22597D;
-  border-radius: 36px;
-  border-width: 5px;
-  background-color: #8FCEE9;
-  text-decoration: bold;
-  text-align: center;
-  font-family: 'Share';
-  cursor: pointer;
-  display: inline-block;
-  font-size: 18px;
-  margin-bottom: 20px;
-  font-weight: bolder;
-  text-shadow: black;
-  -webkit-text-stroke-width: 2px;
-}
-
-.button button1 {
-  top: 0;
-  margin-left: 350px;
-  background-color: #269531;
-
-
-}
 .box-container1 {
   margin-top: 20px;
   width: 40vw;
   height: 35vh;
-  margin-left: 250px;
+  margin-left: 15vw;
   
 }
 .title1 {
@@ -256,7 +230,7 @@ margin-top: 40vh;
   margin-top: 70px;
   width: 40vw;
   height: 20vh;
-  margin-left: 250px;
+  margin-left: 15vw;
   text-align: center;
 }
 .rectangle2 {

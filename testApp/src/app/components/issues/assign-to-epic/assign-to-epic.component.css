@@ -26,6 +26,7 @@ height: 5vh;
 text-align: center;
 margin-bottom: 3vh;
 font-size: 25px;
+padding-top: 0.5vh;
 color: white;
 font-family: 'share';
 }
@@ -58,8 +59,8 @@ margin-top: 40vh;
 
 .sidebutton {
   font-family: 'share';
-  width: 172px;
-  height: 40px;
+  width: 11vw;
+  height: 6vh;
   border-color: #22597D;
   border-radius: 36px;
   border-width: 5px;
@@ -69,16 +70,16 @@ margin-top: 40vh;
   cursor: pointer;
   display: inline-block;
   font-size: 18px;
-  margin-bottom: 20px;
+  margin-bottom: 1vh;
   text-shadow: black;
   -webkit-text-stroke-width: 1px;
 }
 
 .ActiveSidebutton {
-  width: 172px;
+  width: 11vw;
+  height: 6vh;
   color: white;
   font-family: 'share';
-  height: 40px;
   border-color: #22597D;
   border-radius: 36px;
   border-width: 5px;
@@ -87,7 +88,7 @@ margin-top: 40vh;
   cursor: pointer;
   display: inline-block;
   font-size: 18px;
-  margin-bottom: 20px;
+  margin-bottom: 1vh;
   -webkit-text-stroke-width: 1px;
 }
 
@@ -109,6 +110,7 @@ margin-top: 40vh;
     float: none;
   }
 }
+
 
 
 .rectangle1 {

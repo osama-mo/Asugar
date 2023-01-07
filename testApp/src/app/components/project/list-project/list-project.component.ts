@@ -13,8 +13,8 @@ import { throwError } from 'rxjs';
 export class ListProjectComponent implements OnInit {
   projects = [
     {
-      name: "blablabla",
-      id: 123
+      name: "",
+      id: 0
     }
   ]
 
