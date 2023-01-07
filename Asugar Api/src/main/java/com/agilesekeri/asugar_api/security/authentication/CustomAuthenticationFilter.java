@@ -56,12 +56,12 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authentication)
-            throws IOException, ServletException {
+            throws IOException {
         UserDetails user = (UserDetails) authentication.getPrincipal();
         Algorithm accessAlgorithm = Algorithm.HMAC256(accessSecret);
         String accessToken = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(accessAlgorithm);
 

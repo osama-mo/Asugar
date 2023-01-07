@@ -69,7 +69,7 @@ public class IssueService {
     public AbstractIssue getIssue(Long issueId) {
         return issueRepository.findById(issueId)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("No issue with id " + issueId + " was found to retrieve info"));
+                        new IllegalArgumentException("No issue with id " + issueId + " was found"));
     }
 
     public void deleteIssue(Long issueId) {

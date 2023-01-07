@@ -1,13 +1,10 @@
 package com.agilesekeri.asugar_api.controller;
 
 import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
-import com.agilesekeri.asugar_api.model.entity.EpicEntity;
-import com.agilesekeri.asugar_api.model.entity.IssueEntity;
 import com.agilesekeri.asugar_api.model.enums.Role;
 import com.agilesekeri.asugar_api.model.request.EpicCreateRequest;
 import com.agilesekeri.asugar_api.model.request.IssueCreateRequest;
 import com.agilesekeri.asugar_api.service.*;
-import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
@@ -17,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.TreeMap;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 

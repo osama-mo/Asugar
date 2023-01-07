@@ -6,10 +6,13 @@ import com.agilesekeri.asugar_api.email.EmailSender;
 import com.agilesekeri.asugar_api.model.entity.ResetPasswordTokenEntity;
 import com.agilesekeri.asugar_api.service.ResetPasswordTokenService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.util.Pair;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -25,86 +28,100 @@ public class ResetPasswordService {
 
     private final EmailSender emailSender;
 
-    public String changePasswordRequest(String email) {
-        AppUserEntity appUser = appUserService.loadUserByUsername(email);
+    public Pair<String, Integer> changePasswordRequest(String email) {
+        Pair<String, Integer> message;
+        try {
+            AppUserEntity appUser = appUserService.loadUserByUsername(email);
 
-        String token = UUID.randomUUID().toString();
-        ResetPasswordTokenEntity resetPasswordToken = new ResetPasswordTokenEntity(
-                token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
-                appUser
-        );
+            String token = UUID.randomUUID().toString();
+            ResetPasswordTokenEntity resetPasswordToken = new ResetPasswordTokenEntity(
+                    token,
+                    LocalDateTime.now(),
+                    LocalDateTime.now().plusMinutes(15),
+                    appUser
+            );
 
-        resetPasswordTokenService.saveResetPasswordToken(resetPasswordToken);
+            resetPasswordTokenService.saveResetPasswordToken(resetPasswordToken);
 
-        sendVerificationEmail (
-                token,
-                email,
-                appUser.getFirstName()
-        );
+            sendVerificationEmail (
+                    token,
+                    email,
+                    appUser.getFirstName()
+            );
 
-        return "An email is sent";
+            message = Pair.of("An email is sent", HttpServletResponse.SC_ACCEPTED);
+        } catch(UsernameNotFoundException e) {
+            message = Pair.of(e.getMessage(), HttpServletResponse.SC_BAD_REQUEST);
+        } catch(IllegalStateException e) {
+            message = Pair.of(e.getMessage(), HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+        }
+
+        return message;
     }
 
     @Transactional
-    public String confirmRequest(String token, String newPassword) {
-        ResetPasswordTokenEntity resetPasswordToken = resetPasswordTokenService
-                .getToken(token)
-                .orElseThrow(() ->
-                        new IllegalStateException("token not found"));
+    public Pair<String, Integer> confirmRequest(String token, String newPassword) {
+        Pair<String, Integer> message;
+        try {
+            ResetPasswordTokenEntity resetPasswordToken = resetPasswordTokenService.getToken(token)
+                    .orElseThrow(() ->
+                            new IllegalArgumentException("token not found"));
 
-        if (resetPasswordToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("request already confirmed");
+            if (resetPasswordToken.getConfirmedAt() != null)
+                throw new IllegalStateException("request already confirmed");
+
+            if(!resetPasswordToken.getAppUser().getEnabled())
+                throw new IllegalStateException("The user is not enabled yet");
+
+            LocalDateTime expiredAt = resetPasswordToken.getExpiresAt();
+            if (expiredAt.isBefore(LocalDateTime.now())) {
+                String newToken = UUID.randomUUID().toString();
+                ResetPasswordTokenEntity newResetPasswordToken = new ResetPasswordTokenEntity(
+                        newToken,
+                        LocalDateTime.now(),
+                        LocalDateTime.now().plusMinutes(15),
+                        resetPasswordToken.getAppUser()
+                );
+
+                resetPasswordTokenService.saveResetPasswordToken(newResetPasswordToken);
+                sendVerificationEmail (
+                        newToken,
+                        resetPasswordToken.getAppUser().getEmail(),
+                        resetPasswordToken.getAppUser().getFirstName()
+                );
+
+                message = Pair.of("token expired, a new one is sent", HttpServletResponse.SC_ACCEPTED);
+            }
+
+            else {
+                boolean uppercase = false, lowercase = false, integer = false;
+                for (int i = 0; i < newPassword.length() && !(uppercase && lowercase && integer); ++i) {
+                    char c = newPassword.charAt(i);
+                    if (c >= 65 && c <= 90)
+                        uppercase = true;
+                    else if (c >= 97 && c <= 122)
+                        lowercase = true;
+                    else if (c >= 48 && c <= 57)
+                        integer = true;
+                }
+
+                if(!(uppercase && lowercase && integer))
+                    throw new IllegalArgumentException("Password is not valid.");
+
+                else {
+                    String encrypted = bCryptPasswordEncoder.encode(newPassword);
+                    appUserService.changePassword(resetPasswordToken.getAppUser().getEmail(), encrypted);
+                    resetPasswordTokenService.setConfirmedAt(token);
+                    message = Pair.of("Password changed successfully", HttpServletResponse.SC_ACCEPTED);
+                }
+            }
+        } catch(IllegalArgumentException e) {
+            message = Pair.of(e.getMessage(), HttpServletResponse.SC_BAD_REQUEST);
+        } catch(IllegalStateException e) {
+            message = Pair.of(e.getMessage(), HttpServletResponse.SC_SERVICE_UNAVAILABLE);
         }
 
-        LocalDateTime expiredAt = resetPasswordToken.getExpiresAt();
-
-        if (expiredAt.isBefore(LocalDateTime.now())) {
-            String newToken = UUID.randomUUID().toString();
-            ResetPasswordTokenEntity newResetPasswordToken = new ResetPasswordTokenEntity(
-                    newToken,
-                    LocalDateTime.now(),
-                    LocalDateTime.now().plusMinutes(15),
-                    resetPasswordToken.getAppUser()
-            );
-
-            resetPasswordTokenService.saveResetPasswordToken(newResetPasswordToken);
-
-            sendVerificationEmail (
-                    newToken,
-                    resetPasswordToken.getAppUser().getEmail(),
-                    resetPasswordToken.getAppUser().getFirstName()
-            );
-
-            return "token expired, a new one is sent.";
-        }
-
-        boolean uppercase = false, lowercase = false, integer = false;
-
-        for (int i = 0; i < newPassword.length() && !(uppercase && lowercase && integer); ++i) {
-            char c = newPassword.charAt(i);
-            if (c >= 65 && c <= 90)
-                uppercase = true;
-
-            else if (c >= 97 && c <= 122)
-                lowercase = true;
-
-            else if (c >= 48 && c <= 57)
-                integer = true;
-        }
-
-        if(!(uppercase && lowercase && integer))
-            throw new IllegalArgumentException("Password is not valid.");
-
-        String encrypted = bCryptPasswordEncoder.encode(newPassword);
-        appUserService.changePassword(resetPasswordToken.getAppUser().getEmail(), encrypted);
-
-        resetPasswordTokenService.setConfirmedAt(token);
-        appUserService.enableAppUser(
-                resetPasswordToken.getAppUser().getEmail());
-
-        return "Password changed successfully";
+        return message;
     }
 
     public void sendVerificationEmail(String token, String email, String firstName)

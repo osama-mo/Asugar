@@ -1,10 +1,6 @@
 package com.agilesekeri.asugar_api.controller;
 
-import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
-import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
 import com.agilesekeri.asugar_api.model.enums.Role;
-import com.agilesekeri.asugar_api.model.enums.TaskConditionEnum;
-import com.agilesekeri.asugar_api.model.request.EpicCreateRequest;
 import com.agilesekeri.asugar_api.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
@@ -38,15 +34,21 @@ public class EpicController {
                            HttpServletRequest request,
                            HttpServletResponse response)
             throws IOException {
-        String issuerUsername = appUserService.getJWTUsername(request);
-        if(projectService.checkAccess(projectId, issuerUsername, Role.MEMBER)) {
-            epicService.deleteEpic(epicService.getEpic(epicId));
+        try {
+            String issuerUsername = appUserService.getJWTUsername(request);
+            if(projectService.checkAccess(projectId, issuerUsername, Role.MEMBER))
+                throw new IllegalCallerException("The issuer is not a member of the project team");
+
+            epicService.deleteEpic(epicId);
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
-        }
-        else {
+        } catch (IllegalArgumentException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), e.getMessage());
+        } catch (IllegalCallerException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            new ObjectMapper().writeValue(response.getOutputStream(), "The issuer is not a member of the project team");
+            new ObjectMapper().writeValue(response.getOutputStream(), e.getMessage());
         }
     }
 

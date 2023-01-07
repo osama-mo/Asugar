@@ -1,7 +1,5 @@
 package com.agilesekeri.asugar_api.controller;
 
-import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
-import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
 import com.agilesekeri.asugar_api.model.enums.Role;
 import com.agilesekeri.asugar_api.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;

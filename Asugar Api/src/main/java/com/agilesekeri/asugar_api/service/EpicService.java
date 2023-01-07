@@ -66,7 +66,8 @@ public class EpicService {
         epicRepository.flush();
     }
 
-    public void deleteEpic(EpicEntity epic) {
+    public void deleteEpic(Long epicId) {
+        EpicEntity epic = getEpic(epicId);
         epic.getIncludedIssues().forEach(issue -> issue.setEpic(null));
         epicRepository.delete(epic);
     }

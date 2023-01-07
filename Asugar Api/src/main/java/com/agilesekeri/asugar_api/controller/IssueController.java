@@ -1,13 +1,8 @@
 package com.agilesekeri.asugar_api.controller;
 
-import com.agilesekeri.asugar_api.model.dto.AbstractIssueDTO;
-import com.agilesekeri.asugar_api.model.entity.AppUserEntity;
-import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
 import com.agilesekeri.asugar_api.model.enums.Role;
 import com.agilesekeri.asugar_api.model.enums.TaskConditionEnum;
 import com.agilesekeri.asugar_api.service.*;
-import com.agilesekeri.asugar_api.model.request.IssueCreateRequest;
-import com.agilesekeri.asugar_api.model.entity.IssueEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/{projectId}/issues/{issueId}")

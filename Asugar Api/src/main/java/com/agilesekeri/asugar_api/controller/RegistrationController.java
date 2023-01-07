@@ -2,12 +2,8 @@ package com.agilesekeri.asugar_api.controller;
 
 import com.agilesekeri.asugar_api.model.request.RegistrationRequest;
 import com.agilesekeri.asugar_api.service.RegistrationService;
-import com.fasterxml.jackson.core.exc.StreamWriteException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
-import org.springframework.data.util.Pair;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,11 +37,4 @@ public class RegistrationController {
         response.setHeader("Location", "https://asugar-aa257.web.app");
         new ObjectMapper().writeValue(response.getOutputStream(), result.getFirst());
     }
-
-//    @GetMapping(path = "redirect")
-//    public void redirect(HttpServletResponse response) throws IOException {
-//        response.setStatus(HttpServletResponse.SC_FOUND);
-//        response.setHeader("Location", "https://asugar-aa257.web.app");
-//        new ObjectMapper().writeValue(response.getOutputStream(), null);
-//    }
 }

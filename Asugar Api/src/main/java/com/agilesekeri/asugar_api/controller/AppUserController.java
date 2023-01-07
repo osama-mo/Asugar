@@ -5,27 +5,15 @@ import com.agilesekeri.asugar_api.model.enums.Role;
 import com.agilesekeri.asugar_api.service.AppUserService;
 import com.agilesekeri.asugar_api.model.entity.ProjectEntity;
 import com.agilesekeri.asugar_api.service.ProjectService;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
-import org.springframework.data.util.Pair;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
-
-import static com.agilesekeri.asugar_api.security.authentication.CustomAuthenticationFilter.accessSecret;
-import static com.agilesekeri.asugar_api.security.authentication.CustomAuthenticationFilter.refreshSecret;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @RestController
 @AllArgsConstructor
@@ -36,7 +24,9 @@ public class AppUserController {
     private final ProjectService projectService;
 
     @GetMapping("/token/refresh")
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void refreshToken(HttpServletRequest request,
+                             HttpServletResponse response)
+            throws IOException {
         appUserService.genRefreshToken(request, response);
     }
 
