@@ -27,26 +27,7 @@ public class WebSecurityConfig {
                 "/password_reset").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.apply(CustomDsl.customDsl());
-        http.cors()
-//                .configurationSource(c -> {
-//            CorsConfiguration corsCfg = new CorsConfiguration();
-//
-//            // All origins, or specify the origins you need
-//            corsCfg.addAllowedOriginPattern( "*" );
-//
-//            // If you really want to allow all methods
-////            corsCfg.addAllowedMethod( CorsConfiguration.ALL );
-//
-//            // If you want to allow specific methods only
-//            corsCfg.addAllowedMethod( HttpMethod.GET );
-//            corsCfg.addAllowedMethod( HttpMethod.DELETE );
-//            corsCfg.addAllowedMethod( HttpMethod.PUT );
-//            corsCfg.addAllowedMethod( HttpMethod.POST );
-//            // ...
-//
-//            return corsCfg;
-//        })
-        ;
+        http.cors();
 
         return http.build();
     }

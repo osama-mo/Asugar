@@ -73,12 +73,12 @@ public class IssueService {
     }
 
     public void deleteIssue(Long issueId) {
-        AbstractIssue issue = getIssue(issueId);
+//        AbstractIssue issue = getIssue(issueId);
 
-        if(IssueEntity.class.equals(issue.getClass()))
-            ((IssueEntity) issue).getSubtasks().forEach(
-                    subtask -> subtask.setParentIssue(null)
-            );
+//        if(IssueEntity.class.equals(issue.getClass()))
+//            ((IssueEntity) issue).getSubtasks().forEach(
+//                    subtask -> subtask.setParentIssue(null)
+//            );
 
         issueRepository.deleteById(issueId);
     }

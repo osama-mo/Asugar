@@ -77,9 +77,8 @@ public class AppUserController {
             if(!projectService.checkAccess(projectId, issuerUsername, Role.ADMIN))
                 throw new IllegalCallerException("The issuer is not the admin of the project");
 
-            response.setStatus(HttpServletResponse.SC_ACCEPTED);
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             projectService.deleteProject(projectId);
+            response.setStatus(HttpServletResponse.SC_ACCEPTED);
 
         } catch (IllegalCallerException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

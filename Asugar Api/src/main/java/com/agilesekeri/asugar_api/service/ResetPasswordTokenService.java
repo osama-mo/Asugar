@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -18,12 +17,13 @@ public class ResetPasswordTokenService {
         resetPasswordTokenRepository.save(token);
     }
 
-    public Optional<ResetPasswordTokenEntity> getToken(String token) {
-        return resetPasswordTokenRepository.findByToken(token);
+    public ResetPasswordTokenEntity getToken(String token) {
+        return resetPasswordTokenRepository.findByToken(token)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Token not found"));
     }
 
-    public int setConfirmedAt(String token) {
-        return resetPasswordTokenRepository.updateConfirmedAt(
-                token, LocalDateTime.now());
+    public void setConfirmedAt(String token) {
+        resetPasswordTokenRepository.updateConfirmedAt(token, LocalDateTime.now());
     }
 }

@@ -86,10 +86,7 @@ public class RegistrationService {
             RegistrationTokenEntity registrationToken =
                     registrationTokenService.getToken(token);
 
-            if(registrationToken == null)
-                message = Pair.of("Token not found", HttpServletResponse.SC_BAD_REQUEST);
-
-            else if (registrationToken.getConfirmedAt() != null)
+            if (registrationToken.getConfirmedAt() != null)
                 message = Pair.of("email already confirmed", HttpServletResponse.SC_BAD_REQUEST);
 
             else if (registrationToken.getExpiresAt().isBefore(LocalDateTime.now())) {
@@ -109,7 +106,7 @@ public class RegistrationService {
                         registrationToken.getAppUser().getFirstName()
                 );
 
-                message = Pair.of("token expired, a new one is sent.", HttpServletResponse.SC_FOUND);
+                message = Pair.of("token expired, a new one is sent.", HttpServletResponse.SC_ACCEPTED);
             }
 
             else {

@@ -15,9 +15,6 @@ public class IssueCreateRequest {
 
     private final String description;
 
-//    @NotNull
-//    private final Long projectId;
-
     private final Long epicId;
 
     private final String sprint;

@@ -12,6 +12,7 @@ import com.agilesekeri.asugar_api.model.request.EpicCreateRequest;
 import com.agilesekeri.asugar_api.model.request.IssueCreateRequest;
 import com.agilesekeri.asugar_api.repository.ProjectRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,21 +39,26 @@ public class ProjectService {
     private final IssueService issueService;
 
     public Boolean checkAccess(Long projectId, String username, Role role) {
-        switch (role) {
-            case ADMIN:
-                return getProject(projectId).getAdmin()
-                        .equals(appUserService.loadUserByUsername(username));
+        try {
+            AppUserEntity issuer = appUserService.loadUserByUsername(username);
+            switch (role) {
+                case ADMIN:
+                    return getProject(projectId).getAdmin()
+                            .equals(issuer);
 
-            case PRODUCT_OWNER:
-                return getProject(projectId).getProductOwner()
-                        .equals(appUserService.loadUserByUsername(username));
+                case PRODUCT_OWNER:
+                    return getProject(projectId).getProductOwner()
+                            .equals(issuer);
 
-            case MEMBER:
-                return getProject(projectId).getMembers()
-                        .contains(appUserService.loadUserByUsername(username));
+                case MEMBER:
+                    return getProject(projectId).getMembers()
+                            .contains(issuer);
 
-            default:
-                throw new IllegalArgumentException("Unknown role " + role.name());
+                default:
+                    throw new IllegalArgumentException("Unknown role " + role.name());
+            }
+        } catch (UsernameNotFoundException e) {
+            return false;
         }
     }
 
@@ -170,23 +176,17 @@ public class ProjectService {
         project.getIssues().forEach(
                 issue -> {
                     if(issue.getCondition() != TaskConditionEnum.DONE) {
-                        if (issue.getSprint() == active) {
-                            AbstractIssueDTO dto = issueService.getIssueInfo(issue.getId());
+                        AbstractIssueDTO dto = issueService.getIssueInfo(issue.getId());
+                        if (issue.getSprint() == active)
                             dto.setSprint("active");
-                            result.add(dto);
-                        }
 
-                        else if(issue.getSprint() == next) {
-                            AbstractIssueDTO dto = issueService.getIssueInfo(issue.getId());
+                        else if(issue.getSprint() == next)
                             dto.setSprint("next");
-                            result.add(dto);
-                        }
 
-                        else if(issue.getSprint() == null) {
-                            AbstractIssueDTO dto = issueService.getIssueInfo(issue.getId());
+                        else if(issue.getSprint() == null)
                             dto.setSprint(null);
-                            result.add(dto);
-                        }
+
+                        result.add(dto);
                     }
                 }
         );
@@ -270,7 +270,7 @@ public class ProjectService {
         IssueEntity issue = issueService.createIssue(createRequest, issuer, project);
 
         try {
-            if (createRequest.getSprint() != null)
+            if (!Objects.equals(createRequest.getSprint(), "null") && createRequest.getSprint() != null)
                 sprintService.addIssue(
                         getSprint(projectId, createRequest.getSprint()).getId(),
                         issue.getId()

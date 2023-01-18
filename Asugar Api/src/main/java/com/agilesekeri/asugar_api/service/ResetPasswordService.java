@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.naming.ServiceUnavailableException;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -33,6 +34,9 @@ public class ResetPasswordService {
         try {
             AppUserEntity appUser = appUserService.loadUserByUsername(email);
 
+            if(!appUser.getEnabled())
+                throw new IllegalStateException("The user is not enabled yet");
+
             String token = UUID.randomUUID().toString();
             ResetPasswordTokenEntity resetPasswordToken = new ResetPasswordTokenEntity(
                     token,
@@ -52,8 +56,10 @@ public class ResetPasswordService {
             message = Pair.of("An email is sent", HttpServletResponse.SC_ACCEPTED);
         } catch(UsernameNotFoundException e) {
             message = Pair.of(e.getMessage(), HttpServletResponse.SC_BAD_REQUEST);
-        } catch(IllegalStateException e) {
+        } catch(ServiceUnavailableException e) {
             message = Pair.of(e.getMessage(), HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+        } catch(IllegalStateException e) {
+            message = Pair.of(e.getMessage(), HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
 
         return message;
@@ -63,15 +69,9 @@ public class ResetPasswordService {
     public Pair<String, Integer> confirmRequest(String token, String newPassword) {
         Pair<String, Integer> message;
         try {
-            ResetPasswordTokenEntity resetPasswordToken = resetPasswordTokenService.getToken(token)
-                    .orElseThrow(() ->
-                            new IllegalArgumentException("token not found"));
-
+            ResetPasswordTokenEntity resetPasswordToken = resetPasswordTokenService.getToken(token);
             if (resetPasswordToken.getConfirmedAt() != null)
                 throw new IllegalStateException("request already confirmed");
-
-            if(!resetPasswordToken.getAppUser().getEnabled())
-                throw new IllegalStateException("The user is not enabled yet");
 
             LocalDateTime expiredAt = resetPasswordToken.getExpiresAt();
             if (expiredAt.isBefore(LocalDateTime.now())) {
@@ -105,19 +105,19 @@ public class ResetPasswordService {
                         integer = true;
                 }
 
-                if(!(uppercase && lowercase && integer))
+                if(!(uppercase && lowercase && integer) || newPassword.length() < 8)
                     throw new IllegalArgumentException("Password is not valid.");
 
                 else {
                     String encrypted = bCryptPasswordEncoder.encode(newPassword);
                     appUserService.changePassword(resetPasswordToken.getAppUser().getEmail(), encrypted);
                     resetPasswordTokenService.setConfirmedAt(token);
-                    message = Pair.of("Password changed successfully", HttpServletResponse.SC_ACCEPTED);
+                        message = Pair.of("Password changed successfully", HttpServletResponse.SC_ACCEPTED);
                 }
             }
-        } catch(IllegalArgumentException e) {
+        } catch(IllegalArgumentException|IllegalStateException e) {
             message = Pair.of(e.getMessage(), HttpServletResponse.SC_BAD_REQUEST);
-        } catch(IllegalStateException e) {
+        } catch(ServiceUnavailableException e) {
             message = Pair.of(e.getMessage(), HttpServletResponse.SC_SERVICE_UNAVAILABLE);
         }
 
@@ -125,14 +125,14 @@ public class ResetPasswordService {
     }
 
     public void sendVerificationEmail(String token, String email, String firstName)
-            throws IllegalStateException{
+            throws ServiceUnavailableException{
         try {
             String link = "http://localhost:8080/password_reset?token=";
             emailSender.send(
                     email,
                     buildEmail(firstName, token));
         } catch (Exception e) {
-            throw new IllegalStateException("email server not available");
+            throw new ServiceUnavailableException("email server not available");
         }
     }
 

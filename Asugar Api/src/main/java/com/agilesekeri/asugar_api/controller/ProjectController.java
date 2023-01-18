@@ -8,6 +8,7 @@ import com.agilesekeri.asugar_api.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,10 +59,9 @@ public class ProjectController {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(
                     response.getOutputStream(),
-                    new HashMap<String, String>()
-                            .put("completed", projectService.addMember(projectId, username).toString())
+                    projectService.addMember(projectId, username).toString()
             );
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | UsernameNotFoundException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), e.getMessage());
@@ -88,10 +88,9 @@ public class ProjectController {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(
                     response.getOutputStream(),
-                    new HashMap<String, String>()
-                            .put("completed", projectService.removeMember(projectId, username).toString())
+                    projectService.removeMember(projectId, username).toString()
             );
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | UsernameNotFoundException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), e.getMessage());
@@ -164,15 +163,21 @@ public class ProjectController {
                             HttpServletRequest request,
                             HttpServletResponse response)
             throws IOException {
-        String issuerUsername = appUserService.getJWTUsername(request);
-        if(projectService.checkAccess(projectId, issuerUsername, Role.MEMBER)) {
-            projectService.createIssue(projectId, issuerUsername, createRequest);
-            response.setStatus(HttpServletResponse.SC_ACCEPTED);
-        }
-        else {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        try {
+            String issuerUsername = appUserService.getJWTUsername(request);
+            if(projectService.checkAccess(projectId, issuerUsername, Role.MEMBER)) {
+                projectService.createIssue(projectId, issuerUsername, createRequest);
+                response.setStatus(HttpServletResponse.SC_ACCEPTED);
+            }
+            else {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                new ObjectMapper().writeValue(response.getOutputStream(), "The issuer is not a member of the project team");
+            }
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            new ObjectMapper().writeValue(response.getOutputStream(), "The issuer is not a member of the project team");
+            new ObjectMapper().writeValue(response.getOutputStream(), e.getMessage());
         }
     }
 

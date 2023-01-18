@@ -106,4 +106,9 @@ public class EpicService {
 
         return builder.build();
     }
+
+    public void deleteEpic(EpicEntity epic) {
+        epic.getIncludedIssues().forEach(issue -> issue.setEpic(null));
+        epicRepository.delete(epic);
+    }
 }
